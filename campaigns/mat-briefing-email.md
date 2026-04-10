@@ -2,7 +2,7 @@ Subject: Chiri.AI Business Model — Working Session Prep & Initial Scenarios
 
 Mat,
 
-I've built an interactive business model tool for us to use in our working session. It connects all the dots — from engineering capacity to pipeline demand, pricing models, and my GTM compensation structure. 
+I built an interactive business model tool for us to use in our working session. It connects all the dots — from engineering capacity to pipeline demand, pricing models, and my GTM compensation structure. 
 
 The goal of the tool is to let us pull levers live and instantly see the ripple effects across the entire business through the end of 2026. 
 
@@ -10,12 +10,12 @@ Before we dive in, I ran a baseline scenario based on what I believe are our str
 
 ### 1. The Capacity vs. Demand Reconciliation
 
-I modeled a bottoms-up engineering build: starting with 2 engineers in May, doubling to 4 in June, 8 in July, and capping at 16. I also assumed they ramp from handling 2 projects each to 4 projects each by year-end. 
+I modeled a bottoms-up engineering build: starting with 2 engineers in May, ramping to 16 by December, and assuming they scale from handling 2 projects each to 4 projects each. 
 
 Simultaneously, I modeled a top-down pipeline ramp across our 94 named accounts, assuming aggressive but realistic close rates (10% Enterprise, 18% Growth SaaS, 25% AI-Native).
 
 The result is a massive supply surplus:
-* **Bottoms-Up Ceiling:** 312 max engagements (if the team is 100% utilized)
+* **Bottoms-Up Ceiling:** 266 max engagements (if the team is 100% utilized)
 * **Top-Down Demand:** 35.4 planned engagements (based on pipeline close rates)
 
 **The takeaway:** Engineering capacity is not our bottleneck in 2026 if we hire on that curve. The entire constraint is top-down demand. Therefore, all revenue and comp modeling below is based strictly on the **reconciled 35.4 engagements** — the conservative, defensible number.
@@ -38,32 +38,28 @@ Across those 35.4 engagements, the revenue outcome changes dramatically based on
 
 The replacement-value model generates an additional **$2.1M in total revenue** and more than triples our exit ARR, simply by capturing the value of the tool stack we are replacing.
 
-### 3. GTM Compensation Structure
+### 3. GTM Compensation & The Full-Time Trigger
 
-I want to align my compensation directly with the revenue I bring in, while protecting Chiri's cash flow in the early months. 
+I built sliders into the bottom of the tool so we can model my compensation live. We can adjust my base retainer versus my commission rates across services and ARR to see exactly what the payout looks like under different revenue outcomes.
 
-Assuming a lower base to preserve runway, here is my strongest recommendation for a structure that balances risk and upside:
+My philosophy here is simple: the base retainer is just survival money to protect Chiri's cash flow early on. The variable commission is proof of concept. But the real kicker for me — the reason I am doing this — is the equity. 
 
-**Recommended Structure:**
-* **Base Retainer:** $8,000 / month
+If I am growing this business and creating real traction, I want to be bought in. I want major upside and skin in the game. 
+
+**Recommended Starting Structure:**
+* **Base Retainer:** $8,000 / month (keeps burn low)
 * **Services Variable:** 12% of services revenue
 * **ARR Variable:** 12% of new ARR booked
 
-If we hit the 35.4 engagement target under the **Replacement Pricing** model, this structure yields:
-* Base (8 months): $64,000
-* Services Variable: $389,000
-* ARR Variable: $357,000
-* **Total 2026 Cash:** $810,000
+If we hit the 35.4 engagement target under the Replacement Pricing model, this structure yields $810K in total cash for the year. But more importantly, the tool calculates the exact moment where my variable comp becomes more expensive than a full-time salary. 
 
-**Downside Protection:** If revenue comes in at only 60% of plan, my total cash drops to $511K. The variable-heavy structure ensures I only earn significant upside if the company is winning. 
-
-**Full-Time Trigger:** At this structure, it becomes cheaper for Chiri to convert me to a $250K full-time salary once we hit **$400,000 in annualized revenue**. The model tracks exactly which month we cross that threshold.
+At the structure above, that trigger hits at **$400,000 in annualized revenue**. Once we cross that line, it makes financial sense for Chiri to convert me to full-time, lock in my salary, and grant the equity package that gives me the long-term upside I am looking for.
 
 ### Next Steps
 
 You can open the live tool here: [Link to Tool]
 
-Play around with the levers before we meet. We can adjust the engineering ramp, tweak the close rates, or toggle the pricing models live on the call to see exactly how the numbers move.
+Play around with the levers before we meet. We can adjust the engineering ramp, tweak the close rates, or slide the comp percentages live on the call to see exactly how the numbers move.
 
 Looking forward to the session.
 

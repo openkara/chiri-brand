@@ -716,7 +716,7 @@ nav {
   <div class="toggle-group">
     <button class="toggle-btn active" id="presetFlat"      onclick="applyPreset('flat')">Flat (5 eng)</button>
     <button class="toggle-btn"        id="presetHire"      onclick="applyPreset('hire')">Hire 1/Quarter</button>
-    <button class="toggle-btn"        id="presetAgg"       onclick="applyPreset('aggressive')">Aggressive (3→8)</button>
+    <button class="toggle-btn"        id="presetAgg"       onclick="applyPreset('aggressive')">Chiri Ramp (2→16)</button>
     <button class="toggle-btn"        id="presetCustom"    onclick="applyPreset('custom')">Custom</button>
   </div>
 
@@ -1188,9 +1188,10 @@ const ACCOUNT_TIERS = [
 
 // Presets: 8 months
 const PRESETS = {
-  flat:       { eng:[5,5,5,5,5,5,5,5],       cap:[1,1,1,1,1,1,1,1] },
-  hire:       { eng:[3,3,4,4,5,5,6,6],       cap:[1,1,1,1,1,1,1,1] },
-  aggressive: { eng:[3,4,5,6,7,7,8,8],       cap:[1,1,1,1,1,1,1,1] },
+  flat:       { eng:[5,5,5,5,5,5,5,5],         cap:[1,1,1,1,1,1,1,1] },
+  hire:       { eng:[3,3,4,4,5,5,6,6],         cap:[1,1,1,1,1,1,1,1] },
+  // Chiri Ramp: user-specified headcount build 2→16 with productivity ramp
+  aggressive: { eng:[2,4,6,8,10,12,15,16],     cap:[2,2,3,3,4,4,4,4] },
 };
 
 // Months remaining in year after each month (for EOY ARR weighting)
