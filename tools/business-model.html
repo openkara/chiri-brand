@@ -435,7 +435,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       <div class="pricing-big" id="d_acv">—</div>
       <div class="pricing-unit">per seat / month &nbsp;<span style="color:var(--cream-dim);font-size:9px" id="d_acv_annual"></span></div>
       <div class="pricing-rows">
-        <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="d_seats">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">avg seats per client</span><span class="pricing-row-val" id="d_seats">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val amber" id="d_arrEng">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">Services fee per engagement</span><span class="pricing-row-val" id="d_svc">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">Total value per engagement</span><span class="pricing-row-val amber" id="d_total">—</span></div>
@@ -446,7 +446,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       <div class="pricing-big green" id="a_acv">—</div>
       <div class="pricing-unit">per seat / month &nbsp;<span style="color:var(--cream-dim);font-size:9px" id="a_acv_annual"></span></div>
       <div class="pricing-rows">
-        <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="a_seats">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">avg seats per client</span><span class="pricing-row-val" id="a_seats">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val green" id="a_arrEng">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">Services fee per engagement</span><span class="pricing-row-val" id="a_svc">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">Total value per engagement</span><span class="pricing-row-val green" id="a_total">—</span></div>
@@ -466,7 +466,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 
   <!-- Avg seats slider -->
   <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px 20px;background:var(--obsidian-card);border:1px solid var(--border)">
-    <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-muted);white-space:nowrap">Avg seats / deployment</div>
+    <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-muted);white-space:nowrap">Avg seats / client</div>
     <input type="range" class="chiri-slider" id="avgSeats" min="20" max="500" step="10" value="80" oninput="onSlider('avgSeats')" style="flex:1">
     <div class="slider-val" id="avgSeatsVal">80 seats</div>
   </div>
