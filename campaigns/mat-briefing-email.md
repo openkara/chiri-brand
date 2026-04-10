@@ -1,67 +1,39 @@
-Subject: Chiri.AI Business Model — Working Session Prep & Initial Scenarios
+# Email to Mat Caldwell — Business Model Working Session
+
+---
+
+**Subject:** A tool I built for our conversation
+
+---
 
 Mat,
 
-I built an interactive business model tool for us to use in our working session. It connects all the dots — from engineering capacity to pipeline demand, pricing models, and my GTM compensation structure. 
+I wanted to come into our session with something more useful than a deck. I built an interactive business model tool specifically for this conversation — it's designed so we can work through the numbers together in real time, pull any lever, and see the ripple effects immediately.
 
-The goal of the tool is to let us pull levers live and instantly see the ripple effects across the entire business through the end of 2026. 
+**[Open the tool here →](https://chiribizmdl-b4hjnfej.manus.space)**
 
-Before we dive in, I ran a baseline scenario based on what I believe are our strongest, smartest assumptions for the May–December 2026 window. Here is what the data is telling us.
+The tool moves through four questions in sequence, each one feeding the next:
 
-### 1. The Capacity vs. Demand Reconciliation
+**1. Pricing.** Side by side — the current deck pricing ($29/seat/mo) versus the replacement-value model ($99/seat/mo, the existing Business tier). The tool shows what that one decision means for ARR per client and total revenue across the year.
 
-I modeled a bottoms-up engineering build: starting with 2 engineers in May, ramping to 16 by December, and assuming they scale from handling 2 projects each to 4 projects each. 
+**2. Bottoms-up capacity.** I pre-loaded the engineering ramp we discussed — 2 engineers in May, scaling to 16 by December, with capacity per engineer ramping from 2 to 4 projects as the team matures. The tool calculates the maximum revenue the team can physically deliver, with month-over-month consulting revenue and ARR build charts.
 
-Simultaneously, I modeled a top-down pipeline ramp across our 94 named accounts, assuming aggressive but realistic close rates (10% Enterprise, 18% Growth SaaS, 25% AI-Native).
+**3. Goal-down.** Rather than just projecting forward from capacity, we set a revenue target — say $5M or $25M in total bookings — and the tool solves backwards: how many clients per month do we need to close, and what does that require from the pipeline? We can test any number and see what has to be true to hit it.
 
-The result is a massive supply surplus:
-* **Bottoms-Up Ceiling:** 266 max engagements (if the team is 100% utilized)
-* **Top-Down Demand:** 35.4 planned engagements (based on pipeline close rates)
+**4. Kara's comp.** Once we've aligned on a realistic scenario, the tool generates comp options based on whatever structure we agree on — base retainer, services commission, ARR commission, and equity at conversion to full-time. All the sliders are live, so we can move them together and see what different structures mean for both sides in real time.
 
-**The takeaway:** Engineering capacity is not our bottleneck in 2026 if we hire on that curve. The entire constraint is top-down demand. Therefore, all revenue and comp modeling below is based strictly on the **reconciled 35.4 engagements** — the conservative, defensible number.
+A few things I want to surface before we sit down.
 
-### 2. Revenue Scenarios (May–Dec 2026)
+The bottoms-up analysis shows the team can handle significantly more work than the pipeline will generate in 2026. That's good news — it means we'll never be capacity-constrained. The binding constraint is demand generation, which is exactly where I come in. The tool makes that visible and keeps the conversation focused on the right variable.
 
-Across those 35.4 engagements, the revenue outcome changes dramatically based on which pricing model we choose.
+On comp: the base is survival money. The variable structure is how I prove the model works. But the real reason I want to commit fully is equity — skin in the game, upside tied to what we build together. I want to have that conversation explicitly, and the tool has a section for it so we can model what different structures actually mean for both of us.
 
-**Scenario A: Current Deck Pricing**
-* Services Revenue: $3.24M
-* ARR Booked: $870K
-* EOY 2026 ARR Run Rate: $250K
-* **Total 2026 Revenue:** $4.12M
+Every scenario we set in the tool can be saved as a URL, so we can capture whatever we agree on and share it with the broader team.
 
-**Scenario B: Replacement-Value Pricing**
-* Services Revenue: $3.24M
-* ARR Booked: $2.97M
-* EOY 2026 ARR Run Rate: $870K
-* **Total 2026 Revenue:** $6.22M
+Looking forward to working through this with you.
 
-The replacement-value model generates an additional **$2.1M in total revenue** and more than triples our exit ARR, simply by capturing the value of the tool stack we are replacing.
-
-### 3. GTM Compensation & The Full-Time Trigger
-
-I built sliders into the bottom of the tool so we can model my compensation live. We can adjust my base retainer versus my commission rates across services and ARR to see exactly what the payout looks like under different revenue outcomes.
-
-My philosophy here is simple: the base retainer is just survival money to protect Chiri's cash flow early on. The variable commission is proof of concept. But the real kicker for me — the reason I am doing this — is the equity. 
-
-If I am growing this business and creating real traction, I want to be bought in. I want major upside and skin in the game. 
-
-**Recommended Starting Structure:**
-* **Base Retainer:** $8,000 / month (keeps burn low)
-* **Services Variable:** 12% of services revenue
-* **ARR Variable:** 12% of new ARR booked
-
-If we hit the 35.4 engagement target under the Replacement Pricing model, this structure yields $810K in total cash for the year. But more importantly, the tool calculates the exact moment where my variable comp becomes more expensive than a full-time salary. 
-
-At the structure above, that trigger hits at **$400,000 in annualized revenue**. Once we cross that line, it makes financial sense for Chiri to convert me to full-time, lock in my salary, and grant the equity package that gives me the long-term upside I am looking for.
-
-### Next Steps
-
-You can open the live tool here: [Link to Tool]
-
-Play around with the levers before we meet. We can adjust the engineering ramp, tweak the close rates, or slide the comp percentages live on the call to see exactly how the numbers move.
-
-Looking forward to the session.
-
-Best,
 Kara
+
+---
+
+*Works best on a laptop or large screen. No login required.*
