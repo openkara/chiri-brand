@@ -3,1560 +3,1151 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Chiri.AI — Business Model · May–Dec 2026</title>
+<title>Chiri.AI · Business Model Working Session</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
-/* ============================================================
-   CHIRI.AI DESIGN SYSTEM
-   Deep obsidian · Warm amber · Playfair Display + DM Mono
-============================================================ */
+/* ── TOKENS ── */
 :root {
-  --obsidian:      #0a0a0a;
-  --obsidian-mid:  #111111;
-  --obsidian-lift: #181818;
-  --obsidian-high: #1f1f1f;
+  --obsidian:      #0a0a08;
+  --obsidian-mid:  #0f0f0c;
+  --obsidian-lift: #141410;
+  --obsidian-card: #181814;
   --amber:         #C17E35;
   --amber-dim:     rgba(193,126,53,0.5);
-  --amber-faint:   rgba(193,126,53,0.15);
-  --amber-glow:    rgba(193,126,53,0.08);
-  --cream:         #F0EAD6;
-  --cream-dim:     rgba(240,234,214,0.65);
-  --cream-muted:   rgba(240,234,214,0.38);
-  --border:        rgba(240,234,214,0.08);
-  --border-amber:  rgba(193,126,53,0.2);
+  --amber-faint:   rgba(193,126,53,0.06);
+  --amber-glow:    rgba(193,126,53,0.12);
+  --border-amber:  rgba(193,126,53,0.25);
   --green:         #5aff8a;
-  --green-dim:     rgba(90,255,138,0.15);
-  --red:           #ff5a5a;
-  --red-dim:       rgba(255,90,90,0.15);
+  --green-faint:   rgba(90,255,138,0.08);
+  --green-dim:     rgba(90,255,138,0.4);
+  --red:           #ff6b6b;
+  --cream:         #F0EAD6;
+  --cream-muted:   rgba(240,234,214,0.55);
+  --cream-dim:     rgba(240,234,214,0.35);
+  --border:        rgba(240,234,214,0.07);
+  --border-mid:    rgba(240,234,214,0.12);
+  --font-display:  'Playfair Display', Georgia, serif;
+  --font-mono:     'DM Mono', 'Courier New', monospace;
 }
 
-* { margin:0; padding:0; box-sizing:border-box; }
-html { scroll-behavior:smooth; }
+/* ── RESET ── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; }
 body {
-  background:var(--obsidian);
-  color:var(--cream);
-  font-family:'DM Mono',monospace;
-  -webkit-font-smoothing:antialiased;
-  overflow-x:hidden;
-  min-height:100vh;
+  background: var(--obsidian);
+  color: var(--cream);
+  font-family: var(--font-mono);
+  font-size: 13px;
+  line-height: 1.6;
+  min-height: 100vh;
 }
-::-webkit-scrollbar { width:4px; }
-::-webkit-scrollbar-track { background:var(--obsidian); }
-::-webkit-scrollbar-thumb { background:var(--amber-dim); border-radius:2px; }
-
-/* ── NAV ── */
-nav {
-  position:sticky; top:0; z-index:200;
-  display:flex; justify-content:space-between; align-items:center;
-  padding:20px 48px;
-  background:rgba(10,10,10,0.96);
-  backdrop-filter:blur(16px);
-  border-bottom:1px solid var(--border);
-}
-.nav-logo { font-family:'DM Mono',monospace; font-size:13px; letter-spacing:0.15em; color:var(--cream); text-decoration:none; }
-.nav-logo span { color:var(--amber); }
-.nav-center { font-size:10px; letter-spacing:0.25em; text-transform:uppercase; color:var(--cream-muted); }
-.nav-right { display:flex; align-items:center; gap:20px; }
-
-.model-badge {
-  display:flex; align-items:center; gap:8px;
-  padding:6px 14px;
-  border:1px solid var(--border-amber);
-  font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
-  color:var(--amber); background:var(--amber-faint);
-}
-.model-badge .dot { width:6px; height:6px; border-radius:50%; background:var(--amber); animation:pulse 2s infinite; }
-.model-badge.alt-active { border-color:rgba(90,255,138,0.3); color:var(--green); background:var(--green-dim); }
-.model-badge.alt-active .dot { background:var(--green); }
-@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.4} }
 
 /* ── LAYOUT ── */
-.app-body { display:grid; grid-template-columns:1fr 300px; min-height:calc(100vh - 61px); }
-.main-content { border-right:1px solid var(--border); }
+.app-wrap { display: flex; flex-direction: column; min-height: 100vh; }
 
-/* ── SIDEBAR ── */
-.sidebar {
-  position:sticky; top:61px; height:calc(100vh - 61px); overflow-y:auto;
-  padding:28px 24px; background:var(--obsidian-mid);
-  display:flex; flex-direction:column;
+/* ── NAV ── */
+.nav {
+  position: sticky; top: 0; z-index: 100;
+  background: rgba(10,10,8,0.96);
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--border);
+  padding: 0 40px;
+  height: 56px;
+  display: flex; align-items: center; justify-content: space-between;
 }
-.sidebar-label { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; }
-.sidebar-group { padding:16px 0; border-bottom:1px solid var(--border); }
-.sidebar-group:last-child { border-bottom:none; }
-.sidebar-group-title { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--cream-muted); margin-bottom:12px; }
-.sidebar-row { display:flex; justify-content:space-between; align-items:baseline; margin-bottom:9px; }
-.sidebar-row:last-child { margin-bottom:0; }
-.sidebar-key { font-size:10px; color:var(--cream-muted); }
-.sidebar-val { font-size:12px; color:var(--cream); font-weight:500; }
-.sidebar-val.accent { color:var(--amber); }
-.sidebar-val.green  { color:var(--green); }
-.sidebar-val.warn   { color:#f5c842; }
-.sidebar-val.danger { color:var(--red); }
-.sidebar-big { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--amber); line-height:1; margin-bottom:4px; }
-.sidebar-big-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream-muted); }
-.util-bar { height:3px; background:var(--border); border-radius:2px; overflow:hidden; margin-top:8px; }
-.util-fill { height:100%; background:var(--amber); border-radius:2px; transition:width 0.4s ease; }
-.util-fill.warn   { background:#f5c842; }
-.util-fill.danger { background:var(--red); }
+.nav-logo {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--cream);
+  letter-spacing: -0.02em;
+}
+.nav-logo span { color: var(--amber); }
+.nav-session {
+  font-size: 9px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--cream-muted);
+}
+.nav-right { display: flex; align-items: center; gap: 16px; }
+.nav-step-pills { display: flex; gap: 6px; }
+.nav-pill {
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 4px 10px; border: 1px solid var(--border);
+  color: var(--cream-dim); cursor: pointer; transition: all 0.2s;
+  background: transparent;
+}
+.nav-pill:hover { border-color: var(--amber-dim); color: var(--amber); }
+.nav-pill.active { border-color: var(--amber); color: var(--amber); background: var(--amber-faint); }
 .share-btn {
-  margin-top:20px; width:100%; padding:11px;
-  background:transparent; border:1px solid var(--border-amber);
-  color:var(--amber); font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.25em; text-transform:uppercase;
-  cursor:pointer; transition:all 0.2s;
+  font-size: 9px; letter-spacing: 0.15em; text-transform: uppercase;
+  padding: 5px 14px; border: 1px solid var(--border-amber);
+  color: var(--amber); background: transparent; cursor: pointer; transition: all 0.2s;
 }
-.share-btn:hover { background:var(--amber-faint); }
-.copy-msg { display:none; font-size:9px; letter-spacing:0.15em; color:var(--green); text-align:center; margin-top:8px; }
+.share-btn:hover { background: var(--amber-glow); }
 
-/* ── SECTION CHROME ── */
-.section-header { padding:44px 48px 28px; border-bottom:1px solid var(--border); }
-.section-num { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--amber); margin-bottom:10px; }
-.section-title { font-family:'Playfair Display',serif; font-size:clamp(22px,2.2vw,32px); font-weight:700; color:var(--cream); line-height:1.15; margin-bottom:8px; }
-.section-title em { font-style:italic; color:var(--amber); }
-.section-sub { font-size:11px; letter-spacing:0.04em; color:var(--cream-muted); line-height:1.7; }
-.section-body { padding:36px 48px; }
-.section-sep { border:none; border-top:1px solid var(--border); margin:0; }
+/* ── MAIN CONTENT + SIDEBAR ── */
+.content-wrap { display: flex; flex: 1; }
+.main-content { flex: 1; min-width: 0; }
+.sidebar {
+  width: 220px; flex-shrink: 0;
+  position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto;
+  padding: 24px 20px;
+  background: var(--obsidian-mid);
+  border-left: 1px solid var(--border);
+}
+.sidebar-label { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 18px; }
+.sidebar-group { padding: 14px 0; border-bottom: 1px solid var(--border); }
+.sidebar-group:last-child { border-bottom: none; }
+.sidebar-group-title { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 10px; }
+.sidebar-row { display: flex; justify-content: space-between; align-items: baseline; margin-bottom: 8px; }
+.sidebar-row:last-child { margin-bottom: 0; }
+.sidebar-key { font-size: 9px; color: var(--cream-muted); }
+.sidebar-val { font-size: 11px; color: var(--cream); font-weight: 500; }
+.sidebar-val.amber { color: var(--amber); }
+.sidebar-val.green { color: var(--green); }
+.sidebar-big { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 3px; }
+.sidebar-big-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); }
+.sidebar-divider { height: 1px; background: var(--border); margin: 4px 0 12px; }
+.sidebar-note { font-size: 8px; color: var(--cream-dim); line-height: 1.5; margin-top: 6px; }
 
-/* ── TOGGLES ── */
-.toggle-group { display:flex; gap:2px; margin-bottom:28px; flex-wrap:wrap; }
+/* ── STEP SECTIONS ── */
+.step-section {
+  border-bottom: 1px solid var(--border);
+  transition: opacity 0.3s;
+}
+.step-header {
+  padding: 48px 48px 28px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: flex-start; gap: 28px;
+}
+.step-num-badge {
+  flex-shrink: 0;
+  width: 40px; height: 40px;
+  border: 1px solid var(--amber-dim);
+  display: flex; align-items: center; justify-content: center;
+  font-family: var(--font-display); font-size: 18px; font-weight: 700;
+  color: var(--amber); margin-top: 4px;
+}
+.step-num-badge.done { background: var(--amber-glow); border-color: var(--amber); }
+.step-header-text {}
+.step-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 8px; }
+.step-title { font-family: var(--font-display); font-size: clamp(22px, 2.5vw, 32px); font-weight: 600; color: var(--cream); line-height: 1.2; margin-bottom: 10px; }
+.step-title em { color: var(--amber); font-style: italic; }
+.step-sub { font-size: 11px; color: var(--cream-muted); line-height: 1.7; max-width: 680px; }
+.step-body { padding: 36px 48px; }
+
+/* ── TOGGLE BUTTONS ── */
+.toggle-group { display: flex; gap: 6px; flex-wrap: wrap; }
 .toggle-btn {
-  padding:9px 18px; background:var(--obsidian-mid); border:1px solid var(--border);
-  color:var(--cream-muted); font-family:'DM Mono',monospace;
-  font-size:9px; letter-spacing:0.2em; text-transform:uppercase;
-  cursor:pointer; transition:all 0.2s;
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 6px 14px;
+  border: 1px solid var(--border-mid); color: var(--cream-muted);
+  background: transparent; cursor: pointer; transition: all 0.2s;
 }
-.toggle-btn:hover { color:var(--cream); border-color:var(--amber-dim); }
-.toggle-btn.active { background:var(--amber-faint); border-color:var(--amber-dim); color:var(--amber); }
-.toggle-btn.active-green { background:var(--green-dim); border-color:rgba(90,255,138,0.3); color:var(--green); }
+.toggle-btn:hover { border-color: var(--amber-dim); color: var(--amber); }
+.toggle-btn.active { border-color: var(--amber); color: var(--amber); background: var(--amber-faint); }
+.toggle-btn.active-green { border-color: var(--green-dim); color: var(--green); background: var(--green-faint); }
 
-/* ── PART 1 — PRICING ── */
-.pricing-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); margin-bottom:2px; }
-.pricing-col { background:var(--obsidian-mid); padding:32px; transition:opacity 0.3s; }
-.pricing-col.dimmed { opacity:0.3; }
+/* ── PRICING GRID (Step 1) ── */
+.pricing-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px; }
+.pricing-col {
+  background: var(--obsidian-card);
+  border: 1px solid var(--border);
+  padding: 28px;
+  transition: opacity 0.3s;
+}
+.pricing-col.active-pricing { border-color: var(--amber); background: var(--amber-faint); }
+.pricing-col.active-pricing-green { border-color: var(--green-dim); background: var(--green-faint); }
+.pricing-col.dimmed { opacity: 0.4; }
+.pricing-col-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
+.pricing-big { font-family: var(--font-display); font-size: clamp(28px,3vw,44px); font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.pricing-big.green { color: var(--green); }
+.pricing-unit { font-size: 10px; color: var(--cream-muted); margin-bottom: 20px; }
+.pricing-rows { border-top: 1px solid var(--border); }
+.pricing-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 10px; }
+.pricing-row:last-child { border-bottom: none; }
+.pricing-row-key { color: var(--cream-muted); }
+.pricing-row-val { color: var(--cream); font-weight: 500; }
+.pricing-row-val.amber { color: var(--amber); }
+.pricing-row-val.green { color: var(--green); }
 
-.col-label { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; display:flex; align-items:center; gap:8px; }
-.col-label .active-dot { width:5px; height:5px; border-radius:50%; background:var(--amber); }
-.col-label.alt-label { color:var(--green); }
-.col-label.alt-label .active-dot { background:var(--green); }
+/* ── SO WHAT CARD ── */
+.so-what {
+  background: var(--obsidian-lift);
+  border: 1px solid var(--border-amber);
+  padding: 28px;
+  margin-bottom: 28px;
+  position: relative; overflow: hidden;
+}
+.so-what::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 0% 50%, var(--amber-glow) 0%, transparent 60%);
+  pointer-events: none;
+}
+.so-what-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; position: relative; }
+.so-what-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; position: relative; }
+.so-what-cell {}
+.so-what-cell-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 6px; }
+.so-what-cell-val { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--cream); }
+.so-what-cell-val.amber { color: var(--amber); }
+.so-what-cell-val.green { color: var(--green); }
+.so-what-cell-sub { font-size: 9px; color: var(--cream-dim); margin-top: 4px; }
 
-.price-tier { padding:16px 0; border-bottom:1px solid var(--border); }
-.price-tier:last-child { border-bottom:none; }
-.tier-name { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream-muted); margin-bottom:6px; display:flex; align-items:center; gap:8px; }
-.tier-badge { padding:2px 6px; background:var(--amber-faint); border:1px solid var(--amber-dim); font-size:8px; letter-spacing:0.1em; color:var(--amber); }
-.tier-badge.new-badge { background:var(--green-dim); border-color:rgba(90,255,138,0.3); color:var(--green); }
-.tier-price { font-family:'Playfair Display',serif; font-size:clamp(18px,1.8vw,24px); font-weight:700; color:var(--cream); line-height:1; margin-bottom:4px; }
-.tier-price em { font-style:normal; color:var(--amber); }
-.tier-desc { font-size:10px; color:var(--cream-muted); line-height:1.6; }
+/* ── TOOL STACK ── */
+.tool-stack { background: var(--obsidian-card); border: 1px solid var(--border); padding: 24px; margin-bottom: 28px; }
+.tool-stack-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
+.tool-rows { display: grid; grid-template-columns: 1fr 1fr; gap: 0; }
+.tool-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid var(--border); font-size: 10px; }
+.tool-row:nth-child(odd) { padding-right: 20px; }
+.tool-row input[type=checkbox] { accent-color: var(--amber); width: 12px; height: 12px; }
+.tool-row-name { flex: 1; color: var(--cream-muted); }
+.tool-row-price { color: var(--amber); font-weight: 500; min-width: 50px; text-align: right; }
+.tool-stack-total { display: flex; justify-content: space-between; align-items: center; padding-top: 14px; margin-top: 4px; }
+.tool-stack-total-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); }
+.tool-stack-total-val { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--amber); }
 
-/* Tool stack */
-.tool-calc { margin-top:28px; padding-top:24px; border-top:1px solid var(--border); }
-.tool-calc-title { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber); margin-bottom:16px; }
-.tool-row { display:flex; align-items:center; gap:10px; padding:8px 0; border-bottom:1px solid var(--border); }
-.tool-row:last-child { border-bottom:none; }
-.tool-check { width:13px; height:13px; border:1px solid var(--amber-dim); background:transparent; cursor:pointer; appearance:none; -webkit-appearance:none; position:relative; flex-shrink:0; transition:all 0.15s; }
-.tool-check:checked { background:var(--amber-faint); border-color:var(--amber); }
-.tool-check:checked::after { content:''; position:absolute; top:1px; left:3px; width:4px; height:7px; border-right:1px solid var(--amber); border-bottom:1px solid var(--amber); transform:rotate(45deg); }
-.tool-name { flex:1; font-size:10px; color:var(--cream-dim); }
-.tool-name.optional { color:var(--cream-muted); }
-.tool-price-input { width:48px; background:var(--obsidian-lift); border:1px solid var(--border); color:var(--cream); font-family:'DM Mono',monospace; font-size:10px; padding:3px 5px; text-align:right; }
-.tool-price-input:focus { outline:none; border-color:var(--amber-dim); }
-.tool-unit { font-size:9px; color:var(--cream-muted); width:26px; }
-.tool-summary { margin-top:16px; padding:14px; background:var(--obsidian-lift); border:1px solid var(--border); }
-.tool-summary-row { display:flex; justify-content:space-between; align-items:center; padding:5px 0; border-bottom:1px solid var(--border); }
-.tool-summary-row:last-child { border-bottom:none; }
-.ts-key { font-size:9px; letter-spacing:0.1em; color:var(--cream-muted); text-transform:uppercase; }
-.ts-val { font-size:11px; color:var(--cream); font-weight:500; }
-.ts-val.savings { color:var(--green); }
-.ts-val.cost    { color:var(--red); }
-.bundle-note { margin-top:8px; font-size:9px; color:var(--green); text-align:center; padding:7px; background:var(--green-dim); border:1px solid rgba(90,255,138,0.2); display:none; }
+/* ── CAPACITY TABLE (Step 2) ── */
+.cap-table-wrap { overflow-x: auto; margin-bottom: 24px; }
+.cap-table { width: 100%; border-collapse: collapse; font-size: 10px; }
+.cap-table th { text-align: left; padding: 8px 10px; font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); border-bottom: 1px solid var(--border-mid); }
+.cap-table th.month-th { text-align: center; }
+.cap-table td { padding: 6px 10px; border-bottom: 1px solid var(--border); color: var(--cream-dim); }
+.cap-table td.month-td { text-align: center; }
+.cap-input {
+  width: 52px; background: var(--obsidian-mid); border: 1px solid var(--border-mid);
+  color: var(--amber); font-family: var(--font-mono); font-size: 10px;
+  text-align: center; padding: 3px 4px;
+}
+.cap-input:focus { outline: none; border-color: var(--amber); }
+.cap-val { color: var(--cream); font-weight: 500; }
+.cap-val.amber { color: var(--amber); }
+.cap-req { color: var(--green); font-weight: 500; }
 
-/* So-what delta card */
-.sowhat-card {
-  background:var(--obsidian-lift);
-  border:1px solid var(--border-amber);
-  padding:32px 40px;
-  position:relative;
-  overflow:hidden;
-}
-.sowhat-card::before {
-  content:'';
-  position:absolute; inset:0;
-  background:radial-gradient(ellipse at 20% 50%, var(--amber-glow) 0%, transparent 60%);
-  pointer-events:none;
-}
-.sowhat-eyebrow { font-size:9px; letter-spacing:0.3em; text-transform:uppercase; color:var(--amber); margin-bottom:16px; position:relative; }
-.sowhat-grid { display:grid; grid-template-columns:1fr 1fr 1fr; gap:2px; background:var(--border); position:relative; }
-.sowhat-cell { background:var(--obsidian-mid); padding:20px 24px; }
-.sowhat-cell.highlight { background:var(--amber-faint); border:1px solid var(--border-amber); }
-.sowhat-cell-label { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream-muted); margin-bottom:8px; }
-.sowhat-cell-val { font-family:'Playfair Display',serif; font-size:clamp(20px,2vw,28px); font-weight:700; color:var(--amber); line-height:1; margin-bottom:4px; }
-.sowhat-cell.highlight .sowhat-cell-val { color:var(--green); }
-.sowhat-cell-note { font-size:9px; color:var(--cream-muted); line-height:1.5; }
-.sowhat-sentence {
-  margin-top:16px; padding:14px 18px;
-  background:var(--obsidian-mid);
-  border-left:2px solid var(--amber-dim);
-  font-size:10px; color:var(--cream-dim); line-height:1.8;
-  position:relative;
-}
-.sowhat-sentence strong { color:var(--cream); }
-.sowhat-sentence .green { color:var(--green); }
-
-/* Stat strip */
-.stat-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--border); margin-top:2px; }
-.stat-cell { background:var(--obsidian-lift); padding:22px 24px; }
-.stat-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream-muted); margin-bottom:8px; }
-.stat-value { font-family:'Playfair Display',serif; font-size:clamp(16px,1.8vw,24px); font-weight:700; color:var(--amber); line-height:1; margin-bottom:4px; }
-.stat-note { font-size:9px; color:var(--cream-muted); }
-
-/* ── PART 2 — CAPACITY ── */
-.capacity-grid-wrap { overflow-x:auto; margin-bottom:28px; }
-.capacity-table { width:100%; border-collapse:collapse; min-width:600px; }
-.capacity-table th { font-size:9px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream-muted); padding:9px 10px; text-align:left; border-bottom:1px solid var(--border); white-space:nowrap; }
-.capacity-table th.month-th { text-align:center; font-size:8px; color:var(--amber); padding:9px 4px; }
-.capacity-table td { padding:9px 10px; border-bottom:1px solid var(--border); font-size:10px; color:var(--cream-dim); white-space:nowrap; }
-.capacity-table td.month-td { text-align:center; padding:7px 3px; }
-.capacity-table tr:last-child td { border-bottom:none; }
-.cap-input { width:40px; background:var(--obsidian-lift); border:1px solid var(--border); color:var(--cream); font-family:'DM Mono',monospace; font-size:10px; padding:3px 5px; text-align:center; }
-.cap-input:focus { outline:none; border-color:var(--amber-dim); }
-.cap-val { font-size:11px; color:var(--cream); text-align:center; }
-.cap-planned { font-size:10px; color:var(--amber); text-align:center; }
-.cap-planned.at-cap { color:var(--red); }
-.cap-util-bar { width:100%; height:2px; background:var(--border); border-radius:1px; overflow:hidden; margin-top:2px; }
-.cap-util-fill { height:100%; background:var(--amber); border-radius:1px; transition:width 0.3s; }
-.cap-util-fill.warn   { background:#f5c842; }
-.cap-util-fill.danger { background:var(--red); }
-.cap-stat-strip { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); margin-bottom:28px; }
-
-/* ── SLIDERS ── */
-.slider-row { display:flex; align-items:center; gap:14px; margin-bottom:18px; }
-.slider-label { font-size:9px; letter-spacing:0.12em; text-transform:uppercase; color:var(--cream-muted); min-width:160px; }
-.chiri-slider { flex:1; -webkit-appearance:none; appearance:none; height:2px; background:var(--border); outline:none; border-radius:1px; }
-.chiri-slider::-webkit-slider-thumb { -webkit-appearance:none; width:13px; height:13px; border-radius:50%; background:var(--amber); cursor:pointer; border:2px solid var(--obsidian); box-shadow:0 0 0 1px var(--amber-dim); }
-.chiri-slider::-moz-range-thumb { width:13px; height:13px; border-radius:50%; background:var(--amber); cursor:pointer; border:2px solid var(--obsidian); }
-.slider-val { font-size:12px; color:var(--amber); min-width:56px; text-align:right; font-weight:500; }
-
-.context-note { padding:14px 18px; border-left:2px solid var(--amber-dim); background:var(--amber-glow); font-size:10px; color:var(--cream-muted); line-height:1.7; margin-bottom:28px; }
-.context-note strong { color:var(--cream); }
-.context-note.warn   { border-color:rgba(245,200,66,0.4); background:rgba(245,200,66,0.06); }
-.context-note.danger { border-color:rgba(255,90,90,0.4); background:rgba(255,90,90,0.06); }
-
-/* ── PART 3 — RAMP ── */
-.ramp-controls { display:grid; grid-template-columns:1fr 1fr; gap:28px; margin-bottom:28px; }
-.ramp-section-label { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber); margin-bottom:16px; }
-.ramp-grid { display:grid; grid-template-columns:repeat(8,1fr); gap:2px; background:var(--border); margin-bottom:10px; }
-.ramp-cell { background:var(--obsidian-mid); padding:12px 6px; text-align:center; }
-.ramp-cell.at-cap { background:rgba(255,90,90,0.08); border:1px solid rgba(255,90,90,0.2); }
-.ramp-month { font-size:8px; letter-spacing:0.12em; color:var(--cream-muted); margin-bottom:6px; text-transform:uppercase; }
-.ramp-val { font-family:'Playfair Display',serif; font-size:16px; font-weight:700; color:var(--amber); line-height:1; margin-bottom:3px; }
-.ramp-cell.at-cap .ramp-val { color:var(--red); }
-.ramp-cap-label { font-size:7px; letter-spacing:0.12em; color:var(--red); text-transform:uppercase; }
-.ramp-bar { width:100%; height:2px; background:var(--border); border-radius:1px; overflow:hidden; margin-top:5px; }
-.ramp-bar-fill { height:100%; background:var(--amber); border-radius:1px; transition:width 0.3s; }
-
-/* Account tiers */
-.tier-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:2px; background:var(--border); margin-bottom:28px; }
-.tier-card { background:var(--obsidian-mid); padding:24px; }
-.tier-card-label { font-size:9px; letter-spacing:0.22em; text-transform:uppercase; color:var(--amber); margin-bottom:12px; }
-.tier-card-fee { font-family:'Playfair Display',serif; font-size:22px; font-weight:700; color:var(--cream); margin-bottom:3px; }
-.tier-card-count { font-size:10px; color:var(--cream-muted); margin-bottom:16px; }
-.tier-slider-group { margin-bottom:10px; }
-.tier-companies { margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-size:9px; color:var(--cream-muted); line-height:1.7; }
-
-/* ── RECONCILIATION PANEL ── */
-.recon-section {
-  background:var(--obsidian-mid);
-  border-top:1px solid var(--border);
-  border-bottom:1px solid var(--border);
-}
-.recon-header {
-  padding:44px 48px 28px;
-  border-bottom:1px solid var(--border);
-}
-.recon-body { padding:36px 48px; }
-
-.recon-grid {
-  display:grid;
-  grid-template-columns:1fr 60px 1fr;
-  gap:0;
-  align-items:stretch;
-  margin-bottom:28px;
-}
-.recon-col {
-  background:var(--obsidian-lift);
-  border:1px solid var(--border);
-  padding:28px;
-}
-.recon-col.active-col {
-  border-color:var(--amber-dim);
-  background:var(--amber-glow);
-}
-.recon-col-label {
-  font-size:9px;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
-  color:var(--cream-muted);
-  margin-bottom:20px;
-}
-.recon-col-label.amber { color:var(--amber); }
-.recon-col-label.green { color:var(--green); }
-.recon-big {
-  font-family:'Playfair Display',serif;
-  font-size:clamp(28px,3vw,42px);
-  font-weight:700;
-  color:var(--amber);
-  line-height:1;
-  margin-bottom:6px;
-}
-.recon-big.green { color:var(--green); }
-.recon-sub {
-  font-size:10px;
-  color:var(--cream-muted);
-  margin-bottom:20px;
-  line-height:1.6;
-}
-.recon-rows { border-top:1px solid var(--border); }
-.recon-row {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:10px 0;
-  border-bottom:1px solid var(--border);
-  font-size:10px;
-}
-.recon-row:last-child { border-bottom:none; }
-.recon-row-key { color:var(--cream-muted); }
-.recon-row-val { color:var(--cream); font-weight:500; }
-.recon-row-val.amber { color:var(--amber); }
-.recon-row-val.green { color:var(--green); }
-.recon-row-val.red   { color:var(--red); }
-
-.recon-vs {
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:0 8px;
-  gap:8px;
-}
-.recon-vs-label {
-  font-size:9px;
-  letter-spacing:0.2em;
-  text-transform:uppercase;
-  color:var(--cream-muted);
-  writing-mode:vertical-rl;
-  text-orientation:mixed;
-}
-.recon-vs-line {
-  flex:1;
-  width:1px;
-  background:var(--border);
-}
-
-.recon-verdict {
-  padding:24px 28px;
-  border:1px solid var(--border-amber);
-  background:var(--amber-faint);
-  margin-bottom:28px;
-  position:relative;
-  overflow:hidden;
-}
-.recon-verdict::before {
-  content:'';
-  position:absolute; inset:0;
-  background:radial-gradient(ellipse at 0% 50%, var(--amber-glow) 0%, transparent 60%);
-  pointer-events:none;
-}
-.recon-verdict-label {
-  font-size:9px;
-  letter-spacing:0.3em;
-  text-transform:uppercase;
-  color:var(--amber);
-  margin-bottom:12px;
-  position:relative;
-}
-.recon-verdict-text {
-  font-size:11px;
-  color:var(--cream-dim);
-  line-height:1.8;
-  position:relative;
-}
-.recon-verdict-text strong { color:var(--cream); }
-.recon-verdict-text .green { color:var(--green); }
-.recon-verdict-text .red   { color:var(--red); }
-
-.recon-override {
-  display:flex;
-  align-items:center;
-  gap:16px;
-  padding:16px 20px;
-  background:var(--obsidian-lift);
-  border:1px solid var(--border);
-  margin-bottom:28px;
-}
-.recon-override-label {
-  font-size:9px;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--cream-muted);
-  white-space:nowrap;
-}
-.recon-override select {
-  background:var(--obsidian-mid);
-  border:1px solid var(--border-amber);
-  color:var(--amber);
-  font-family:'DM Mono',monospace;
-  font-size:10px;
-  padding:6px 10px;
-  cursor:pointer;
-  letter-spacing:0.1em;
-}
-.recon-override select:focus { outline:none; }
-.recon-override-note {
-  font-size:9px;
-  color:var(--cream-muted);
-  flex:1;
-  line-height:1.6;
-}
-.recon-carries {
-  font-size:10px;
-  color:var(--cream-muted);
-  padding:12px 16px;
-  background:var(--obsidian-mid);
-  border-left:2px solid var(--amber-dim);
-}
-.recon-carries strong { color:var(--amber); }
+/* ── STAT STRIP ── */
+.stat-strip { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 28px; }
+.stat-cell { background: var(--obsidian-card); padding: 20px; }
+.stat-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 8px; }
+.stat-value { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.stat-value.green { color: var(--green); }
+.stat-note { font-size: 9px; color: var(--cream-dim); }
 
 /* ── CHARTS ── */
-.charts-section {
-  border-top:1px solid var(--border);
-}
-.charts-header {
-  padding:44px 48px 28px;
-  border-bottom:1px solid var(--border);
-}
-.charts-body { padding:36px 48px; }
+.chart-section { margin-bottom: 28px; }
+.chart-section-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.chart-card { background: var(--obsidian-card); border: 1px solid var(--border); padding: 20px; }
+.chart-card-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
+.chart-card-sub { font-size: 9px; color: var(--cream-dim); margin-bottom: 16px; }
+.chart-totals { display: flex; gap: 20px; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--border); }
+.chart-total-item { }
+.chart-total-label { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); }
+.chart-total-val { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: var(--amber); }
+.chart-total-val.green { color: var(--green); }
 
-.chart-grid {
-  display:grid;
-  grid-template-columns:1fr 1fr;
-  gap:2px;
-  background:var(--border);
-  margin-bottom:28px;
+/* ── GOAL MODE (Step 3) ── */
+.goal-input-row {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--obsidian-card); border: 1px solid var(--border-amber);
+  padding: 24px 28px; margin-bottom: 28px;
 }
-.chart-panel {
-  background:var(--obsidian-mid);
-  padding:28px;
+.goal-input-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); white-space: nowrap; }
+.goal-input-wrap { display: flex; align-items: center; gap: 8px; }
+.goal-prefix { font-family: var(--font-display); font-size: 20px; color: var(--amber); }
+.goal-input {
+  font-family: var(--font-display); font-size: 28px; font-weight: 700;
+  color: var(--amber); background: transparent;
+  border: none; border-bottom: 1px solid var(--amber-dim);
+  width: 140px; text-align: center; padding: 4px 8px;
 }
-.chart-panel-label {
-  font-size:9px;
-  letter-spacing:0.25em;
-  text-transform:uppercase;
-  color:var(--amber);
-  margin-bottom:6px;
+.goal-input:focus { outline: none; border-bottom-color: var(--amber); }
+.goal-input-suffix { font-size: 11px; color: var(--cream-muted); }
+.goal-solve-btn {
+  font-family: var(--font-mono); font-size: 9px; letter-spacing: 0.15em;
+  text-transform: uppercase; padding: 8px 20px;
+  border: 1px solid var(--amber); color: var(--amber);
+  background: var(--amber-faint); cursor: pointer; transition: all 0.2s;
+  margin-left: auto;
 }
-.chart-panel-sub {
-  font-size:10px;
-  color:var(--cream-muted);
-  margin-bottom:20px;
-}
-.chart-panel canvas {
-  display:block;
-  width:100% !important;
-}
-.chart-totals {
-  display:flex;
-  gap:20px;
-  margin-top:14px;
-  padding-top:14px;
-  border-top:1px solid var(--border);
-}
-.chart-total-item { flex:1; }
-.chart-total-label {
-  font-size:9px;
-  letter-spacing:0.15em;
-  text-transform:uppercase;
-  color:var(--cream-muted);
-  margin-bottom:4px;
-}
-.chart-total-val {
-  font-family:'Playfair Display',serif;
-  font-size:18px;
-  font-weight:700;
-  color:var(--amber);
-}
-.chart-total-val.green { color:var(--green); }
+.goal-solve-btn:hover { background: var(--amber-glow); }
 
-.chart-full {
-  background:var(--obsidian-mid);
-  padding:28px;
-  margin-bottom:2px;
+.goal-breakdown {
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px;
+  margin-bottom: 28px;
 }
-
-/* Revenue strip */
-.rev-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--border); margin-bottom:10px; }
-.delta-cell { background:var(--obsidian-lift); padding:22px 24px; }
-.delta-cell .stat-value { color:var(--green); }
-
-/* ── PART 4 — COMP ── */
-.comp-grid { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); margin-bottom:28px; }
-.comp-col { background:var(--obsidian-mid); padding:28px; }
-.comp-col-label { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber); margin-bottom:20px; }
-.comp-row { display:flex; justify-content:space-between; align-items:center; padding:12px 0; border-bottom:1px solid var(--border); }
-.comp-row:last-child { border-bottom:none; }
-.comp-key { font-size:10px; color:var(--cream-muted); }
-.comp-val { font-size:12px; color:var(--cream); font-weight:500; }
-.comp-summary-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:2px; background:var(--border); }
-.comp-summary-cell { background:var(--obsidian-lift); padding:20px; }
-.comp-summary-label { font-size:9px; letter-spacing:0.2em; text-transform:uppercase; color:var(--cream-muted); margin-bottom:8px; }
-.comp-summary-val { font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--amber); line-height:1; }
-.comp-equity-cell { grid-column:1/-1; background:var(--amber-glow); border:1px solid var(--border-amber); padding:20px; }
-.comp-equity-cell .comp-summary-val { color:var(--cream); }
-
-/* Trigger */
-.trigger-wrap { margin-top:28px; }
-.trigger-label-row { font-size:9px; letter-spacing:0.25em; text-transform:uppercase; color:var(--amber); margin-bottom:16px; }
-.trigger-inputs { display:grid; grid-template-columns:1fr 1fr; gap:2px; background:var(--border); margin-bottom:2px; }
-.trigger-input-cell { background:var(--obsidian-mid); padding:18px 22px; }
-.trigger-box {
-  background:var(--obsidian-lift); border:1px solid var(--border-amber);
-  padding:36px; text-align:center; position:relative; overflow:hidden;
+.goal-card {
+  background: var(--obsidian-card); border: 1px solid var(--border);
+  padding: 24px;
 }
-.trigger-box::before { content:''; position:absolute; inset:0; background:radial-gradient(ellipse at center, var(--amber-glow) 0%, transparent 70%); pointer-events:none; }
-.trigger-amount { font-family:'Playfair Display',serif; font-size:clamp(32px,3.5vw,52px); font-weight:900; color:var(--amber); line-height:1; margin-bottom:10px; position:relative; }
-.trigger-month { font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--cream); margin-bottom:16px; position:relative; }
-.trigger-desc { font-size:10px; color:var(--cream-muted); line-height:1.8; max-width:460px; margin:0 auto; position:relative; }
+.goal-card.primary { border-color: var(--amber); background: var(--amber-faint); }
+.goal-card-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 10px; }
+.goal-card-label.amber { color: var(--amber); }
+.goal-card-val { font-family: var(--font-display); font-size: 26px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.goal-card-val.green { color: var(--green); }
+.goal-card-val.cream { color: var(--cream); }
+.goal-card-sub { font-size: 9px; color: var(--cream-dim); line-height: 1.5; }
+
+.goal-requirements {
+  background: var(--obsidian-lift); border: 1px solid var(--border);
+  padding: 24px 28px; margin-bottom: 28px;
+}
+.goal-req-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
+.goal-req-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+.goal-req-item { }
+.goal-req-item-label { font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 6px; }
+.goal-req-item-val { font-family: var(--font-display); font-size: 20px; font-weight: 700; color: var(--cream); }
+.goal-req-item-val.amber { color: var(--amber); }
+.goal-req-item-val.green { color: var(--green); }
+.goal-req-item-val.red { color: var(--red); }
+.goal-req-item-sub { font-size: 9px; color: var(--cream-dim); margin-top: 3px; }
+
+.goal-compare {
+  display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 28px;
+}
+.goal-compare-col {
+  background: var(--obsidian-card); border: 1px solid var(--border); padding: 24px;
+}
+.goal-compare-col.active { border-color: var(--amber); background: var(--amber-faint); }
+.goal-compare-label { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
+.goal-compare-label.amber { color: var(--amber); }
+.goal-compare-rows { border-top: 1px solid var(--border); }
+.goal-compare-row { display: flex; justify-content: space-between; padding: 9px 0; border-bottom: 1px solid var(--border); font-size: 10px; }
+.goal-compare-row:last-child { border-bottom: none; }
+.goal-compare-key { color: var(--cream-muted); }
+.goal-compare-val { color: var(--cream); font-weight: 500; }
+.goal-compare-val.amber { color: var(--amber); }
+.goal-compare-val.green { color: var(--green); }
+
+/* ── COMP SLIDERS (Step 4) ── */
+.comp-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-bottom: 28px; }
+.comp-panel { background: var(--obsidian-card); border: 1px solid var(--border); padding: 28px; }
+.comp-panel-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--amber); margin-bottom: 20px; }
+.slider-row { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.slider-label { font-size: 9px; color: var(--cream-muted); min-width: 180px; }
+.chiri-slider { flex: 1; accent-color: var(--amber); }
+.slider-val { font-size: 11px; color: var(--amber); font-weight: 500; min-width: 60px; text-align: right; }
+
+.comp-results { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; background: var(--border); border: 1px solid var(--border); margin-bottom: 28px; }
+.comp-result-cell { background: var(--obsidian-card); padding: 20px; }
+.comp-result-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 8px; }
+.comp-result-val { font-family: var(--font-display); font-size: 22px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.comp-result-val.green { color: var(--green); }
+.comp-result-note { font-size: 9px; color: var(--cream-dim); }
+
+.comp-scenario-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 28px; }
+.comp-scenario-col { background: var(--obsidian-card); border: 1px solid var(--border); padding: 20px; }
+.comp-scenario-col.plan { border-color: var(--amber); background: var(--amber-faint); }
+.comp-scenario-label { font-size: 8px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 12px; }
+.comp-scenario-label.amber { color: var(--amber); }
+.comp-scenario-big { font-family: var(--font-display); font-size: 24px; font-weight: 700; color: var(--amber); line-height: 1; margin-bottom: 4px; }
+.comp-scenario-sub { font-size: 9px; color: var(--cream-dim); margin-bottom: 14px; }
+.comp-scenario-rows { border-top: 1px solid var(--border); }
+.comp-scenario-row { display: flex; justify-content: space-between; padding: 7px 0; border-bottom: 1px solid var(--border); font-size: 9px; }
+.comp-scenario-row:last-child { border-bottom: none; }
+.comp-scenario-key { color: var(--cream-muted); }
+.comp-scenario-val { color: var(--cream); font-weight: 500; }
+.comp-scenario-val.amber { color: var(--amber); }
+.comp-scenario-val.green { color: var(--green); }
+
+.ft-trigger-box {
+  background: var(--obsidian-lift); border: 1px solid var(--border-amber);
+  padding: 24px 28px; position: relative; overflow: hidden;
+}
+.ft-trigger-box::before {
+  content: ''; position: absolute; inset: 0;
+  background: radial-gradient(ellipse at 100% 50%, rgba(193,126,53,0.08) 0%, transparent 60%);
+  pointer-events: none;
+}
+.ft-trigger-label { font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--amber); margin-bottom: 12px; position: relative; }
+.ft-trigger-text { font-size: 11px; color: var(--cream-dim); line-height: 1.8; position: relative; }
+.ft-trigger-text strong { color: var(--cream); }
+.ft-trigger-text .amber { color: var(--amber); }
+.ft-trigger-text .green { color: var(--green); }
+
+/* ── CONTEXT NOTE ── */
+.context-note { font-size: 10px; color: var(--cream-dim); line-height: 1.7; padding: 14px 18px; background: var(--obsidian-lift); border-left: 2px solid var(--border-amber); margin-bottom: 24px; }
+.context-note.warn { border-left-color: #f5c842; color: #f5c842; }
+.context-note.danger { border-left-color: var(--red); color: var(--red); }
+
+/* ── SECTION SEP ── */
+.section-sep { height: 1px; background: var(--border); }
+
+/* ── MISC ── */
+select {
+  background: var(--obsidian-mid); border: 1px solid var(--border-amber);
+  color: var(--amber); font-family: var(--font-mono); font-size: 10px;
+  padding: 5px 10px; cursor: pointer;
+}
+select:focus { outline: none; }
+input[type=number] { -moz-appearance: textfield; }
+input[type=number]::-webkit-outer-spin-button,
+input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
 </style>
 </head>
 <body>
+<div class="app-wrap">
 
-<!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo"><span>Chiri</span>.AI</a>
-  <div class="nav-center">Business Model · May – Dec 2026</div>
+<!-- ══ NAV ══ -->
+<nav class="nav">
+  <div style="display:flex;align-items:center;gap:20px">
+    <div class="nav-logo">Chiri<span>.</span>AI</div>
+    <div class="nav-session">Business Model · Working Session</div>
+  </div>
   <div class="nav-right">
-    <div id="modelBadge" class="model-badge">
-      <span class="dot"></span>
-      <span id="modelBadgeText">Current Pricing</span>
+    <div class="nav-step-pills">
+      <button class="nav-pill active" onclick="scrollToStep(1)">1 · Pricing</button>
+      <button class="nav-pill" onclick="scrollToStep(2)">2 · Bottoms-Up</button>
+      <button class="nav-pill" onclick="scrollToStep(3)">3 · Goal-Down</button>
+      <button class="nav-pill" onclick="scrollToStep(4)">4 · Kara's Comp</button>
     </div>
+    <button class="share-btn" onclick="shareURL()">Share Scenario</button>
   </div>
 </nav>
 
-<div class="app-body">
+<div class="content-wrap">
 <div class="main-content">
 
 <!-- ══════════════════════════════════════════════════════════
-     PART 1 — PRICING
+     STEP 1 — PRICING
 ══════════════════════════════════════════════════════════ -->
-<div class="section-header">
-  <div class="section-num">Part 01 · Pricing</div>
-  <div class="section-title">Current pricing <em>versus</em> a replacement model.</div>
-  <div class="section-sub">Toggle the active model — it drives every number in Parts 2–4. The "so what?" card at the bottom shows the ARR difference per engagement at your average seat count.</div>
+<div class="step-section" id="step1">
+<div class="step-header">
+  <div class="step-num-badge" id="badge1">1</div>
+  <div class="step-header-text">
+    <div class="step-label">Step 01 · Pricing</div>
+    <div class="step-title">Current pricing vs. <em>replacement value.</em></div>
+    <div class="step-sub">Two models. One decision. The current deck pricing is what we charge today. The replacement-value model prices Chiri against the tool stack it replaces — and captures a fraction of the value it creates. Choose the active model here; it flows through every number in this session.</div>
+  </div>
 </div>
+<div class="step-body">
 
-<div class="section-body">
-
-  <div class="toggle-group">
-    <button class="toggle-btn active" id="toggleDeck" onclick="setPricingModel('deck')">Current Pricing</button>
-    <button class="toggle-btn" id="toggleAlt"  onclick="setPricingModel('alt')">Replacement-Value Pricing</button>
+  <div style="display:flex;gap:10px;margin-bottom:20px">
+    <button class="toggle-btn active" id="toggleDeck" onclick="setPricing('deck')">Current Deck Pricing</button>
+    <button class="toggle-btn" id="toggleAlt" onclick="setPricing('alt')">Replacement-Value Pricing</button>
   </div>
 
   <div class="pricing-grid">
-
-    <!-- Current -->
     <div class="pricing-col" id="colDeck">
-      <div class="col-label"><span class="active-dot"></span>Current — In the Deck Today</div>
-
-      <div class="price-tier">
-        <div class="tier-name">Services</div>
-        <div class="tier-price">$25–50K<em>/month</em></div>
-        <div class="tier-desc">2-month minimum · FDE Sherpas · Channel Partner</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Individual</div>
-        <div class="tier-price">$19<em>/user/mo</em></div>
-        <div class="tier-desc">1,000 credits included</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Team <span class="tier-badge">Most Popular</span></div>
-        <div class="tier-price">$29<em>/user/mo</em></div>
-        <div class="tier-desc">3,000 credits pooled</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Enterprise</div>
-        <div class="tier-price">Custom</div>
-        <div class="tier-desc">No published floor</div>
+      <div class="pricing-col-label">Current Deck Pricing</div>
+      <div class="pricing-big" id="d_acv">—</div>
+      <div class="pricing-unit">per seat / year</div>
+      <div class="pricing-rows">
+        <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="d_seats">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val amber" id="d_arrEng">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">Services fee per engagement</span><span class="pricing-row-val" id="d_svc">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">Total value per engagement</span><span class="pricing-row-val amber" id="d_total">—</span></div>
       </div>
     </div>
-
-    <!-- Replacement -->
     <div class="pricing-col" id="colAlt">
-      <div class="col-label alt-label"><span class="active-dot"></span>Replacement-Value Model</div>
-
-      <div class="price-tier">
-        <div class="tier-name">Services</div>
-        <div class="tier-price">$75K–225K<em>/engagement</em></div>
-        <div class="tier-desc">Starter $75K · Premium $225K · 30% premium mix</div>
+      <div class="pricing-col-label">Replacement-Value Pricing</div>
+      <div class="pricing-big green" id="a_acv">—</div>
+      <div class="pricing-unit">per seat / year</div>
+      <div class="pricing-rows">
+        <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="a_seats">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val green" id="a_arrEng">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">Services fee per engagement</span><span class="pricing-row-val" id="a_svc">—</span></div>
+        <div class="pricing-row"><span class="pricing-row-key">Total value per engagement</span><span class="pricing-row-val green" id="a_total">—</span></div>
       </div>
-      <div class="price-tier">
-        <div class="tier-name">Team</div>
-        <div class="tier-price">$29<em>/user/mo</em></div>
-        <div class="tier-desc">Unchanged — keeps PLG/SMB motion</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Business <span class="tier-badge new-badge">New</span></div>
-        <div class="tier-price">$99<em>/user/mo</em></div>
-        <div class="tier-desc">Replaces ChatGPT Enterprise + Glean · +$15/user/mo avg modules</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Enterprise</div>
-        <div class="tier-price">$199+<em>/user/mo</em></div>
-        <div class="tier-desc">Published floor · replaces "custom" ambiguity</div>
-      </div>
-      <div class="price-tier">
-        <div class="tier-name">Credit Overage</div>
-        <div class="tier-price">$10<em>/1K credits</em></div>
-        <div class="tier-desc">Above 3,000 included credits</div>
-      </div>
-
-      <div class="tool-calc">
-        <div class="tool-calc-title">Tool-Replacement Stack Calculator</div>
-        <div id="toolRows"></div>
-        <div class="tool-summary">
-          <div class="tool-summary-row">
-            <span class="ts-key">Current stack cost</span>
-            <span class="ts-val cost" id="stackCost">$0/user/mo</span>
-          </div>
-          <div class="tool-summary-row">
-            <span class="ts-key">Chiri Business tier</span>
-            <span class="ts-val">$99/user/mo</span>
-          </div>
-          <div class="tool-summary-row">
-            <span class="ts-key">Net savings / user / mo</span>
-            <span class="ts-val savings" id="stackSavings">$0</span>
-          </div>
+      <!-- Tool stack -->
+      <div style="margin-top:20px;padding-top:16px;border-top:1px solid var(--border)">
+        <div class="pricing-col-label" style="margin-bottom:12px">Tool Stack Being Replaced</div>
+        <div id="toolRowsAlt"></div>
+        <div class="tool-stack-total">
+          <span class="tool-stack-total-label">Stack cost / user / mo</span>
+          <span class="tool-stack-total-val" id="stackCost">—</span>
         </div>
-        <div class="bundle-note" id="bundleSavingsNote"></div>
+        <div style="font-size:9px;color:var(--green);margin-top:6px" id="bundleSavingsNote"></div>
       </div>
     </div>
   </div>
 
-  <!-- ── SO WHAT? CARD ── -->
-  <div class="sowhat-card" style="margin-top:2px;">
-    <div class="sowhat-eyebrow">So what? — ARR impact per engagement at your avg seat count</div>
-    <div class="sowhat-grid">
-      <div class="sowhat-cell">
-        <div class="sowhat-cell-label">Current ACV / seat / yr</div>
-        <div class="sowhat-cell-val" id="sw_deckACV">$348</div>
-        <div class="sowhat-cell-note">Team tier avg · $29/user/mo</div>
+  <!-- Avg seats slider -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;padding:16px 20px;background:var(--obsidian-card);border:1px solid var(--border)">
+    <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-muted);white-space:nowrap">Avg seats / deployment</div>
+    <input type="range" class="chiri-slider" id="avgSeats" min="20" max="500" step="10" value="80" oninput="onSlider('avgSeats')" style="flex:1">
+    <div class="slider-val" id="avgSeatsVal">80 seats</div>
+  </div>
+
+  <!-- So-what card -->
+  <div class="so-what">
+    <div class="so-what-label">So what? · The revenue difference per engagement</div>
+    <div class="so-what-grid">
+      <div class="so-what-cell">
+        <div class="so-what-cell-label">Current pricing ARR / engagement</div>
+        <div class="so-what-cell-val" id="sw_deck_arr">—</div>
+        <div class="so-what-cell-sub">at <span id="sw_deckACV">—</span>/seat · <span id="sw_seats">—</span> seats</div>
       </div>
-      <div class="sowhat-cell">
-        <div class="sowhat-cell-label">Replacement ACV / seat / yr</div>
-        <div class="sowhat-cell-val" id="sw_altACV">$1,188</div>
-        <div class="sowhat-cell-note">Business tier · $99/user/mo</div>
+      <div class="so-what-cell">
+        <div class="so-what-cell-label">Replacement pricing ARR / engagement</div>
+        <div class="so-what-cell-val green" id="sw_alt_arr">—</div>
+        <div class="so-what-cell-sub">at <span id="sw_altACV">—</span>/seat · <span id="sw_s2">—</span> seats</div>
       </div>
-      <div class="sowhat-cell highlight">
-        <div class="sowhat-cell-label">ARR difference / engagement</div>
-        <div class="sowhat-cell-val" id="sw_delta">+$68K</div>
-        <div class="sowhat-cell-note" id="sw_deltaNote">at <span id="sw_seats">80</span> avg seats</div>
+      <div class="so-what-cell">
+        <div class="so-what-cell-label">Difference per engagement</div>
+        <div class="so-what-cell-val amber" id="sw_diff">—</div>
+        <div class="so-what-cell-sub">across <span id="sw_engCount">—</span> engagements = <strong id="sw_totalDiff">—</strong></div>
       </div>
     </div>
-    <div class="sowhat-sentence" id="sw_sentence">
-      At <strong><span id="sw_s2">80</span> seats per engagement</strong> and the current pricing model,
-      each new customer adds <strong><span id="sw_deck_arr">$27,840</span></strong> in annual recurring revenue.
-      Switch to the replacement-value model and that same engagement adds
-      <strong><span id="sw_alt_arr">$95,040</span></strong> — a difference of
-      <strong class="green"><span id="sw_diff">$67,200</span> per engagement</strong>.
-      Across <strong><span id="sw_engCount">34.7</span> engagements</strong> through Dec 2026,
-      that's <strong class="green"><span id="sw_totalDiff">$2.3M</span> in additional ARR</strong>.
-    </div>
+  </div>
+
+</div>
+</div><!-- /step1 -->
+
+<!-- ══════════════════════════════════════════════════════════
+     STEP 2 — BOTTOMS-UP
+══════════════════════════════════════════════════════════ -->
+<div class="step-section" id="step2">
+<div class="step-header">
+  <div class="step-num-badge" id="badge2">2</div>
+  <div class="step-header-text">
+    <div class="step-label">Step 02 · Bottoms-Up</div>
+    <div class="step-title">Given this team, <em>what can we build?</em></div>
+    <div class="step-sub">Start with the hiring plan. Set how many engineers come on each month and how many engagements each can handle. The model calculates the maximum revenue the team can deliver — and shows what that looks like month by month through December 2026. This is the supply-side view.</div>
+  </div>
+</div>
+<div class="step-body">
+
+  <!-- Presets -->
+  <div style="display:flex;gap:8px;margin-bottom:20px;align-items:center">
+    <div style="font-size:9px;letter-spacing:0.2em;text-transform:uppercase;color:var(--cream-muted);margin-right:4px">Preset:</div>
+    <button class="toggle-btn" onclick="applyPreset('flat')">Flat (5 eng)</button>
+    <button class="toggle-btn" onclick="applyPreset('hire1q')">Hire 1/Quarter</button>
+    <button class="toggle-btn active" id="presetChiri" onclick="applyPreset('chiri')">Chiri Ramp (2→16)</button>
+    <button class="toggle-btn" onclick="applyPreset('custom')">Custom</button>
+  </div>
+
+  <!-- Capacity table -->
+  <div class="cap-table-wrap">
+    <table class="cap-table">
+      <thead>
+        <tr>
+          <th>Metric</th>
+          <th class="month-th">MAY</th><th class="month-th">JUN</th><th class="month-th">JUL</th>
+          <th class="month-th">AUG</th><th class="month-th">SEP</th><th class="month-th">OCT</th>
+          <th class="month-th">NOV</th><th class="month-th">DEC</th>
+        </tr>
+      </thead>
+      <tbody id="capTbody"></tbody>
+    </table>
   </div>
 
   <!-- Stat strip -->
-  <div class="stat-strip" style="margin-top:2px;">
+  <div class="stat-strip">
     <div class="stat-cell">
-      <div class="stat-label">Active Model ACV</div>
-      <div class="stat-value" id="s1ACV">$348/seat/yr</div>
-      <div class="stat-note">per seat per year</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-label">Avg Engagement Fee</div>
-      <div class="stat-value" id="s1Fee">$75K</div>
-      <div class="stat-note">blended services</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-label">Capacity Ceiling</div>
-      <div class="stat-value" id="s1Ceiling">—</div>
+      <div class="stat-label">Total Engagements</div>
+      <div class="stat-value" id="bu_totalEng">—</div>
       <div class="stat-note">May–Dec 2026</div>
     </div>
     <div class="stat-cell">
-      <div class="stat-label">EOY 2026 ARR</div>
-      <div class="stat-value" id="s1EOY">—</div>
+      <div class="stat-label">Services Revenue</div>
+      <div class="stat-value" id="bu_svc">—</div>
+      <div class="stat-note">consulting fees</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">ARR Booked ✱</div>
+      <div class="stat-value" id="bu_arr">—</div>
+      <div class="stat-note">full contract value</div>
+    </div>
+    <div class="stat-cell">
+      <div class="stat-label">EOY Run Rate ✱✱</div>
+      <div class="stat-value green" id="bu_eoy">—</div>
       <div class="stat-note">Dec 31, 2026</div>
     </div>
   </div>
 
+  <!-- Charts -->
+  <div class="chart-section">
+    <div class="chart-section-label">Revenue build · May through December 2026</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-card-title">Consulting Revenue (MoM)</div>
+        <div class="chart-card-sub">Monthly services cash + cumulative total</div>
+        <canvas id="buSvcChart" height="180"></canvas>
+        <div class="chart-totals">
+          <div class="chart-total-item"><div class="chart-total-label">Total Services</div><div class="chart-total-val" id="buSvcTotal">—</div></div>
+        </div>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">ARR Build (MoM)</div>
+        <div class="chart-card-sub">New ARR booked each month + EOY run rate</div>
+        <canvas id="buArrChart" height="180"></canvas>
+        <div class="chart-totals">
+          <div class="chart-total-item"><div class="chart-total-label">ARR Booked ✱</div><div class="chart-total-val" id="buArrTotal">—</div></div>
+          <div class="chart-total-item"><div class="chart-total-label">EOY Run Rate ✱✱</div><div class="chart-total-val green" id="buEoyTotal">—</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="context-note" style="font-size:9px;line-height:1.6">
+    <strong style="color:var(--cream)">✱ ARR Booked</strong> — Full annualized value of all seat contracts signed, as if every customer stayed 12 months from signing. &nbsp;
+    <strong style="color:var(--cream)">✱✱ EOY Run Rate</strong> — The ARR meter reading on Dec 31. Always lower than ARR Booked because contracts signed later in the year haven't had time to accumulate. This is the investor exit velocity number — not lost revenue.
+  </div>
+
 </div>
-<div class="section-sep"></div>
+</div><!-- /step2 -->
 
 <!-- ══════════════════════════════════════════════════════════
-     PART 2 — CAPACITY
+     STEP 3 — GOAL-DOWN
 ══════════════════════════════════════════════════════════ -->
-<div class="section-header">
-  <div class="section-num">Part 02 · Capacity</div>
-  <div class="section-title">Bottoms-up. <em>What can the team deliver?</em></div>
-  <div class="section-sub">Supply-side ceiling — engineers × engagements per engineer per month · May through December 2026.</div>
+<div class="step-section" id="step3">
+<div class="step-header">
+  <div class="step-num-badge" id="badge3">3</div>
+  <div class="step-header-text">
+    <div class="step-label">Step 03 · Goal-Down</div>
+    <div class="step-title">Start with the goal. <em>Work backwards.</em></div>
+    <div class="step-sub">Set a total revenue target for May–December 2026. The model solves backwards: how many engagements are required, what that means for monthly new logos Kara needs to generate, and whether the team in Step 2 can actually deliver it. Compare two scenarios side by side.</div>
+  </div>
 </div>
+<div class="step-body">
 
-<div class="section-body">
-
-  <div class="toggle-group">
-    <button class="toggle-btn active" id="presetFlat"      onclick="applyPreset('flat')">Flat (5 eng)</button>
-    <button class="toggle-btn"        id="presetHire"      onclick="applyPreset('hire')">Hire 1/Quarter</button>
-    <button class="toggle-btn"        id="presetAgg"       onclick="applyPreset('aggressive')">Chiri Ramp (2→16)</button>
-    <button class="toggle-btn"        id="presetCustom"    onclick="applyPreset('custom')">Custom</button>
-  </div>
-
-  <div class="slider-row">
-    <div class="slider-label">Avg seats per deployment</div>
-    <input type="range" class="chiri-slider" id="avgSeats" min="10" max="500" value="80" oninput="onSlider('avgSeats')">
-    <div class="slider-val"><span id="avgSeatsVal">80</span> seats</div>
-  </div>
-
-  <div class="capacity-grid-wrap">
-    <table class="capacity-table">
-      <thead>
-        <tr>
-          <th>Metric</th>
-          <th class="month-th">MAY</th>
-          <th class="month-th">JUN</th>
-          <th class="month-th">JUL</th>
-          <th class="month-th">AUG</th>
-          <th class="month-th">SEP</th>
-          <th class="month-th">OCT</th>
-          <th class="month-th">NOV</th>
-          <th class="month-th">DEC</th>
-        </tr>
-      </thead>
-      <tbody id="capacityTbody"></tbody>
-    </table>
-  </div>
-
-  <div class="cap-stat-strip">
-    <div class="stat-cell">
-      <div class="stat-label">Max Engagements (May–Dec)</div>
-      <div class="stat-value" id="buMaxEng">40</div>
-      <div class="stat-note">if fully utilized</div>
+  <!-- Goal inputs -->
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:28px">
+    <div class="goal-input-row" style="flex-direction:column;align-items:flex-start;gap:12px">
+      <div class="goal-input-label">Scenario A · Conservative Goal</div>
+      <div class="goal-input-wrap">
+        <span class="goal-prefix">$</span>
+        <input type="number" class="goal-input" id="goalA" value="5" min="0.5" max="100" step="0.5" oninput="recompute()">
+        <span class="goal-input-suffix">M total bookings</span>
+      </div>
     </div>
-    <div class="stat-cell">
-      <div class="stat-label">Max Seats Deployed</div>
-      <div class="stat-value" id="buMaxSeats">3,200</div>
-      <div class="stat-note">at avg seats/deployment</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-label">Ceiling Revenue (May–Dec)</div>
-      <div class="stat-value" id="buRevenue">—</div>
-      <div class="stat-note">services + ARR if fully utilized</div>
+    <div class="goal-input-row" style="flex-direction:column;align-items:flex-start;gap:12px;border-color:var(--green-dim);background:var(--green-faint)">
+      <div class="goal-input-label" style="color:var(--green)">Scenario B · Stretch Goal</div>
+      <div class="goal-input-wrap">
+        <span class="goal-prefix" style="color:var(--green)">$</span>
+        <input type="number" class="goal-input" id="goalB" value="25" min="0.5" max="200" step="0.5" oninput="recompute()" style="color:var(--green);border-bottom-color:var(--green-dim)">
+        <span class="goal-input-suffix">M total bookings</span>
+      </div>
     </div>
   </div>
 
-  <div class="context-note" id="capNote">
-    The capacity ceiling is the hard constraint on growth. Part 3's demand ramp is capped at this ceiling each month — the model never plans for more engagements than the team can deliver.
+  <!-- What "total bookings" means -->
+  <div style="padding:16px 20px;background:var(--obsidian-card);border:1px solid var(--border);margin-bottom:28px;font-size:10px;color:var(--cream-dim);line-height:1.7">
+    <strong style="color:var(--cream)">"Total bookings"</strong> = Services Revenue + ARR Booked. It is the full commercial value of everything closed May–December, combining one-time consulting fees and the annualized value of all seat contracts signed. It is <em>not</em> the same as EOY ARR — that is just the run-rate portion recognized by Dec 31.
   </div>
+
+  <!-- Side-by-side comparison -->
+  <div class="goal-compare" style="grid-template-columns:1fr 1fr">
+    <div class="goal-compare-col" id="goalColA">
+      <div class="goal-compare-label amber">Scenario A · <span id="gA_label">$5M</span></div>
+      <div class="goal-compare-rows">
+        <div class="goal-compare-row"><span class="goal-compare-key">Required engagements</span><span class="goal-compare-val amber" id="gA_eng">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Avg new logos / month</span><span class="goal-compare-val amber" id="gA_logosPerMo">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Services revenue</span><span class="goal-compare-val" id="gA_svc">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">ARR booked ✱</span><span class="goal-compare-val" id="gA_arr">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">EOY run rate ✱✱</span><span class="goal-compare-val amber" id="gA_eoy">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Team can deliver?</span><span class="goal-compare-val" id="gA_feasible">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gA_engNeeded">—</span></div>
+      </div>
+    </div>
+    <div class="goal-compare-col" id="goalColB">
+      <div class="goal-compare-label" style="color:var(--green)">Scenario B · <span id="gB_label">$25M</span></div>
+      <div class="goal-compare-rows">
+        <div class="goal-compare-row"><span class="goal-compare-key">Required engagements</span><span class="goal-compare-val green" id="gB_eng">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Avg new logos / month</span><span class="goal-compare-val green" id="gB_logosPerMo">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Services revenue</span><span class="goal-compare-val" id="gB_svc">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">ARR booked ✱</span><span class="goal-compare-val" id="gB_arr">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">EOY run rate ✱✱</span><span class="goal-compare-val green" id="gB_eoy">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Team can deliver?</span><span class="goal-compare-val" id="gB_feasible">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gB_engNeeded">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Charts for goal scenarios -->
+  <div class="chart-section">
+    <div class="chart-section-label">What each goal looks like month by month</div>
+    <div class="chart-grid">
+      <div class="chart-card">
+        <div class="chart-card-title">Scenario A vs B · Engagements / Month</div>
+        <div class="chart-card-sub">New logos required to hit each target</div>
+        <canvas id="goalEngChart" height="180"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="chart-card-title">Scenario A vs B · Revenue Build</div>
+        <div class="chart-card-sub">Cumulative total bookings May–Dec</div>
+        <canvas id="goalRevChart" height="180"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <div class="context-note" id="goalFeasNote">Adjust the goals above to see what changes.</div>
 
 </div>
-<div class="section-sep"></div>
+</div><!-- /step3 -->
 
 <!-- ══════════════════════════════════════════════════════════
-     RECONCILIATION — BOTTOMS-UP vs TOP-DOWN
+     STEP 4 — KARA'S COMP
 ══════════════════════════════════════════════════════════ -->
-<div class="recon-section">
-<div class="recon-header">
-  <div class="section-num">Capacity Check · Before We Go Further</div>
-  <div class="section-title">The ceiling. <em>And the plan.</em></div>
-  <div class="section-sub">These two numbers answer different questions. The bottoms-up ceiling tells you the maximum the team could ever deliver if fully utilized — it is a physical constraint, not a forecast. The top-down demand is the actual revenue plan, driven by pipeline close rates. A large gap between them is not a problem. It means you will never hit a capacity wall. The binding constraint is always demand generation.</div>
+<div class="step-section" id="step4">
+<div class="step-header">
+  <div class="step-num-badge" id="badge4">4</div>
+  <div class="step-header-text">
+    <div class="step-label">Step 04 · Kara's Comp</div>
+    <div class="step-title">Once we agree on the goal, <em>what does Kara earn?</em></div>
+    <div class="step-sub">Set the base retainer and commission rates. The model calculates Kara's total cash across the three scenarios: the bottoms-up plan from Step 2, Scenario A from Step 3, and Scenario B from Step 3. It also calculates the full-time conversion trigger — the revenue threshold where converting to FT saves Chiri money and unlocks the equity conversation.</div>
+  </div>
 </div>
-<div class="recon-body">
-
-  <div class="recon-grid">
-    <div class="recon-col" id="reconBUCol">
-      <div class="recon-col-label amber">Delivery Ceiling — Maximum the team can handle</div>
-      <div class="recon-big" id="reconBUEng">—</div>
-      <div class="recon-sub">max engagements May–Dec 2026<br>if every engineer is 100% utilized</div>
-      <div class="recon-rows">
-        <div class="recon-row"><span class="recon-row-key">If fully utilized — services</span><span class="recon-row-val amber" id="reconBUSvc">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">If fully utilized — ARR booked ✱</span><span class="recon-row-val amber" id="reconBUARR">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">If fully utilized — EOY run rate ✱✱</span><span class="recon-row-val amber" id="reconBUEOY">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">What limits this number</span><span class="recon-row-val" id="reconBUConstraint">Engineering headcount</span></div>
-      </div>
-      <div style="margin-top:1rem;padding:0.75rem;background:rgba(193,126,53,0.08);border:1px solid rgba(193,126,53,0.2);font-size:0.72rem;line-height:1.5;color:var(--cream-dim)">This is a theoretical maximum. It assumes zero sales cycle, zero onboarding lag, and 100% utilization from day one. Use it to confirm you will never be capacity-constrained — not as a revenue target.</div>
-    </div>
-
-    <div class="recon-vs">
-      <div class="recon-vs-line"></div>
-      <div class="recon-vs-label">→</div>
-      <div class="recon-vs-line"></div>
-    </div>
-
-    <div class="recon-col" id="reconTDCol">
-      <div class="recon-col-label green">Revenue Plan — What the pipeline actually generates</div>
-      <div class="recon-big green" id="reconTDEng">—</div>
-      <div class="recon-sub">planned engagements May–Dec 2026<br>based on named accounts × close rates</div>
-      <div class="recon-rows">
-        <div class="recon-row"><span class="recon-row-key">Planned services revenue</span><span class="recon-row-val green" id="reconTDSvc">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Planned ARR booked ✱</span><span class="recon-row-val green" id="reconTDARR">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Planned EOY run rate ✱✱</span><span class="recon-row-val green" id="reconTDEOY">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">What limits this number</span><span class="recon-row-val" id="reconTDConstraint">Pipeline close rates</span></div>
-      </div>
-      <div style="margin-top:1rem;padding:0.75rem;background:rgba(100,200,120,0.06);border:1px solid rgba(100,200,120,0.2);font-size:0.72rem;line-height:1.5;color:var(--cream-dim)">⚠ TAM is incomplete. The account list and close rates below are working assumptions — not a fully prospected pipeline. These numbers will sharpen once Apollo prospecting is complete. Adjust close rates in Part 3 as the pipeline develops.</div>
-    </div>
-  </div>
-
-  <div class="recon-verdict" id="reconVerdict">
-    <div class="recon-verdict-label">What this means for the model</div>
-    <div class="recon-verdict-text" id="reconVerdictText">Calculating…</div>
-  </div>
-
-  <div class="recon-override">
-    <div class="recon-override-label">Number to carry into comp (Part 4):</div>
-    <select id="reconChoice" onchange="S.reconChoice=this.value; recompute();">
-      <option value="reconciled">Top-Down demand (recommended)</option>
-      <option value="bu">Delivery ceiling (theoretical max)</option>
-      <option value="td">Top-Down demand</option>
-    </select>
-      <div class="recon-override-note" id="reconChoiceNote">Use the top-down demand as your planning number. The delivery ceiling is only useful to confirm you will never be capacity-constrained.</div>
-  </div>
-
-  <div style="margin:1.5rem 0 0.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);font-size:0.72rem;line-height:1.7;color:var(--cream-dim)">
-    <strong style="color:var(--cream-muted);letter-spacing:0.08em">METRIC DEFINITIONS</strong><br><br>
-    <strong style="color:var(--cream)">Services Revenue</strong> — Cash collected from consulting engagement fees. One-time per engagement. Recognized when the work is delivered.<br><br>
-    <strong style="color:var(--cream)">✱ ARR Booked</strong> — The total annualized value of all SaaS seat contracts signed May–Dec, as if every customer stayed for a full 12 months from signing. This is the full contract value on paper — not what you’ve collected yet.<br><br>
-    <strong style="color:var(--cream)">✱✱ EOY 2026 Run Rate</strong> — The ARR meter reading on December 31. Because customers sign at different points in the year, you only capture a fraction of their annual contract value before year-end. A customer who signs in May contributes 8 months; one who signs in November contributes 2 months. This is always lower than ARR Booked — that is not a problem. It is a timing effect. The gap represents ARR that continues accruing into 2027. The EOY run rate is the number investors use to assess your exit velocity.
-  </div>
-
-  <div class="recon-carries">
-    Part 4 comp is calculated on: <strong id="reconCarriesVal">—</strong>
-  </div>
-
-</div>
-</div>
-<div class="section-sep"></div>
-
-<!-- ══════════════════════════════════════════════════════════
-     PART 3 — PIPELINE
-══════════════════════════════════════════════════════════ -->
-<div class="section-header">
-  <div class="section-num">Part 03 · Pipeline</div>
-  <div class="section-title">Top-down. <em>What does demand look like?</em></div>
-  <div class="section-sub">94 named accounts across three tiers · May through December 2026.</div>
-</div>
-
-<div class="section-body">
-
-  <div class="ramp-controls">
-    <div>
-      <div class="ramp-section-label">Growth Pattern</div>
-      <div class="toggle-group">
-        <button class="toggle-btn"        id="gpFlat"   onclick="setGrowthPattern('flat')">Flat</button>
-        <button class="toggle-btn"        id="gpLinear" onclick="setGrowthPattern('linear')">Linear</button>
-        <button class="toggle-btn active" id="gpExp"    onclick="setGrowthPattern('exp')">Exponential</button>
-        <button class="toggle-btn"        id="gpScurve" onclick="setGrowthPattern('scurve')">S-Curve</button>
-      </div>
-    </div>
-    <div>
-      <div class="ramp-section-label">Parameters</div>
-      <div class="slider-row">
-        <div class="slider-label">May engagements (start)</div>
-        <input type="range" class="chiri-slider" id="m1Eng" min="1" max="8" step="0.5" value="2" oninput="onSlider('m1Eng')">
-        <div class="slider-val" id="m1EngVal">2</div>
-      </div>
-      <div class="slider-row">
-        <div class="slider-label">Dec engagements (target)</div>
-        <input type="range" class="chiri-slider" id="growthFactor" min="1" max="12" step="0.5" value="6" oninput="onSlider('growthFactor')">
-        <div class="slider-val" id="growthFactorVal">6</div>
-      </div>
-    </div>
-  </div>
-
-  <div class="ramp-section-label">May – December 2026 · Monthly Engagements</div>
-  <div class="ramp-grid" id="rampY1"></div>
-
-  <div class="ramp-section-label" style="margin-top:28px;">Account Tiers — 94 Named Accounts</div>
-  <div class="tier-grid" id="tierGrid"></div>
-
-  <div class="rev-strip">
-    <div class="stat-cell">
-      <div class="stat-label">Services Revenue (May–Dec)</div>
-      <div class="stat-value" id="tdSvcRev">—</div>
-      <div class="stat-note">engagements × avg fee</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-label">Platform ARR Booked</div>
-      <div class="stat-value" id="tdARR">—</div>
-      <div class="stat-note">seats × ACV</div>
-    </div>
-    <div class="stat-cell">
-      <div class="stat-label">EOY 2026 ARR</div>
-      <div class="stat-value" id="tdEOY26">—</div>
-      <div class="stat-note">Dec 31, 2026 exit rate</div>
-    </div>
-    <div class="delta-cell stat-cell">
-      <div class="stat-label">Current vs. Replacement Delta</div>
-      <div class="stat-value" id="tdDelta">—</div>
-      <div class="stat-note">EOY ARR difference</div>
-    </div>
-  </div>
-
-  <div class="stat-cell" style="background:var(--obsidian-lift); padding:22px 24px; margin-top:2px;">
-    <div class="stat-label">Total Revenue May–Dec 2026</div>
-    <div class="stat-value" id="tdTotal">—</div>
-    <div class="stat-note">services + ARR booked</div>
-  </div>
-
-  <div class="context-note" style="margin-top:16px;" id="pipelineNote">
-    Calculating pipeline utilization…
-  </div>
-
-</div>
-<div class="section-sep"></div>
-
-<!-- ══════════════════════════════════════════════════════════
-     CHARTS — REVENUE VISUALIZATION
-══════════════════════════════════════════════════════════ -->
-<div class="charts-section">
-<div class="charts-header">
-  <div class="section-num">Revenue Visualization · Investor View</div>
-  <div class="section-title">Month by month. <em>The story in charts.</em></div>
-  <div class="section-sub">Consulting revenue and ARR growth May–December 2026 · Updates live with every lever change · Investor-deck ready.</div>
-</div>
-<div class="charts-body">
-
-  <div class="chart-grid">
-    <div class="chart-panel">
-      <div class="chart-panel-label">Consulting Revenue</div>
-      <div class="chart-panel-sub">Monthly services revenue from engagements · bars = monthly · line = cumulative</div>
-      <canvas id="chartSvc" height="200"></canvas>
-      <div class="chart-totals">
-        <div class="chart-total-item">
-          <div class="chart-total-label">Total May–Dec</div>
-          <div class="chart-total-val" id="chartSvcTotal">—</div>
-        </div>
-        <div class="chart-total-item">
-          <div class="chart-total-label">Peak Month</div>
-          <div class="chart-total-val" id="chartSvcPeak">—</div>
-        </div>
-        <div class="chart-total-item">
-          <div class="chart-total-label">Dec Run Rate (ann.)</div>
-          <div class="chart-total-val" id="chartSvcRunRate">—</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="chart-panel">
-      <div class="chart-panel-label">ARR Growth</div>
-      <div class="chart-panel-sub">Monthly new ARR booked · bars = new ARR · line = cumulative ARR run rate</div>
-      <canvas id="chartARR" height="200"></canvas>
-      <div class="chart-totals">
-        <div class="chart-total-item">
-          <div class="chart-total-label">Total ARR Booked</div>
-          <div class="chart-total-val" id="chartARRTotal">—</div>
-        </div>
-        <div class="chart-total-item">
-          <div class="chart-total-label">EOY 2026 ARR</div>
-          <div class="chart-total-val green" id="chartARREOY">—</div>
-        </div>
-        <div class="chart-total-item">
-          <div class="chart-total-label">Dec Monthly ARR</div>
-          <div class="chart-total-val" id="chartARRDec">—</div>
-        </div>
-      </div>
-    </div>
-  </div>
-
-  <div class="chart-full">
-    <div class="chart-panel-label">Combined Revenue View</div>
-    <div class="chart-panel-sub">Consulting revenue (bars) stacked with ARR booked (bars) · line = total cumulative revenue · both models shown when toggled</div>
-    <canvas id="chartCombined" height="160"></canvas>
-  </div>
-
-</div>
-</div>
-<div class="section-sep"></div>
-
-<!-- ══════════════════════════════════════════════════════════
-     PART 4 — COMP
-══════════════════════════════════════════════════════════ -->
-<div class="section-header">
-  <div class="section-num">Part 04 · GTM Partnership</div>
-  <div class="section-title">Comp structure. <em>Conversion trigger.</em></div>
-  <div class="section-sub">Kara Burney · Founding GTM Hire — retainer, variable, equity, and when FT makes sense · May–Dec 2026.</div>
-</div>
-
-<div class="section-body">
+<div class="step-body">
 
   <div class="comp-grid">
-    <div class="comp-col">
-      <div class="comp-col-label">Compensation Levers</div>
-      <div class="comp-row">
-        <div class="comp-key">Monthly retainer</div>
-        <div class="comp-val" id="retainerVal">$12,000</div>
+    <div class="comp-panel">
+      <div class="comp-panel-label">Base & Commission</div>
+      <div class="slider-row">
+        <div class="slider-label">Monthly base retainer</div>
+        <input type="range" class="chiri-slider" id="retainer" min="3000" max="20000" step="500" value="8000" oninput="onSlider('retainer')">
+        <div class="slider-val" id="retainerVal">$8,000/mo</div>
       </div>
-      <div class="slider-row" style="margin:0 0 4px;">
-        <input type="range" class="chiri-slider" id="retainer" min="5000" max="25000" step="500" value="12000" oninput="onSlider('retainer')">
+      <div class="slider-row">
+        <div class="slider-label">Services commission %</div>
+        <input type="range" class="chiri-slider" id="svcPct" min="5" max="25" step="1" value="12" oninput="onSlider('svcPct')">
+        <div class="slider-val" id="svcPctVal">12%</div>
       </div>
-      <div class="comp-row">
-        <div class="comp-key">% of services revenue</div>
-        <div class="comp-val" id="svcPctVal">15%</div>
-      </div>
-      <div class="slider-row" style="margin:0 0 4px;">
-        <input type="range" class="chiri-slider" id="svcPct" min="5" max="30" step="1" value="15" oninput="onSlider('svcPct')">
-      </div>
-      <div class="comp-row">
-        <div class="comp-key">% of new ARR booked</div>
-        <div class="comp-val" id="arrPctVal">15%</div>
-      </div>
-      <div class="slider-row" style="margin:0 0 4px;">
-        <input type="range" class="chiri-slider" id="arrPct" min="5" max="30" step="1" value="15" oninput="onSlider('arrPct')">
-      </div>
-      <div class="comp-row">
-        <div class="comp-key">Equity grant</div>
-        <div class="comp-val" id="equityVal">1.5%</div>
-      </div>
-      <div class="slider-row" style="margin:0 0 4px;">
-        <input type="range" class="chiri-slider" id="equity" min="0.25" max="5" step="0.25" value="1.5" oninput="onSlider('equity')">
-      </div>
-      <div class="comp-row">
-        <div class="comp-key">Post-money valuation</div>
-        <div class="comp-val" id="valuationVal">$25M</div>
-      </div>
-      <div class="slider-row" style="margin:0 0 4px;">
-        <input type="range" class="chiri-slider" id="valuation" min="5" max="100" step="5" value="25" oninput="onSlider('valuation')">
+      <div class="slider-row">
+        <div class="slider-label">ARR commission %</div>
+        <input type="range" class="chiri-slider" id="arrPct" min="5" max="25" step="1" value="12" oninput="onSlider('arrPct')">
+        <div class="slider-val" id="arrPctVal">12%</div>
       </div>
     </div>
-
-    <div class="comp-col">
-      <div class="comp-col-label">May–Dec 2026 Comp Summary</div>
-      <div class="comp-summary-grid">
-        <div class="comp-summary-cell">
-          <div class="comp-summary-label">Retainer (8 mo)</div>
-          <div class="comp-summary-val" id="compRetainer">$96K</div>
-        </div>
-        <div class="comp-summary-cell">
-          <div class="comp-summary-label">Services Variable</div>
-          <div class="comp-summary-val" id="compSvc">—</div>
-        </div>
-        <div class="comp-summary-cell">
-          <div class="comp-summary-label">ARR Variable</div>
-          <div class="comp-summary-val" id="compARR">—</div>
-        </div>
-        <div class="comp-summary-cell">
-          <div class="comp-summary-label">Total May–Dec Cash</div>
-          <div class="comp-summary-val" id="compTotal">—</div>
-        </div>
-        <div class="comp-equity-cell">
-          <div class="comp-summary-label">Equity Paper Value</div>
-          <div class="comp-summary-val" id="compEquity">$375K</div>
-          <div class="stat-note" style="margin-top:4px;">at post-money valuation</div>
-        </div>
+    <div class="comp-panel">
+      <div class="comp-panel-label">Full-Time Conversion & Equity</div>
+      <div class="slider-row">
+        <div class="slider-label">FT annual salary (if converted)</div>
+        <input type="range" class="chiri-slider" id="ftComp" min="100000" max="500000" step="10000" value="250000" oninput="onSlider('ftComp')">
+        <div class="slider-val" id="ftCompVal">$250K</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">Equity % (at conversion)</div>
+        <input type="range" class="chiri-slider" id="equity" min="0.5" max="10" step="0.25" value="2" oninput="onSlider('equity')">
+        <div class="slider-val" id="equityVal">2.0%</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">Company valuation ($M)</div>
+        <input type="range" class="chiri-slider" id="valuation" min="5" max="100" step="5" value="25" oninput="onSlider('valuation')">
+        <div class="slider-val" id="valuationVal">$25M</div>
       </div>
     </div>
   </div>
 
-  <div class="trigger-wrap">
-    <div class="trigger-label-row">Full-Time Conversion Trigger</div>
-    <div class="trigger-inputs">
-      <div class="trigger-input-cell">
-        <div class="comp-row">
-          <div class="comp-key">FT annual comp target</div>
-          <div class="comp-val" id="ftCompVal">$250,000</div>
-        </div>
-        <div class="slider-row" style="margin:0;">
-          <input type="range" class="chiri-slider" id="ftComp" min="100000" max="500000" step="10000" value="250000" oninput="onSlider('ftComp')">
-        </div>
-      </div>
-      <div class="trigger-input-cell">
-        <div class="comp-row">
-          <div class="comp-key">FT equity vest per year</div>
-          <div class="comp-val" id="ftVestVal">25%</div>
-        </div>
-        <div class="slider-row" style="margin:0;">
-          <input type="range" class="chiri-slider" id="ftVest" min="10" max="50" step="5" value="25" oninput="onSlider('ftVest')">
-        </div>
+  <!-- Comp across 3 scenarios -->
+  <div class="comp-scenario-grid">
+    <div class="comp-scenario-col">
+      <div class="comp-scenario-label">Bottoms-Up Plan (Step 2)</div>
+      <div class="comp-scenario-big" id="cs_bu_total">—</div>
+      <div class="comp-scenario-sub">total cash May–Dec</div>
+      <div class="comp-scenario-rows">
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Base (8 mo)</span><span class="comp-scenario-val" id="cs_bu_base">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Services commission</span><span class="comp-scenario-val" id="cs_bu_svc">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">ARR commission</span><span class="comp-scenario-val" id="cs_bu_arr">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Equity value</span><span class="comp-scenario-val amber" id="cs_bu_eq">—</span></div>
       </div>
     </div>
-    <div class="trigger-box" style="margin-top:2px;">
-      <div class="trigger-amount" id="triggerAmount">$833,333</div>
-      <div class="trigger-month" id="triggerMonth">Calculating…</div>
-      <div class="trigger-desc" id="triggerDesc"></div>
+    <div class="comp-scenario-col plan">
+      <div class="comp-scenario-label amber">Scenario A Goal (Step 3)</div>
+      <div class="comp-scenario-big" id="cs_a_total">—</div>
+      <div class="comp-scenario-sub">total cash May–Dec</div>
+      <div class="comp-scenario-rows">
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Base (8 mo)</span><span class="comp-scenario-val" id="cs_a_base">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Services commission</span><span class="comp-scenario-val" id="cs_a_svc">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">ARR commission</span><span class="comp-scenario-val" id="cs_a_arr">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Equity value</span><span class="comp-scenario-val amber" id="cs_a_eq">—</span></div>
+      </div>
     </div>
+    <div class="comp-scenario-col">
+      <div class="comp-scenario-label" style="color:var(--green)">Scenario B Goal (Step 3)</div>
+      <div class="comp-scenario-big" style="color:var(--green)" id="cs_b_total">—</div>
+      <div class="comp-scenario-sub">total cash May–Dec</div>
+      <div class="comp-scenario-rows">
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Base (8 mo)</span><span class="comp-scenario-val" id="cs_b_base">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Services commission</span><span class="comp-scenario-val" id="cs_b_svc">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">ARR commission</span><span class="comp-scenario-val" id="cs_b_arr">—</span></div>
+        <div class="comp-scenario-row"><span class="comp-scenario-key">Equity value</span><span class="comp-scenario-val green" id="cs_b_eq">—</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FT trigger -->
+  <div class="ft-trigger-box">
+    <div class="ft-trigger-label">Full-Time Conversion Trigger</div>
+    <div class="ft-trigger-text" id="ftTriggerText">Calculating…</div>
   </div>
 
 </div>
+</div><!-- /step4 -->
+
 </div><!-- /main-content -->
 
-<!-- ══════════════════════════════════════════════════════════
-     SIDEBAR
-══════════════════════════════════════════════════════════ -->
+<!-- ══ SIDEBAR ══ -->
 <aside class="sidebar">
-  <div class="sidebar-label">Live Summary · May–Dec 2026</div>
+  <div class="sidebar-label">Live Summary</div>
 
   <div class="sidebar-group">
-    <div class="sidebar-big" id="sbEOY26">—</div>
-    <div class="sidebar-big-label">EOY 2026 ARR (Dec 31)</div>
-  </div>
-
-  <div class="sidebar-group">
-    <div class="sidebar-group-title">Capacity</div>
+    <div class="sidebar-group-title">Active Pricing</div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Ceiling (May–Dec)</span>
-      <span class="sidebar-val accent" id="sbCeiling">—</span>
+      <span class="sidebar-key">Model</span>
+      <span class="sidebar-val amber" id="sb_pricing">Deck</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Planned engagements</span>
-      <span class="sidebar-val" id="sbTopDown">—</span>
-    </div>
-    <div class="sidebar-row">
-      <span class="sidebar-key">Pipeline utilization</span>
-      <span class="sidebar-val" id="sbUtil">—</span>
-    </div>
-    <div class="util-bar">
-      <div class="util-fill" id="sbUtilBar" style="width:0%"></div>
+      <span class="sidebar-key">ACV / seat / yr</span>
+      <span class="sidebar-val" id="sb_acv">—</span>
     </div>
   </div>
 
   <div class="sidebar-group">
-    <div class="sidebar-group-title">Revenue (May–Dec)</div>
+    <div class="sidebar-group-title">Bottoms-Up (Step 2)</div>
+    <div class="sidebar-big" id="sb_bu_eoy">—</div>
+    <div class="sidebar-big-label">EOY Run Rate</div>
+    <div class="sidebar-divider"></div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Services</span>
-      <span class="sidebar-val" id="sbSvcRev">—</span>
+      <span class="sidebar-key">Total engagements</span>
+      <span class="sidebar-val" id="sb_bu_eng">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key" title="Full annualized value of all contracts signed. Not yet collected.">ARR booked ✱</span>
-      <span class="sidebar-val" id="sbARR">—</span>
+      <span class="sidebar-key">Services rev</span>
+      <span class="sidebar-val" id="sb_bu_svc">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key" title="Dec 31 run rate. Always lower than ARR Booked due to timing — contracts signed later in the year haven't had time to accumulate. This is your investor exit velocity number.">EOY run rate ✱✱</span>
-      <span class="sidebar-val accent" id="sbEOY26b">—</span>
+      <span class="sidebar-key">ARR booked</span>
+      <span class="sidebar-val" id="sb_bu_arr">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Total revenue</span>
-      <span class="sidebar-val" id="sbTotal">—</span>
+      <span class="sidebar-key">Total bookings</span>
+      <span class="sidebar-val amber" id="sb_bu_total">—</span>
     </div>
   </div>
 
   <div class="sidebar-group">
-    <div class="sidebar-group-title">GTM Comp (May–Dec)</div>
+    <div class="sidebar-group-title">Goal-Down (Step 3)</div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Kara total cash</span>
-      <span class="sidebar-val accent" id="sbKaraCash">—</span>
+      <span class="sidebar-key">Scenario A</span>
+      <span class="sidebar-val" id="sb_gA">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key">FT trigger revenue</span>
-      <span class="sidebar-val" id="sbTrigger">—</span>
-    </div>
-    <div class="sidebar-row">
-      <span class="sidebar-key">Trajectory hits trigger</span>
-      <span class="sidebar-val green" id="sbTriggerMonth">—</span>
+      <span class="sidebar-key">Scenario B</span>
+      <span class="sidebar-val green" id="sb_gB">—</span>
     </div>
   </div>
 
-  <button class="share-btn" onclick="copyShareURL()">Share This Configuration</button>
-  <div class="copy-msg" id="copyMsg">URL copied to clipboard</div>
+  <div class="sidebar-group">
+    <div class="sidebar-group-title">Kara's Comp (Step 4)</div>
+    <div class="sidebar-row">
+      <span class="sidebar-key">On BU plan</span>
+      <span class="sidebar-val" id="sb_comp_bu">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-key">On Scenario A</span>
+      <span class="sidebar-val amber" id="sb_comp_a">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-key">On Scenario B</span>
+      <span class="sidebar-val green" id="sb_comp_b">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-key">FT trigger</span>
+      <span class="sidebar-val" id="sb_ft_trigger">—</span>
+    </div>
+  </div>
+
+  <div class="sidebar-note">✱ ARR Booked = full annualized contract value<br>✱✱ EOY Run Rate = Dec 31 ARR meter reading</div>
 </aside>
-</div><!-- /app-body -->
 
-<!-- ══════════════════════════════════════════════════════════
-     JAVASCRIPT
-══════════════════════════════════════════════════════════ -->
+</div><!-- /content-wrap -->
+</div><!-- /app-wrap -->
+
 <script>
 // ─── CONSTANTS ───────────────────────────────────────────
-const MONTHS = ['MAY','JUN','JUL','AUG','SEP','OCT','NOV','DEC'];
-const N = 8; // May through December
+const MONTHS = ['May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const N = 8;
+const MONTHS_REMAINING = [8,7,6,5,4,3,2,1]; // months left in 2026 after each month closes
 
-const TOOLS_DEFAULT = [
-  { name:'Claude Enterprise',         price:25,  on:true,  optional:false },
-  { name:'ChatGPT Enterprise',        price:60,  on:true,  optional:false },
-  { name:'Glean',                     price:35,  on:true,  optional:false },
-  { name:'Notion AI',                 price:10,  on:true,  optional:false },
-  { name:'Zapier Team',               price:20,  on:true,  optional:false },
-  { name:'MCP Orchestration',         price:15,  on:true,  optional:false },
-  { name:'In-house Glue Maintenance', price:25,  on:true,  optional:false },
-  { name:'Harvey / Specialist',       price:50,  on:false, optional:true  },
-  { name:'Copilot Enterprise',        price:39,  on:false, optional:true  },
-  { name:'Perplexity Enterprise',     price:40,  on:false, optional:true  },
-];
-
-const ACCOUNT_TIERS = [
-  { name:'Tier 1 — Enterprise Anchors', count:30, fee:167000, companies:'McDonald\'s, Nike, T-Mobile, Target, UPS, FedEx, Walmart, Home Depot' },
-  { name:'Tier 2 — Growth SaaS',        count:32, fee:100000, companies:'Notion, Figma, Stripe, Airtable, Retool, Miro, Loom, Linear' },
-  { name:'Tier 3 — AI-Native',          count:32, fee:67000,  companies:'Anthropic, Cohere, Harvey, Hebbia, Perplexity, Writer, Glean' },
-];
-
-// Presets: 8 months
-const PRESETS = {
-  flat:       { eng:[5,5,5,5,5,5,5,5],         cap:[1,1,1,1,1,1,1,1] },
-  hire:       { eng:[3,3,4,4,5,5,6,6],         cap:[1,1,1,1,1,1,1,1] },
-  // Chiri Ramp: user-specified headcount build 2→16 with productivity ramp
-  aggressive: { eng:[2,4,6,8,10,12,15,16],     cap:[2,2,3,3,4,4,4,4] },
+const PRICING = {
+  deck: { label:'Deck Pricing', acvPerSeat:300, svcFeeBlended:75000 },
+  alt:  { label:'Replacement Value', acvPerSeat:1188, svcFeeBlended:75000 }
 };
 
-// Months remaining in year after each month (for EOY ARR weighting)
-// May=8, Jun=7, Jul=6, Aug=5, Sep=4, Oct=3, Nov=2, Dec=1
-const MONTHS_REMAINING = [8,7,6,5,4,3,2,1];
+const TOOLS_DEFAULT = [
+  { name:'ChatGPT Team',    price:30,  on:true  },
+  { name:'Cursor Pro',      price:40,  on:true  },
+  { name:'Notion AI',       price:20,  on:true  },
+  { name:'Slack',           price:15,  on:true  },
+  { name:'Loom',            price:20,  on:true  },
+  { name:'Figma',           price:15,  on:true  },
+  { name:'Harvey',          price:50,  on:false },
+  { name:'GitHub Copilot',  price:39,  on:false },
+  { name:'Perplexity Pro',  price:40,  on:false },
+  { name:'Zoom',            price:20,  on:true  },
+];
 
-// ─── CHART INSTANCES ────────────────────────────────────
-let chartSvc = null, chartARR = null, chartCombined = null;
-
-// ─── CHART DEFAULTS ──────────────────────────────────────
-Chart.defaults.color = 'rgba(240,234,214,0.38)';
-Chart.defaults.borderColor = 'rgba(240,234,214,0.06)';
-Chart.defaults.font.family = "'DM Mono', monospace";
-Chart.defaults.font.size = 9;
+const PRESETS = {
+  flat:   { eng:[5,5,5,5,5,5,5,5],     cap:[2,2,3,3,4,4,4,4] },
+  hire1q: { eng:[3,3,3,4,4,4,5,5],     cap:[2,2,3,3,4,4,4,4] },
+  chiri:  { eng:[2,4,6,8,10,12,15,16], cap:[2,2,3,3,4,4,4,4] },
+  custom: null
+};
 
 // ─── STATE ───────────────────────────────────────────────
 let S = {
   pricingModel: 'deck',
-  preset: 'flat',
-  engineers:    [...PRESETS.flat.eng],
-  capacity:     [...PRESETS.flat.cap],
   avgSeats:     80,
-  growthPattern:'exp',
-  m1Eng:        2,
-  growthFactor: 6,
-  tiers: [
-    { closeRate:8,  avgSeats:200 },
-    { closeRate:15, avgSeats:60  },
-    { closeRate:20, avgSeats:30  },
-  ],
-  retainer:  12000,
-  svcPct:    15,
-  arrPct:    15,
-  equity:    1.5,
-  valuation: 25,
-  ftComp:    250000,
-  ftVest:    25,
-  tools:     TOOLS_DEFAULT.map(t => ({...t})),
-  reconChoice: 'reconciled',
+  engineers:    [2,4,6,8,10,12,15,16],
+  capacity:     [2,2,3,3,4,4,4,4],
+  goalA:        5,   // $M total bookings
+  goalB:        25,  // $M total bookings
+  retainer:     8000,
+  svcPct:       12,
+  arrPct:       12,
+  equity:       2,
+  valuation:    25,
+  ftComp:       250000,
+  tools:        TOOLS_DEFAULT.map(t=>({...t})),
 };
 
-// ─── PRICING MODELS ──────────────────────────────────────
-const PRICING = {
-  deck: {
-    label:         'Current Pricing',
-    svcFeeBlended: 75000,
-    acvPerSeat:    348,    // $29/mo × 12
-  },
-  alt: {
-    label:         'Replacement-Value Pricing',
-    svcFeeBlended: 0.7*75000 + 0.3*225000, // $120K blended
-    acvPerSeat:    1188,   // $99/mo × 12
-  },
+// ─── FORMATTERS ──────────────────────────────────────────
+const fmt$ = v => {
+  if (v >= 1e6) return '$' + (v/1e6).toFixed(1) + 'M';
+  if (v >= 1e3) return '$' + Math.round(v/1e3) + 'K';
+  return '$' + Math.round(v).toLocaleString();
 };
+const fmtFull$ = v => '$' + Math.round(v).toLocaleString();
 
-// ─── HELPERS ─────────────────────────────────────────────
-function fmt$(n) {
-  if (n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return '$' + Math.round(n/1e3) + 'K';
-  return '$' + Math.round(n).toLocaleString();
+// ─── PRICING TOGGLE ──────────────────────────────────────
+function setPricing(m) {
+  S.pricingModel = m;
+  document.getElementById('toggleDeck').className = 'toggle-btn' + (m==='deck'?' active':'');
+  document.getElementById('toggleAlt').className  = 'toggle-btn' + (m==='alt'?' active-green':'');
+  recompute();
 }
-function fmtFull$(n) { return '$' + Math.round(n).toLocaleString(); }
-function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
 
-// ─── RAMP ────────────────────────────────────────────────
-function computeRamp(m1, gf, pattern, cap) {
-  const result = [];
-  for (let i = 0; i < N; i++) {
-    let raw;
-    const t = N > 1 ? i / (N - 1) : 0;
-    if (pattern === 'flat')        raw = m1;
-    else if (pattern === 'linear') raw = m1 + (gf - m1) * t;
-    else if (pattern === 'exp')    raw = m1 <= 0 ? gf * t : m1 * Math.pow(Math.max(gf/m1, 1.001), t);
-    else { // s-curve
-      const s = 1 / (1 + Math.exp(-10 * (t - 0.5)));
-      raw = m1 + (gf - m1) * s;
-    }
-    const planned = clamp(raw, 0, cap[i] || 999);
-    result.push({ raw: parseFloat(raw.toFixed(1)), planned: parseFloat(planned.toFixed(1)), atCap: planned < raw - 0.05 });
+// ─── PRESET ──────────────────────────────────────────────
+function applyPreset(key) {
+  if (key !== 'custom' && PRESETS[key]) {
+    S.engineers = [...PRESETS[key].eng];
+    S.capacity  = [...PRESETS[key].cap];
   }
-  return result;
-}
-
-// ─── REVENUE ─────────────────────────────────────────────
-function computeRevenue(ramp, p) {
-  const totalWeight = ACCOUNT_TIERS.reduce((a,t,i) => a + t.count * S.tiers[i].closeRate/100, 0);
-  const avgSeatsW = totalWeight > 0
-    ? ACCOUNT_TIERS.reduce((a,t,i) => a + (t.count * S.tiers[i].closeRate/100 / totalWeight) * S.tiers[i].avgSeats, 0)
-    : S.avgSeats;
-
-  let svcRev = 0, arrBooked = 0, eoy26 = 0;
-  ramp.forEach((m, i) => {
-    svcRev    += m.planned * p.svcFeeBlended;
-    arrBooked += m.planned * avgSeatsW * p.acvPerSeat;
-    // EOY ARR: weight by months remaining in 2026 / 12
-    eoy26     += m.planned * avgSeatsW * p.acvPerSeat * MONTHS_REMAINING[i] / 12;
+  ['flat','hire1q','chiri','custom'].forEach(k => {
+    const id = k==='hire1q'?'presetHire1q':k==='flat'?'presetFlat':k==='chiri'?'presetChiri':'presetCustom';
+    const el = document.getElementById(id);
+    if (el) el.className = 'toggle-btn' + (k===key?' active':'');
   });
-
-  const totalEng = ramp.reduce((a,m) => a + m.planned, 0);
-  return { svcRev, arrBooked, eoy26, totalRev: svcRev + arrBooked, totalEng, avgSeatsW };
+  recompute();
 }
 
-// ─── COMP ────────────────────────────────────────────────
-function computeComp(rev) {
-  const retainer8mo = S.retainer * 8;
-  const svcVar      = rev.svcRev    * S.svcPct / 100;
-  const arrVar      = rev.arrBooked * S.arrPct  / 100;
-  const total       = retainer8mo + svcVar + arrVar;
-  const equity      = S.equity / 100 * S.valuation * 1e6;
-  // FT trigger: annualized revenue at which FT salary < variable payout
-  const ftTrigger   = S.ftComp / (S.svcPct/100 + S.arrPct/100);
-  return { retainer8mo, svcVar, arrVar, total, equity, ftTrigger };
+// ─── CELL EDIT ───────────────────────────────────────────
+function onCellEdit(field, idx, val) {
+  S[field][idx] = parseFloat(val) || 0;
+  recompute();
 }
 
-// ─── RENDER TOOL ROWS ────────────────────────────────────
+// ─── SLIDER ──────────────────────────────────────────────
+function onSlider(id) {
+  const el = document.getElementById(id);
+  S[id] = parseFloat(el.value);
+  const valEl = document.getElementById(id + 'Val');
+  if (!valEl) return;
+  if (id === 'avgSeats')  valEl.textContent = S[id] + ' seats';
+  else if (id === 'retainer') valEl.textContent = '$' + S[id].toLocaleString() + '/mo';
+  else if (id === 'svcPct' || id === 'arrPct') valEl.textContent = S[id] + '%';
+  else if (id === 'equity') valEl.textContent = S[id].toFixed(2) + '%';
+  else if (id === 'ftComp') valEl.textContent = '$' + (S[id]/1000).toFixed(0) + 'K';
+  else if (id === 'valuation') valEl.textContent = '$' + S[id] + 'M';
+  recompute();
+}
+
+// ─── TOOL ROWS ───────────────────────────────────────────
 function renderToolRows() {
-  document.getElementById('toolRows').innerHTML = S.tools.map((t,i) => `
+  const container = document.getElementById('toolRowsAlt');
+  container.innerHTML = S.tools.map((t,i) => `
     <div class="tool-row">
-      <input type="checkbox" class="tool-check" ${t.on?'checked':''}
-        onchange="S.tools[${i}].on=this.checked; renderToolSummary(); recompute();">
-      <span class="tool-name${t.optional?' optional':''}">${t.name}${t.optional?' <span style="font-size:8px;color:var(--cream-muted)">(opt)</span>':''}</span>
-      <input type="number" class="tool-price-input" value="${t.price}"
-        onchange="S.tools[${i}].price=parseFloat(this.value)||0; renderToolSummary(); recompute();">
-      <span class="tool-unit">/user</span>
+      <input type="checkbox" ${t.on?'checked':''} onchange="S.tools[${i}].on=this.checked; renderToolSummary()">
+      <span class="tool-row-name">${t.name}</span>
+      <input type="number" class="cap-input" value="${t.price}" min="0" max="500"
+        style="width:44px" onchange="S.tools[${i}].price=+this.value; renderToolSummary()">
+      <span class="tool-row-price">/user/mo</span>
     </div>`).join('');
 }
 
 function renderToolSummary() {
-  const total   = S.tools.reduce((a,t) => a + (t.on ? t.price : 0), 0);
+  const total = S.tools.reduce((a,t) => a + (t.on ? t.price : 0), 0);
   const savings = total - 99;
-  document.getElementById('stackCost').textContent    = `$${total}/user/mo`;
-  document.getElementById('stackSavings').textContent = savings > 0 ? `$${savings}/user/mo` : '$0';
+  document.getElementById('stackCost').textContent = '$' + total + '/user/mo';
   const note = document.getElementById('bundleSavingsNote');
-  note.textContent = savings > 0 ? `Chiri saves $${savings}/user/mo vs. current stack` : '';
+  note.textContent = savings > 0 ? `Chiri saves $${savings}/user/mo vs. this stack` : '';
   note.style.display = savings > 0 ? 'block' : 'none';
 }
 
-// ─── RENDER CAPACITY GRID ────────────────────────────────
-function renderCapacityGrid(ramp) {
-  const maxEng = S.engineers.map((e,i) => e * S.capacity[i]);
-
-  const engRow = `<tr><td>Engineers</td>${S.engineers.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0" max="50" onchange="onCellEdit('engineers',${i},this.value)"></td>`).join('')}</tr>`;
-  const capRow = `<tr><td>Eng/mo</td>${S.capacity.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0.5" max="5" step="0.5" onchange="onCellEdit('capacity',${i},this.value)"></td>`).join('')}</tr>`;
-  const maxRow = `<tr><td>Max Engagements</td>${maxEng.map(v=>`<td class="month-td cap-val">${v.toFixed(1)}</td>`).join('')}</tr>`;
-  const planRow = `<tr><td>Planned (Part 3)</td>${ramp.map((m,i)=>{
-    const pct = maxEng[i]>0 ? m.planned/maxEng[i]*100 : 0;
-    const fillCls = pct>90?'danger':pct>65?'warn':'';
-    return `<td class="month-td">
-      <div class="cap-planned${m.atCap?' at-cap':''}">${m.planned.toFixed(1)}</div>
-      <div class="cap-util-bar"><div class="cap-util-fill ${fillCls}" style="width:${Math.min(100,pct).toFixed(0)}%"></div></div>
-      <div style="font-size:8px;color:var(--cream-muted);text-align:center;margin-top:2px;">${pct.toFixed(0)}%</div>
-    </td>`;
-  }).join('')}</tr>`;
-
-  document.getElementById('capacityTbody').innerHTML = engRow + capRow + maxRow + planRow;
-}
-
-// ─── RENDER RAMP GRID ────────────────────────────────────
-function renderRampGrid(id, data) {
-  const maxVal = Math.max(...data.map(m=>m.planned), 1);
-  document.getElementById(id).innerHTML = data.map((m,i) => `
-    <div class="ramp-cell${m.atCap?' at-cap':''}">
-      <div class="ramp-month">${MONTHS[i]}</div>
-      <div class="ramp-val">${m.planned.toFixed(1)}</div>
-      ${m.atCap?'<div class="ramp-cap-label">CAP</div>':''}
-      <div class="ramp-bar"><div class="ramp-bar-fill" style="width:${(m.planned/maxVal*100).toFixed(0)}%"></div></div>
-    </div>`).join('');
-}
-
-// ─── RENDER TIER GRID ────────────────────────────────────
-function renderTierGrid() {
-  document.getElementById('tierGrid').innerHTML = ACCOUNT_TIERS.map((t,i) => `
-    <div class="tier-card">
-      <div class="tier-card-label">${t.name}</div>
-      <div class="tier-card-fee">${fmt$(t.fee)}</div>
-      <div class="tier-card-count">${t.count} accounts</div>
-      <div class="tier-slider-group">
-        <div class="slider-row">
-          <div class="slider-label">Close rate</div>
-          <input type="range" class="chiri-slider" min="1" max="50" step="1" value="${S.tiers[i].closeRate}"
-            oninput="S.tiers[${i}].closeRate=parseInt(this.value); document.getElementById('cr${i}').textContent=this.value+'%'; recompute();">
-          <div class="slider-val" id="cr${i}">${S.tiers[i].closeRate}%</div>
-        </div>
-        <div class="slider-row">
-          <div class="slider-label">Avg seats</div>
-          <input type="range" class="chiri-slider" min="10" max="500" step="10" value="${S.tiers[i].avgSeats}"
-            oninput="S.tiers[${i}].avgSeats=parseInt(this.value); document.getElementById('as${i}').textContent=this.value; recompute();">
-          <div class="slider-val" id="as${i}">${S.tiers[i].avgSeats}</div>
-        </div>
-      </div>
-      <div class="tier-companies">${t.companies}</div>
-    </div>`).join('');
-}
-
-// ─── URL STATE ───────────────────────────────────────────
-function saveToURL() {
-  const snap = {
-    pm:S.pricingModel, pr:S.preset, eng:S.engineers, cap:S.capacity,
-    as:S.avgSeats, gp:S.growthPattern, m1:S.m1Eng, gf:S.growthFactor,
-    ti:S.tiers.map(t=>[t.closeRate,t.avgSeats]),
-    re:S.retainer, sp:S.svcPct, ap:S.arrPct, eq:S.equity, va:S.valuation,
-    fc:S.ftComp, fv:S.ftVest, to:S.tools.map(t=>[t.on?1:0,t.price]),
-  };
-  history.replaceState(null,'','#'+btoa(JSON.stringify(snap)));
-}
-
-function loadFromURL() {
-  try {
-    if (!location.hash || location.hash.length < 5) return false;
-    const snap = JSON.parse(atob(location.hash.slice(1)));
-    if (snap.pm) S.pricingModel  = snap.pm;
-    if (snap.pr) S.preset        = snap.pr;
-    if (snap.eng) S.engineers    = snap.eng;
-    if (snap.cap) S.capacity     = snap.cap;
-    if (snap.as)  S.avgSeats     = snap.as;
-    if (snap.gp)  S.growthPattern= snap.gp;
-    if (snap.m1)  S.m1Eng        = snap.m1;
-    if (snap.gf)  S.growthFactor = snap.gf;
-    if (snap.ti)  snap.ti.forEach((t,i)=>{ S.tiers[i].closeRate=t[0]; S.tiers[i].avgSeats=t[1]; });
-    if (snap.re)  S.retainer  = snap.re;
-    if (snap.sp)  S.svcPct    = snap.sp;
-    if (snap.ap)  S.arrPct    = snap.ap;
-    if (snap.eq)  S.equity    = snap.eq;
-    if (snap.va)  S.valuation = snap.va;
-    if (snap.fc)  S.ftComp    = snap.fc;
-    if (snap.fv)  S.ftVest    = snap.fv;
-    if (snap.to)  snap.to.forEach((t,i)=>{ S.tools[i].on=!!t[0]; S.tools[i].price=t[1]; });
-    ['avgSeats','m1Eng','growthFactor','retainer','svcPct','arrPct','equity','valuation','ftComp','ftVest'].forEach(id=>{
-      const el=document.getElementById(id); if(el) el.value=S[id];
-    });
-    return true;
-  } catch(e) { return false; }
-}
-
-// ─── RECONCILIATION LOGIC ────────────────────────────────
-function getReconciledRamp(rampTD, capCeil) {
-  // Returns per-month reconciled engagements based on user choice
-  return rampTD.map((m, i) => {
-    let planned;
-    if (S.reconChoice === 'bu')          planned = capCeil[i];
-    else if (S.reconChoice === 'td')     planned = m.planned;
-    else                                  planned = Math.min(m.planned, capCeil[i]);
-    return { ...m, planned: parseFloat(planned.toFixed(1)), atCap: planned < m.raw - 0.05 };
+// ─── COMPUTE REVENUE FROM ENGAGEMENT ARRAY ───────────────
+function computeRev(engArr, p) {
+  let svcRev = 0, arrBooked = 0, eoy26 = 0;
+  const avgSeatsW = S.avgSeats;
+  engArr.forEach((eng, i) => {
+    svcRev    += eng * p.svcFeeBlended;
+    arrBooked += eng * avgSeatsW * p.acvPerSeat;
+    eoy26     += eng * avgSeatsW * p.acvPerSeat * MONTHS_REMAINING[i] / 12;
   });
+  const totalBookings = svcRev + arrBooked;
+  const totalEng = engArr.reduce((a,b)=>a+b,0);
+  return { svcRev, arrBooked, eoy26, totalBookings, totalEng, avgSeatsW };
 }
 
-// ─── CHART RENDERING ─────────────────────────────────────
-function renderCharts(ramp, p, avgSeatsW) {
-  const amber     = '#C17E35';
-  const amberFaint= 'rgba(193,126,53,0.25)';
-  const green     = '#5aff8a';
-  const greenFaint= 'rgba(90,255,138,0.2)';
-  const cream     = 'rgba(240,234,214,0.65)';
-  const border    = 'rgba(240,234,214,0.06)';
+// ─── COMPUTE COMP FROM REVENUE ────────────────────────────
+function computeComp(rev) {
+  const base8mo = S.retainer * 8;
+  const svcVar  = rev.svcRev * S.svcPct / 100;
+  const arrVar  = rev.arrBooked * S.arrPct / 100;
+  const total   = base8mo + svcVar + arrVar;
+  const equity  = S.equity / 100 * S.valuation * 1e6;
+  // FT trigger: annualized rev where variable > FT salary
+  // retainer*12 + svcPct*svcRev_ann + arrPct*arr_ann = ftComp
+  // solve for annualized total bookings
+  const ftTrigger = (S.ftComp - S.retainer*12) / ((S.svcPct + S.arrPct) / 100 / 2);
+  return { base8mo, svcVar, arrVar, total, equity, ftTrigger };
+}
 
-  const svcData = ramp.map(m => Math.round(m.planned * p.svcFeeBlended));
-  const arrData = ramp.map(m => Math.round(m.planned * avgSeatsW * p.acvPerSeat));
+// ─── SOLVE ENGAGEMENTS FROM TOTAL BOOKINGS TARGET ────────
+function solveEngFromTarget(targetM, p) {
+  const target = targetM * 1e6;
+  const revenuePerEng = p.svcFeeBlended + S.avgSeats * p.acvPerSeat;
+  const totalEng = target / revenuePerEng;
+  const logosPerMo = totalEng / N;
+  // Build a flat ramp at that rate
+  const engArr = Array(N).fill(totalEng / N);
+  const rev = computeRev(engArr, p);
+  const totalCap = S.engineers.reduce((a,e,i)=>a + e*S.capacity[i], 0);
+  const feasible = totalEng <= totalCap;
+  const engNeeded = feasible ? null : Math.ceil(totalEng / (S.capacity.reduce((a,b)=>a+b,0)/N));
+  return { totalEng, logosPerMo, rev, feasible, engNeeded, engArr };
+}
 
-  // Cumulative lines
+// ─── RENDER CAPACITY GRID ────────────────────────────────
+function renderCapGrid() {
+  const maxEng = S.engineers.map((e,i) => e * S.capacity[i]);
+  const engRow = `<tr><td>Engineers</td>${S.engineers.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0" max="50" onchange="onCellEdit('engineers',${i},this.value)"></td>`).join('')}</tr>`;
+  const capRow = `<tr><td>Eng/mo</td>${S.capacity.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0.5" max="8" step="0.5" onchange="onCellEdit('capacity',${i},this.value)"></td>`).join('')}</tr>`;
+  const maxRow = `<tr><td style="color:var(--amber)">Max Engagements</td>${maxEng.map(v=>`<td class="month-td cap-val amber">${v.toFixed(0)}</td>`).join('')}</tr>`;
+  document.getElementById('capTbody').innerHTML = engRow + capRow + maxRow;
+}
+
+// ─── CHART INSTANCES ─────────────────────────────────────
+let charts = {};
+function destroyChart(id) { if (charts[id]) { charts[id].destroy(); delete charts[id]; } }
+
+function renderBUCharts(engArr, p) {
+  const amber = '#C17E35', amberFaint = 'rgba(193,126,53,0.25)';
+  const green = '#5aff8a', greenFaint = 'rgba(90,255,138,0.2)';
+  const cream = 'rgba(240,234,214,0.65)';
+  const gridColor = 'rgba(240,234,214,0.06)';
+
+  const svcData = engArr.map(e => Math.round(e * p.svcFeeBlended));
+  const arrData = engArr.map(e => Math.round(e * S.avgSeats * p.acvPerSeat));
   let svcCum = 0, arrCum = 0;
   const svcCumData = svcData.map(v => { svcCum += v; return svcCum; });
   const arrCumData = arrData.map(v => { arrCum += v; return arrCum; });
+  const eoyData = engArr.map((e,i) => Math.round(e * S.avgSeats * p.acvPerSeat * MONTHS_REMAINING[i] / 12 * 12));
 
-  // EOY ARR run rate (annualized from each month's new ARR)
-  const arrRunRate = ramp.map((m,i) => Math.round(m.planned * avgSeatsW * p.acvPerSeat * MONTHS_REMAINING[i] / 12 * 12 / Math.max(MONTHS_REMAINING[i],1)));
-
-  const chartOpts = (yLabel) => ({
-    responsive: true,
-    maintainAspectRatio: true,
+  const baseOpts = (y1Label, y2Label) => ({
+    responsive: true, maintainAspectRatio: true,
     interaction: { mode:'index', intersect:false },
     plugins: {
-      legend: { display:true, position:'top', labels:{ boxWidth:10, padding:16, color:cream } },
-      tooltip: {
-        backgroundColor:'rgba(10,10,10,0.95)',
-        borderColor:'rgba(193,126,53,0.3)',
-        borderWidth:1,
-        titleColor:amber,
-        bodyColor:cream,
-        padding:12,
-        callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt$(ctx.raw) }
-      }
+      legend: { display:true, position:'top', labels:{ boxWidth:10, padding:12, color:cream, font:{family:'DM Mono',size:9} } },
+      tooltip: { backgroundColor:'rgba(10,10,10,0.95)', borderColor:'rgba(193,126,53,0.3)', borderWidth:1, titleColor:amber, bodyColor:cream, padding:10 }
     },
     scales: {
-      x: { grid:{ color:border }, ticks:{ color:cream } },
-      y: {
-        grid:{ color:border }, ticks:{ color:cream,
-          callback: v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v
-        },
-        title:{ display:false }
-      },
-      y2: {
-        position:'right', grid:{ drawOnChartArea:false }, ticks:{ color:'rgba(240,234,214,0.25)',
-          callback: v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v
-        }
-      }
+      x: { ticks:{ color:cream, font:{family:'DM Mono',size:9} }, grid:{ color:gridColor } },
+      y:  { position:'left',  ticks:{ color:amber, font:{family:'DM Mono',size:9}, callback:v=>fmt$(v) }, grid:{ color:gridColor }, title:{ display:true, text:y1Label, color:amber, font:{family:'DM Mono',size:8} } },
+      y2: { position:'right', ticks:{ color:cream, font:{family:'DM Mono',size:9}, callback:v=>fmt$(v) }, grid:{ display:false }, title:{ display:true, text:y2Label, color:cream, font:{family:'DM Mono',size:8} } }
     }
   });
 
-  // ── Services chart ──
-  if (chartSvc) chartSvc.destroy();
-  chartSvc = new Chart(document.getElementById('chartSvc'), {
+  destroyChart('buSvc');
+  charts['buSvc'] = new Chart(document.getElementById('buSvcChart'), {
     data: {
       labels: MONTHS,
       datasets: [
-        { type:'bar',  label:'Monthly Consulting', data:svcData,    backgroundColor:amberFaint, borderColor:amber, borderWidth:1, yAxisID:'y' },
-        { type:'line', label:'Cumulative',          data:svcCumData, borderColor:amber, borderWidth:2, pointRadius:3, pointBackgroundColor:amber, fill:false, tension:0.3, yAxisID:'y2' }
+        { type:'bar',  label:'Monthly Services', data:svcData, backgroundColor:amberFaint, borderColor:amber, borderWidth:1, yAxisID:'y' },
+        { type:'line', label:'Cumulative',        data:svcCumData, borderColor:cream, borderWidth:2, pointRadius:3, pointBackgroundColor:cream, fill:false, tension:0.3, yAxisID:'y2' }
       ]
     },
-    options: chartOpts('Revenue')
+    options: baseOpts('Monthly','Cumulative')
   });
 
-  // ── ARR chart ──
-  if (chartARR) chartARR.destroy();
-  chartARR = new Chart(document.getElementById('chartARR'), {
+  destroyChart('buArr');
+  charts['buArr'] = new Chart(document.getElementById('buArrChart'), {
     data: {
       labels: MONTHS,
       datasets: [
-        { type:'bar',  label:'New ARR Booked',   data:arrData,    backgroundColor:greenFaint, borderColor:green, borderWidth:1, yAxisID:'y' },
-        { type:'line', label:'Cumulative ARR',   data:arrCumData, borderColor:green, borderWidth:2, pointRadius:3, pointBackgroundColor:green, fill:false, tension:0.3, yAxisID:'y2' }
+        { type:'bar',  label:'ARR Booked',    data:arrData,  backgroundColor:greenFaint, borderColor:green, borderWidth:1, yAxisID:'y' },
+        { type:'line', label:'EOY Run Rate',  data:eoyData,  borderColor:amber, borderWidth:2, pointRadius:3, pointBackgroundColor:amber, fill:false, tension:0.3, yAxisID:'y2' }
       ]
     },
-    options: chartOpts('ARR')
+    options: baseOpts('ARR Booked','EOY Run Rate')
+  });
+}
+
+function renderGoalCharts(engArrA, engArrB) {
+  const amber = '#C17E35', amberFaint = 'rgba(193,126,53,0.25)';
+  const green = '#5aff8a', greenFaint = 'rgba(90,255,138,0.2)';
+  const cream = 'rgba(240,234,214,0.65)';
+  const gridColor = 'rgba(240,234,214,0.06)';
+
+  const p = PRICING[S.pricingModel];
+  const revA = engArrA.map(e => Math.round(e * (p.svcFeeBlended + S.avgSeats * p.acvPerSeat)));
+  const revB = engArrB.map(e => Math.round(e * (p.svcFeeBlended + S.avgSeats * p.acvPerSeat)));
+  let cumA = 0, cumB = 0;
+  const cumAData = revA.map(v => { cumA += v; return cumA; });
+  const cumBData = revB.map(v => { cumB += v; return cumB; });
+
+  const baseOpts = () => ({
+    responsive: true, maintainAspectRatio: true,
+    interaction: { mode:'index', intersect:false },
+    plugins: {
+      legend: { display:true, position:'top', labels:{ boxWidth:10, padding:12, color:cream, font:{family:'DM Mono',size:9} } },
+      tooltip: { backgroundColor:'rgba(10,10,10,0.95)', borderColor:'rgba(193,126,53,0.3)', borderWidth:1, titleColor:amber, bodyColor:cream, padding:10 }
+    },
+    scales: {
+      x: { ticks:{ color:cream, font:{family:'DM Mono',size:9} }, grid:{ color:gridColor } },
+      y: { ticks:{ color:cream, font:{family:'DM Mono',size:9}, callback:v=>v.toFixed(1) }, grid:{ color:gridColor } }
+    }
   });
 
-  // ── Combined chart ──
-  if (chartCombined) chartCombined.destroy();
-  const totalData = svcData.map((v,i) => v + arrData[i]);
-  let totCum = 0;
-  const totCumData = totalData.map(v => { totCum += v; return totCum; });
-  chartCombined = new Chart(document.getElementById('chartCombined'), {
+  destroyChart('goalEng');
+  charts['goalEng'] = new Chart(document.getElementById('goalEngChart'), {
+    type: 'bar',
     data: {
       labels: MONTHS,
       datasets: [
-        { type:'bar',  label:'Consulting Revenue', data:svcData, backgroundColor:amberFaint, borderColor:amber, borderWidth:1, stack:'rev', yAxisID:'y' },
-        { type:'bar',  label:'ARR Booked',          data:arrData, backgroundColor:greenFaint, borderColor:green, borderWidth:1, stack:'rev', yAxisID:'y' },
-        { type:'line', label:'Cumulative Total',    data:totCumData, borderColor:cream, borderWidth:2, pointRadius:3, pointBackgroundColor:cream, fill:false, tension:0.3, yAxisID:'y2' }
+        { label:'Scenario A', data:engArrA.map(v=>parseFloat(v.toFixed(1))), backgroundColor:amberFaint, borderColor:amber, borderWidth:1 },
+        { label:'Scenario B', data:engArrB.map(v=>parseFloat(v.toFixed(1))), backgroundColor:greenFaint, borderColor:green, borderWidth:1 }
+      ]
+    },
+    options: baseOpts()
+  });
+
+  destroyChart('goalRev');
+  charts['goalRev'] = new Chart(document.getElementById('goalRevChart'), {
+    type: 'line',
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { label:'Scenario A cumulative', data:cumAData, borderColor:amber, borderWidth:2, pointRadius:3, pointBackgroundColor:amber, fill:false, tension:0.3 },
+        { label:'Scenario B cumulative', data:cumBData, borderColor:green, borderWidth:2, pointRadius:3, pointBackgroundColor:green, fill:false, tension:0.3 }
       ]
     },
     options: {
-      ...chartOpts('Revenue'),
+      responsive: true, maintainAspectRatio: true,
+      interaction: { mode:'index', intersect:false },
+      plugins: {
+        legend: { display:true, position:'top', labels:{ boxWidth:10, padding:12, color:cream, font:{family:'DM Mono',size:9} } },
+        tooltip: { backgroundColor:'rgba(10,10,10,0.95)', borderColor:'rgba(193,126,53,0.3)', borderWidth:1, titleColor:amber, bodyColor:cream, padding:10, callbacks:{ label: ctx => ctx.dataset.label + ': ' + fmt$(ctx.raw) } }
+      },
       scales: {
-        ...chartOpts('Revenue').scales,
-        x: { ...chartOpts('Revenue').scales.x, stacked:true }
+        x: { ticks:{ color:cream, font:{family:'DM Mono',size:9} }, grid:{ color:gridColor } },
+        y: { ticks:{ color:cream, font:{family:'DM Mono',size:9}, callback:v=>fmt$(v) }, grid:{ color:gridColor } }
       }
     }
   });
-
-  // Chart stat totals
-  const peakSvc = Math.max(...svcData);
-  const decSvc  = svcData[N-1];
-  document.getElementById('chartSvcTotal').textContent   = fmt$(svcCum);
-  document.getElementById('chartSvcPeak').textContent    = fmt$(peakSvc);
-  document.getElementById('chartSvcRunRate').textContent = fmt$(decSvc * 12);
-  document.getElementById('chartARRTotal').textContent   = fmt$(arrCum);
-  document.getElementById('chartARREOY').textContent     = fmt$(ramp.reduce((a,m,i)=>a+m.planned*avgSeatsW*p.acvPerSeat*MONTHS_REMAINING[i]/12,0));
-  document.getElementById('chartARRDec').textContent     = fmt$(arrData[N-1]);
 }
 
 // ─── MAIN RECOMPUTE ──────────────────────────────────────
@@ -1565,249 +1156,221 @@ function recompute() {
   const capCeil = S.engineers.map((e,i) => e * S.capacity[i]);
   const totalCap = capCeil.reduce((a,b)=>a+b, 0);
 
-  // Top-down ramp (uncapped by capacity — pure demand signal)
-  const rampTD_raw = computeRamp(S.m1Eng, S.growthFactor, S.growthPattern, Array(N).fill(9999));
-  // Top-down capped at capacity (what Part 3 shows)
-  const rampTD = computeRamp(S.m1Eng, S.growthFactor, S.growthPattern, capCeil);
-  // Reconciled ramp (feeds comp)
-  const ramp = getReconciledRamp(rampTD, capCeil);
+  // ── Step 1 ──
+  const deckP = PRICING.deck, altP = PRICING.alt;
+  const seats = S.avgSeats;
+  document.getElementById('d_acv').textContent     = '$' + deckP.acvPerSeat.toLocaleString();
+  document.getElementById('a_acv').textContent     = '$' + altP.acvPerSeat.toLocaleString();
+  document.getElementById('d_seats').textContent   = seats + ' seats';
+  document.getElementById('a_seats').textContent   = seats + ' seats';
+  document.getElementById('d_arrEng').textContent  = fmt$(deckP.acvPerSeat * seats);
+  document.getElementById('a_arrEng').textContent  = fmt$(altP.acvPerSeat * seats);
+  document.getElementById('d_svc').textContent     = fmt$(deckP.svcFeeBlended);
+  document.getElementById('a_svc').textContent     = fmt$(altP.svcFeeBlended);
+  document.getElementById('d_total').textContent   = fmt$(deckP.acvPerSeat * seats + deckP.svcFeeBlended);
+  document.getElementById('a_total').textContent   = fmt$(altP.acvPerSeat * seats + altP.svcFeeBlended);
 
-  const rev  = computeRevenue(ramp, p);
-  const comp = computeComp(rev);
+  document.getElementById('colDeck').className = 'pricing-col' + (S.pricingModel==='deck'?' active-pricing':' dimmed');
+  document.getElementById('colAlt').className  = 'pricing-col' + (S.pricingModel==='alt'?' active-pricing-green':' dimmed');
 
-  // ── Part 1 ──
-  document.getElementById('s1ACV').textContent     = '$' + p.acvPerSeat.toLocaleString() + '/seat/yr';
-  document.getElementById('s1Fee').textContent     = fmt$(p.svcFeeBlended);
-  document.getElementById('s1Ceiling').textContent = totalCap.toFixed(0) + ' eng';
-  document.getElementById('s1EOY').textContent     = fmt$(rev.eoy26);
-
-  // So-what card
-  const deckACV = PRICING.deck.acvPerSeat;
-  const altACV  = PRICING.alt.acvPerSeat;
-  const seats   = rev.avgSeatsW;
-  const deckARR = deckACV * seats;
-  const altARR  = altACV  * seats;
+  const deckARR = deckP.acvPerSeat * seats;
+  const altARR  = altP.acvPerSeat  * seats;
   const diffARR = altARR - deckARR;
-  const totalDiff = diffARR * rev.totalEng;
-
-  document.getElementById('sw_deckACV').textContent  = '$' + deckACV.toLocaleString();
-  document.getElementById('sw_altACV').textContent   = '$' + altACV.toLocaleString();
-  document.getElementById('sw_delta').textContent    = (diffARR>=0?'+':'') + fmt$(diffARR);
-  document.getElementById('sw_seats').textContent    = Math.round(seats);
-  document.getElementById('sw_s2').textContent       = Math.round(seats);
-  document.getElementById('sw_deck_arr').textContent = fmtFull$(deckARR);
-  document.getElementById('sw_alt_arr').textContent  = fmtFull$(altARR);
-  document.getElementById('sw_diff').textContent     = fmtFull$(diffARR);
-  document.getElementById('sw_engCount').textContent = rev.totalEng.toFixed(1);
-  document.getElementById('sw_totalDiff').textContent= fmt$(totalDiff);
+  document.getElementById('sw_deckACV').textContent   = '$' + deckP.acvPerSeat.toLocaleString();
+  document.getElementById('sw_altACV').textContent    = '$' + altP.acvPerSeat.toLocaleString();
+  document.getElementById('sw_deck_arr').textContent  = fmtFull$(deckARR);
+  document.getElementById('sw_alt_arr').textContent   = fmtFull$(altARR);
+  document.getElementById('sw_diff').textContent      = (diffARR>=0?'+':'') + fmtFull$(diffARR);
+  document.getElementById('sw_seats').textContent     = seats;
+  document.getElementById('sw_s2').textContent        = seats;
+  const buTotalEng = capCeil.reduce((a,b)=>a+b,0);
+  document.getElementById('sw_engCount').textContent  = buTotalEng.toFixed(1);
+  document.getElementById('sw_totalDiff').textContent = fmt$(diffARR * buTotalEng);
 
   renderToolSummary();
 
-  // ── Part 2 ──
-  renderCapacityGrid(ramp);
-  document.getElementById('buMaxEng').textContent   = totalCap.toFixed(0);
-  document.getElementById('buMaxSeats').textContent = Math.round(totalCap * S.avgSeats).toLocaleString();
-  const buRev = totalCap * p.svcFeeBlended + totalCap * S.avgSeats * p.acvPerSeat;
-  document.getElementById('buRevenue').textContent  = fmt$(buRev);
+  // ── Step 2 ──
+  renderCapGrid();
+  const buRev = computeRev(capCeil, p);
+  document.getElementById('bu_totalEng').textContent = buRev.totalEng.toFixed(0);
+  document.getElementById('bu_svc').textContent      = fmt$(buRev.svcRev);
+  document.getElementById('bu_arr').textContent      = fmt$(buRev.arrBooked);
+  document.getElementById('bu_eoy').textContent      = fmt$(buRev.eoy26);
+  document.getElementById('buSvcTotal').textContent  = fmt$(buRev.svcRev);
+  document.getElementById('buArrTotal').textContent  = fmt$(buRev.arrBooked);
+  document.getElementById('buEoyTotal').textContent  = fmt$(buRev.eoy26);
+  renderBUCharts(capCeil, p);
 
-  // ── Reconciliation Panel ──
-  const buRevFull = computeRevenue(capCeil.map((_,i)=>({planned:capCeil[i],raw:capCeil[i],atCap:false})), p);
-  const tdRevFull = computeRevenue(rampTD, p);
-  const reconRev  = computeRevenue(ramp, p);
+  // ── Step 3 ──
+  const goalAM = parseFloat(document.getElementById('goalA').value) || 5;
+  const goalBM = parseFloat(document.getElementById('goalB').value) || 25;
+  S.goalA = goalAM; S.goalB = goalBM;
 
-  const buTotal = capCeil.reduce((a,b)=>a+b,0);
-  const tdTotal = rampTD.reduce((a,m)=>a+m.planned,0);
-  const reconTotal = ramp.reduce((a,m)=>a+m.planned,0);
+  const solA = solveEngFromTarget(goalAM, p);
+  const solB = solveEngFromTarget(goalBM, p);
 
-  document.getElementById('reconBUEng').textContent = buTotal.toFixed(1);
-  document.getElementById('reconTDEng').textContent = tdTotal.toFixed(1);
-  document.getElementById('reconBUSvc').textContent = fmt$(buTotal * p.svcFeeBlended);
-  document.getElementById('reconBUARR').textContent = fmt$(buTotal * rev.avgSeatsW * p.acvPerSeat);
-  document.getElementById('reconBUEOY').textContent = fmt$(capCeil.reduce((a,v,i)=>a+v*rev.avgSeatsW*p.acvPerSeat*MONTHS_REMAINING[i]/12,0));
-  document.getElementById('reconTDSvc').textContent = fmt$(tdRevFull.svcRev);
-  document.getElementById('reconTDARR').textContent = fmt$(tdRevFull.arrBooked);
-  document.getElementById('reconTDEOY').textContent = fmt$(tdRevFull.eoy26);
-
-  const gap = tdTotal - buTotal;
-  const gapPct = buTotal > 0 ? (gap / buTotal * 100).toFixed(0) : 0;
-  let verdictHTML = '';
-  if (Math.abs(gap) < 0.5) {
-    verdictHTML = `<strong>Supply and demand are in balance.</strong> The top-down pipeline and bottoms-up capacity are aligned at <strong>${reconTotal.toFixed(1)} engagements</strong>. Either number is defensible. The reconciled model carries <strong>${fmt$(reconRev.totalRev)}</strong> into comp.`;
-  } else if (gap > 0) {
-    verdictHTML = `<strong class="red">Demand exceeds supply by ${Math.abs(gap).toFixed(1)} engagements (${Math.abs(gapPct)}%).</strong> The pipeline is generating more qualified demand than the team can deliver. The reconciled model uses the <strong>bottoms-up ceiling</strong> — <strong>${buTotal.toFixed(1)} engagements</strong> — as the conservative, defensible number. To close the gap, hire faster or tighten close rates in Part 3.`;
-  } else {
-    verdictHTML = `<strong class="green">Capacity exceeds demand by ${Math.abs(gap).toFixed(1)} engagements (${Math.abs(gapPct)}%).</strong> The team has more bandwidth than the pipeline can fill. The reconciled model uses the <strong>top-down demand</strong> — <strong>${tdTotal.toFixed(1)} engagements</strong>. Consider accelerating the growth target or expanding the account list.`;
-  }
-  document.getElementById('reconVerdictText').innerHTML = verdictHTML;
-
-  const choiceLabels = { reconciled:'Reconciled (conservative)', bu:'Bottoms-Up ceiling', td:'Top-Down demand' };
-  const choiceNotes  = {
-    reconciled: 'The model uses the lower of bottoms-up and top-down each month — the conservative, defensible number.',
-    bu:         'Using the full capacity ceiling — assumes the team is 100% utilized every month.',
-    td:         'Using the top-down demand signal — assumes every planned engagement closes and delivers.'
-  };
-  document.getElementById('reconChoiceNote').textContent = choiceNotes[S.reconChoice];
-  document.getElementById('reconCarriesVal').textContent = `${reconTotal.toFixed(1)} engagements · ${fmt$(reconRev.totalRev)} total revenue (${choiceLabels[S.reconChoice]})`;
-
-  // Highlight active column
-  document.getElementById('reconBUCol').classList.toggle('active-col', S.reconChoice === 'bu');
-  document.getElementById('reconTDCol').classList.toggle('active-col', S.reconChoice === 'td');
-
-  // ── Charts ──
-  renderCharts(ramp, p, rev.avgSeatsW);
-
-  // ── Part 3 ──
-  renderRampGrid('rampY1', ramp);
-  renderTierGrid();
-
-  document.getElementById('tdSvcRev').textContent = fmt$(rev.svcRev);
-  document.getElementById('tdARR').textContent    = fmt$(rev.arrBooked);
-  document.getElementById('tdEOY26').textContent  = fmt$(rev.eoy26);
-  document.getElementById('tdTotal').textContent  = fmt$(rev.totalRev);
-
-  // Delta: EOY ARR difference between models
-  const deckRev = computeRevenue(ramp, PRICING.deck);
-  const altRev  = computeRevenue(ramp, PRICING.alt);
-  const delta   = altRev.eoy26 - deckRev.eoy26;
-  document.getElementById('tdDelta').textContent = (delta>=0?'+':'') + fmt$(delta);
-
-  // Pipeline note
-  const utilPct = totalCap > 0 ? (rev.totalEng / totalCap * 100).toFixed(0) : 0;
-  const pipeNote = document.getElementById('pipelineNote');
-  if (utilPct > 90) {
-    pipeNote.className = 'context-note danger';
-    pipeNote.innerHTML = `⚠ Pipeline utilization is <strong>${utilPct}%</strong> — demand is hitting the capacity ceiling. Hire more engineers or reduce the growth target.`;
-  } else if (utilPct > 65) {
-    pipeNote.className = 'context-note warn';
-    pipeNote.innerHTML = `Pipeline utilization is <strong>${utilPct}%</strong> — approaching capacity. Monitor closely as the ramp accelerates.`;
-  } else {
-    pipeNote.className = 'context-note';
-    pipeNote.innerHTML = `Pipeline utilization is <strong>${utilPct}%</strong> of capacity ceiling. The team has headroom through December — consider accelerating the growth target.`;
-  }
-
-  // ── Part 4 ──
-  document.getElementById('compRetainer').textContent = fmt$(comp.retainer8mo);
-  document.getElementById('compSvc').textContent      = fmt$(comp.svcVar);
-  document.getElementById('compARR').textContent      = fmt$(comp.arrVar);
-  document.getElementById('compTotal').textContent    = fmt$(comp.total);
-  document.getElementById('compEquity').textContent   = fmt$(comp.equity);
-
-  // FT trigger
-  document.getElementById('triggerAmount').textContent = fmtFull$(comp.ftTrigger);
-  document.getElementById('sbTrigger').textContent     = fmt$(comp.ftTrigger);
-
-  // Find which month the annualized run-rate hits the trigger
-  let triggerMonth = 'Not reached by Dec 2026';
-  for (let i = 0; i < N; i++) {
-    const annualRunRate = (ramp[i].planned * p.svcFeeBlended + ramp[i].planned * rev.avgSeatsW * p.acvPerSeat) * 12;
-    if (annualRunRate >= comp.ftTrigger) {
-      triggerMonth = `Trajectory hits trigger: ${MONTHS[i]} 2026`;
-      break;
+  const setGoalCol = (prefix, sol, labelM) => {
+    document.getElementById(`g${prefix}_label`).textContent = '$' + labelM + 'M';
+    document.getElementById(`g${prefix}_eng`).textContent = sol.totalEng.toFixed(1);
+    document.getElementById(`g${prefix}_logosPerMo`).textContent = sol.logosPerMo.toFixed(1) + ' / mo';
+    document.getElementById(`g${prefix}_svc`).textContent = fmt$(sol.rev.svcRev);
+    document.getElementById(`g${prefix}_arr`).textContent = fmt$(sol.rev.arrBooked);
+    document.getElementById(`g${prefix}_eoy`).textContent = fmt$(sol.rev.eoy26);
+    const feasEl = document.getElementById(`g${prefix}_feasible`);
+    if (sol.feasible) {
+      feasEl.textContent = 'Yes ✓';
+      feasEl.style.color = 'var(--green)';
+    } else {
+      feasEl.textContent = 'No — need more eng';
+      feasEl.style.color = 'var(--red)';
     }
+    const needEl = document.getElementById(`g${prefix}_engNeeded`);
+    needEl.textContent = sol.feasible ? 'Current team sufficient' : '~' + sol.engNeeded + ' engineers';
+    needEl.style.color = sol.feasible ? 'var(--green)' : 'var(--red)';
+  };
+  setGoalCol('A', solA, goalAM);
+  setGoalCol('B', solB, goalBM);
+
+  renderGoalCharts(solA.engArr, solB.engArr);
+
+  // Goal feasibility note
+  const noteEl = document.getElementById('goalFeasNote');
+  if (!solA.feasible && !solB.feasible) {
+    noteEl.className = 'context-note danger';
+    noteEl.innerHTML = `Neither scenario is achievable with the current team in Step 2. Scenario A requires ~${solA.engNeeded} engineers; Scenario B requires ~${solB.engNeeded}. Adjust the hiring plan in Step 2 or lower the goals.`;
+  } else if (!solB.feasible) {
+    noteEl.className = 'context-note warn';
+    noteEl.innerHTML = `Scenario A ($${goalAM}M) is achievable with the current team. Scenario B ($${goalBM}M) requires ~${solB.engNeeded} engineers — more than the current ramp provides. Adjust Step 2 to unlock Scenario B.`;
+  } else {
+    noteEl.className = 'context-note';
+    noteEl.innerHTML = `Both scenarios are achievable with the current team in Step 2. The team has capacity for up to ${totalCap.toFixed(0)} total engagements.`;
   }
-  document.getElementById('triggerMonth').textContent    = triggerMonth;
-  document.getElementById('sbTriggerMonth').textContent  = triggerMonth.replace('Trajectory hits trigger: ','');
-  document.getElementById('triggerDesc').textContent     =
-    `Below ${fmtFull$(comp.ftTrigger)} annualized revenue, the variable structure (retainer + ${S.svcPct}% services + ${S.arrPct}% ARR) costs Chiri less than a full-time salary. Above this threshold, converting to FT saves the company money and locks in the GTM leader.`;
+
+  // ── Step 4 ──
+  const compBU = computeComp(buRev);
+  const compA  = computeComp(solA.rev);
+  const compB  = computeComp(solB.rev);
+
+  const fillCompCol = (prefix, rev, comp) => {
+    document.getElementById(`cs_${prefix}_total`).textContent = fmt$(comp.total);
+    document.getElementById(`cs_${prefix}_base`).textContent  = fmt$(comp.base8mo);
+    document.getElementById(`cs_${prefix}_svc`).textContent   = fmt$(comp.svcVar);
+    document.getElementById(`cs_${prefix}_arr`).textContent   = fmt$(comp.arrVar);
+    document.getElementById(`cs_${prefix}_eq`).textContent    = fmt$(comp.equity);
+  };
+  fillCompCol('bu', buRev, compBU);
+  fillCompCol('a',  solA.rev, compA);
+  fillCompCol('b',  solB.rev, compB);
+
+  // FT trigger text
+  const ftTrigger = compBU.ftTrigger;
+  const annBU = (buRev.totalBookings / 8) * 12;
+  const annA  = (solA.rev.totalBookings / 8) * 12;
+  const annB  = (solB.rev.totalBookings / 8) * 12;
+  let ftHits = [];
+  if (annBU >= ftTrigger) ftHits.push('the Bottoms-Up plan');
+  if (annA  >= ftTrigger) ftHits.push('Scenario A');
+  if (annB  >= ftTrigger) ftHits.push('Scenario B');
+
+  const ftEl = document.getElementById('ftTriggerText');
+  ftEl.innerHTML = `Below <strong class="amber">${fmt$(ftTrigger)}</strong> in annualized total bookings, the variable structure (retainer + ${S.svcPct}% services + ${S.arrPct}% ARR) costs Chiri less than a full-time salary of <strong>${fmt$(S.ftComp)}</strong>. Above this threshold, converting Kara to full-time saves the company money — and is the moment the equity conversation becomes real.`
+    + (ftHits.length > 0
+      ? ` <span class="green">The trigger is already exceeded by: ${ftHits.join(', ')}.</span> This is a strong argument for structuring the FT role from day one.`
+      : ` <span style="color:var(--cream-muted)">None of the current scenarios exceed the trigger — the variable structure is the right starting point.</span>`);
 
   // ── Sidebar ──
-  document.getElementById('sbEOY26').textContent   = fmt$(rev.eoy26);
-  document.getElementById('sbEOY26b').textContent  = fmt$(rev.eoy26);
-  document.getElementById('sbCeiling').textContent = totalCap.toFixed(0) + ' eng';
-  document.getElementById('sbTopDown').textContent = rev.totalEng.toFixed(1) + ' eng';
-  document.getElementById('sbUtil').textContent    = utilPct + '%';
-  document.getElementById('sbSvcRev').textContent  = fmt$(rev.svcRev);
-  document.getElementById('sbARR').textContent     = fmt$(rev.arrBooked);
-  document.getElementById('sbTotal').textContent   = fmt$(rev.totalRev);
-  document.getElementById('sbKaraCash').textContent= fmt$(comp.total);
-
-  const utilEl = document.getElementById('sbUtilBar');
-  utilEl.style.width = Math.min(100, utilPct) + '%';
-  utilEl.className = 'util-fill' + (utilPct>90?' danger':utilPct>65?' warn':'');
-  document.getElementById('sbUtil').className = 'sidebar-val' + (utilPct>90?' danger':utilPct>65?' warn':' accent');
-
-  // Nav badge
-  const badge = document.getElementById('modelBadge');
-  badge.className = 'model-badge' + (S.pricingModel==='alt'?' alt-active':'');
-  document.getElementById('modelBadgeText').textContent = p.label;
-
-  // Pricing col dim
-  document.getElementById('colDeck').classList.toggle('dimmed', S.pricingModel!=='deck');
-  document.getElementById('colAlt').classList.toggle('dimmed',  S.pricingModel!=='alt');
-
-  // Toggle buttons
-  document.getElementById('toggleDeck').className = 'toggle-btn' + (S.pricingModel==='deck'?' active':'');
-  document.getElementById('toggleAlt').className  = 'toggle-btn' + (S.pricingModel==='alt'?' active-green':'');
-
-  // Preset buttons
-  ['flat','hire','aggressive','custom'].forEach(pr => {
-    const el = document.getElementById('preset'+pr.charAt(0).toUpperCase()+pr.slice(1));
-    if (el) el.className = 'toggle-btn' + (S.preset===pr?' active':'');
-  });
-
-  // Growth pattern buttons
-  ['Flat','Linear','Exp','Scurve'].forEach(gp => {
-    const el = document.getElementById('gp'+gp);
-    if (el) el.className = 'toggle-btn' + (S.growthPattern===gp.toLowerCase()?' active':'');
-  });
-
-  saveToURL();
+  document.getElementById('sb_pricing').textContent = p.label;
+  document.getElementById('sb_acv').textContent     = '$' + p.acvPerSeat.toLocaleString() + '/seat/yr';
+  document.getElementById('sb_bu_eoy').textContent  = fmt$(buRev.eoy26);
+  document.getElementById('sb_bu_eng').textContent  = buRev.totalEng.toFixed(0) + ' eng';
+  document.getElementById('sb_bu_svc').textContent  = fmt$(buRev.svcRev);
+  document.getElementById('sb_bu_arr').textContent  = fmt$(buRev.arrBooked);
+  document.getElementById('sb_bu_total').textContent= fmt$(buRev.totalBookings);
+  document.getElementById('sb_gA').textContent      = '$' + goalAM + 'M → ' + fmt$(solA.rev.eoy26) + ' EOY';
+  document.getElementById('sb_gB').textContent      = '$' + goalBM + 'M → ' + fmt$(solB.rev.eoy26) + ' EOY';
+  document.getElementById('sb_comp_bu').textContent = fmt$(compBU.total);
+  document.getElementById('sb_comp_a').textContent  = fmt$(compA.total);
+  document.getElementById('sb_comp_b').textContent  = fmt$(compB.total);
+  document.getElementById('sb_ft_trigger').textContent = fmt$(ftTrigger);
 }
 
-// ─── EVENT HANDLERS ──────────────────────────────────────
-function setPricingModel(m) { S.pricingModel = m; recompute(); }
-
-function applyPreset(name) {
-  S.preset = name;
-  if (name !== 'custom' && PRESETS[name]) {
-    S.engineers = [...PRESETS[name].eng];
-    S.capacity  = [...PRESETS[name].cap];
-  }
-  recompute();
+// ─── SCROLL TO STEP ──────────────────────────────────────
+function scrollToStep(n) {
+  document.getElementById('step' + n).scrollIntoView({ behavior:'smooth', block:'start' });
+  document.querySelectorAll('.nav-pill').forEach((el,i) => el.classList.toggle('active', i+1===n));
 }
 
-function setGrowthPattern(gp) { S.growthPattern = gp; recompute(); }
-
-function onCellEdit(field, idx, val) {
-  S[field][idx] = parseFloat(val) || 0;
-  S.preset = 'custom';
-  recompute();
-}
-
-function onSlider(id) {
-  const el = document.getElementById(id);
-  const v  = parseFloat(el.value);
-  S[id] = v;
-  const labels = {
-    avgSeats:    () => document.getElementById('avgSeatsVal').textContent = v,
-    m1Eng:       () => document.getElementById('m1EngVal').textContent = v,
-    growthFactor:() => document.getElementById('growthFactorVal').textContent = v,
-    retainer:    () => document.getElementById('retainerVal').textContent = '$' + v.toLocaleString(),
-    svcPct:      () => document.getElementById('svcPctVal').textContent = v + '%',
-    arrPct:      () => document.getElementById('arrPctVal').textContent = v + '%',
-    equity:      () => document.getElementById('equityVal').textContent = v + '%',
-    valuation:   () => document.getElementById('valuationVal').textContent = '$' + v + 'M',
-    ftComp:      () => document.getElementById('ftCompVal').textContent = '$' + v.toLocaleString(),
-    ftVest:      () => document.getElementById('ftVestVal').textContent = v + '%',
+// ─── SHARE URL ───────────────────────────────────────────
+function shareURL() {
+  const snap = {
+    pm: S.pricingModel, as: S.avgSeats,
+    en: S.engineers, ca: S.capacity,
+    ga: S.goalA, gb: S.goalB,
+    re: S.retainer, sp: S.svcPct, ap: S.arrPct,
+    eq: S.equity, va: S.valuation, fc: S.ftComp,
+    to: S.tools.map(t=>[t.on?1:0, t.price])
   };
-  if (labels[id]) labels[id]();
-  recompute();
+  const hash = btoa(JSON.stringify(snap));
+  const url = location.href.split('#')[0] + '#' + hash;
+  navigator.clipboard.writeText(url).then(() => alert('Scenario URL copied to clipboard.'));
 }
 
-function copyShareURL() {
-  navigator.clipboard.writeText(window.location.href).then(() => {
-    const msg = document.getElementById('copyMsg');
-    msg.style.display = 'block';
-    setTimeout(() => msg.style.display = 'none', 2500);
-  });
+function loadFromHash() {
+  try {
+    const snap = JSON.parse(atob(location.hash.slice(1)));
+    if (snap.pm) S.pricingModel = snap.pm;
+    if (snap.as) S.avgSeats    = snap.as;
+    if (snap.en) S.engineers   = snap.en;
+    if (snap.ca) S.capacity    = snap.ca;
+    if (snap.ga) S.goalA       = snap.ga;
+    if (snap.gb) S.goalB       = snap.gb;
+    if (snap.re) S.retainer    = snap.re;
+    if (snap.sp) S.svcPct      = snap.sp;
+    if (snap.ap) S.arrPct      = snap.ap;
+    if (snap.eq) S.equity      = snap.eq;
+    if (snap.va) S.valuation   = snap.va;
+    if (snap.fc) S.ftComp      = snap.fc;
+    if (snap.to) snap.to.forEach((t,i)=>{ S.tools[i].on=!!t[0]; S.tools[i].price=t[1]; });
+    // Sync sliders
+    ['avgSeats','retainer','svcPct','arrPct','equity','valuation','ftComp'].forEach(id=>{
+      const el=document.getElementById(id); if(el) el.value=S[id];
+    });
+    if (snap.ga) document.getElementById('goalA').value = snap.ga;
+    if (snap.gb) document.getElementById('goalB').value = snap.gb;
+    if (snap.pm) {
+      document.getElementById('toggleDeck').className = 'toggle-btn' + (snap.pm==='deck'?' active':'');
+      document.getElementById('toggleAlt').className  = 'toggle-btn' + (snap.pm==='alt'?' active-green':'');
+    }
+    return true;
+  } catch(e) { return false; }
 }
 
 // ─── INIT ────────────────────────────────────────────────
-window.addEventListener('DOMContentLoaded', () => {
-  loadFromURL();
+(function init() {
   renderToolRows();
+  loadFromHash();
+  // Sync all slider display values
+  document.getElementById('avgSeatsVal').textContent = S.avgSeats + ' seats';
+  document.getElementById('retainerVal').textContent = '$' + S.retainer.toLocaleString() + '/mo';
+  document.getElementById('svcPctVal').textContent   = S.svcPct + '%';
+  document.getElementById('arrPctVal').textContent   = S.arrPct + '%';
+  document.getElementById('equityVal').textContent   = S.equity.toFixed(2) + '%';
+  document.getElementById('ftCompVal').textContent   = '$' + (S.ftComp/1000).toFixed(0) + 'K';
+  document.getElementById('valuationVal').textContent= '$' + S.valuation + 'M';
   recompute();
-});
+
+  // Nav pill scroll spy
+  const steps = [1,2,3,4].map(n => document.getElementById('step'+n));
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        const idx = steps.indexOf(e.target);
+        document.querySelectorAll('.nav-pill').forEach((el,i) => el.classList.toggle('active', i===idx));
+      }
+    });
+  }, { threshold: 0.3 });
+  steps.forEach(s => observer.observe(s));
+})();
 </script>
 </body>
 </html>
