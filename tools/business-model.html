@@ -91,11 +91,11 @@ body {
 
 /* ── MAIN CONTENT + SIDEBAR ── */
 .content-wrap { display: flex; flex: 1; }
-.main-content { flex: 1; min-width: 0; }
+.main-content { flex: 1; min-width: 0; padding-right: 0; }
 .sidebar {
-  width: 220px; flex-shrink: 0;
+  width: 200px; flex-shrink: 0;
   position: sticky; top: 56px; height: calc(100vh - 56px); overflow-y: auto;
-  padding: 24px 20px;
+  padding: 20px 16px;
   background: var(--obsidian-mid);
   border-left: 1px solid var(--border);
 }
@@ -138,7 +138,7 @@ body {
 .step-title { font-family: var(--font-display); font-size: clamp(22px, 2.5vw, 32px); font-weight: 600; color: var(--cream); line-height: 1.2; margin-bottom: 10px; }
 .step-title em { color: var(--amber); font-style: italic; }
 .step-sub { font-size: 11px; color: var(--cream-muted); line-height: 1.7; max-width: 680px; }
-.step-body { padding: 36px 48px; }
+.step-body { padding: 36px 40px; }
 
 /* ── TOGGLE BUTTONS ── */
 .toggle-group { display: flex; gap: 6px; flex-wrap: wrap; }
@@ -238,7 +238,7 @@ body {
 /* ── CHARTS ── */
 .chart-section { margin-bottom: 28px; }
 .chart-section-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-muted); margin-bottom: 16px; }
-.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+.chart-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
 .chart-card { background: var(--obsidian-card); border: 1px solid var(--border); padding: 20px; }
 .chart-card-title { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--amber); margin-bottom: 4px; }
 .chart-card-sub { font-size: 9px; color: var(--cream-dim); margin-bottom: 16px; }
@@ -433,7 +433,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     <div class="pricing-col" id="colDeck">
       <div class="pricing-col-label">Current Deck Pricing</div>
       <div class="pricing-big" id="d_acv">—</div>
-      <div class="pricing-unit">per seat / year</div>
+      <div class="pricing-unit">per seat / month &nbsp;<span style="color:var(--cream-dim);font-size:9px" id="d_acv_annual"></span></div>
       <div class="pricing-rows">
         <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="d_seats">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val amber" id="d_arrEng">—</span></div>
@@ -442,9 +442,9 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       </div>
     </div>
     <div class="pricing-col" id="colAlt">
-      <div class="pricing-col-label">Replacement-Value Pricing</div>
+      <div class="pricing-col-label">Replacement-Value Pricing · Business Tier</div>
       <div class="pricing-big green" id="a_acv">—</div>
-      <div class="pricing-unit">per seat / year</div>
+      <div class="pricing-unit">per seat / month &nbsp;<span style="color:var(--cream-dim);font-size:9px" id="a_acv_annual"></span></div>
       <div class="pricing-rows">
         <div class="pricing-row"><span class="pricing-row-key">Avg seats per deployment</span><span class="pricing-row-val" id="a_seats">—</span></div>
         <div class="pricing-row"><span class="pricing-row-key">ARR per engagement</span><span class="pricing-row-val green" id="a_arrEng">—</span></div>
@@ -505,7 +505,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   <div class="step-header-text">
     <div class="step-label">Step 02 · Bottoms-Up</div>
     <div class="step-title">Given this team, <em>what can we build?</em></div>
-    <div class="step-sub">Start with the hiring plan. Set how many engineers come on each month and how many engagements each can handle. The model calculates the maximum revenue the team can deliver — and shows what that looks like month by month through December 2026. This is the supply-side view.</div>
+    <div class="step-sub">Start with the hiring plan. Set how many engineers come on each month and how many clients each can handle. The model calculates the maximum revenue the team can deliver — and shows what that looks like month by month through December 2026. This is the supply-side ceiling.</div>
   </div>
 </div>
 <div class="step-body">
@@ -527,7 +527,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
           <th>Metric</th>
           <th class="month-th">MAY</th><th class="month-th">JUN</th><th class="month-th">JUL</th>
           <th class="month-th">AUG</th><th class="month-th">SEP</th><th class="month-th">OCT</th>
-          <th class="month-th">NOV</th><th class="month-th">DEC</th>
+          <th class="month-th">NOV</th><th class="month-th">DEC</th><th class="month-th" style="color:var(--amber);border-left:1px solid var(--border-amber)">TOTAL</th>
         </tr>
       </thead>
       <tbody id="capTbody"></tbody>
@@ -537,7 +537,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   <!-- Stat strip -->
   <div class="stat-strip">
     <div class="stat-cell">
-      <div class="stat-label">Total Engagements</div>
+      <div class="stat-label">Total Clients</div>
       <div class="stat-value" id="bu_totalEng">—</div>
       <div class="stat-note">May–Dec 2026</div>
     </div>
@@ -599,7 +599,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   <div class="step-header-text">
     <div class="step-label">Step 03 · Goal-Down</div>
     <div class="step-title">Start with the goal. <em>Work backwards.</em></div>
-    <div class="step-sub">Set a total revenue target for May–December 2026. The model solves backwards: how many engagements are required, what that means for monthly new logos Kara needs to generate, and whether the team in Step 2 can actually deliver it. Compare two scenarios side by side.</div>
+    <div class="step-sub">Set a total revenue target for May–December 2026. The model solves backwards: how many clients are required, what that means for monthly new logos Kara needs to generate, and whether the team in Step 2 can actually deliver it. Compare two scenarios side by side.</div>
   </div>
 </div>
 <div class="step-body">
@@ -634,25 +634,23 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     <div class="goal-compare-col" id="goalColA">
       <div class="goal-compare-label amber">Scenario A · <span id="gA_label">$5M</span></div>
       <div class="goal-compare-rows">
-        <div class="goal-compare-row"><span class="goal-compare-key">Required engagements</span><span class="goal-compare-val amber" id="gA_eng">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Avg new logos / month</span><span class="goal-compare-val amber" id="gA_logosPerMo">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Required clients</span><span class="goal-compare-val amber" id="gA_eng">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Avg new clients / month</span><span class="goal-compare-val amber" id="gA_logosPerMo">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">Services revenue</span><span class="goal-compare-val" id="gA_svc">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">ARR booked ✱</span><span class="goal-compare-val" id="gA_arr">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">EOY run rate ✱✱</span><span class="goal-compare-val amber" id="gA_eoy">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Team can deliver?</span><span class="goal-compare-val" id="gA_feasible">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gA_engNeeded">—</span></div>
+        <div class="goal-compare-row" id="gA_engNeededRow"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gA_engNeeded">—</span></div>
       </div>
     </div>
     <div class="goal-compare-col" id="goalColB">
       <div class="goal-compare-label" style="color:var(--green)">Scenario B · <span id="gB_label">$25M</span></div>
       <div class="goal-compare-rows">
-        <div class="goal-compare-row"><span class="goal-compare-key">Required engagements</span><span class="goal-compare-val green" id="gB_eng">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Avg new logos / month</span><span class="goal-compare-val green" id="gB_logosPerMo">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Required clients</span><span class="goal-compare-val green" id="gB_eng">—</span></div>
+        <div class="goal-compare-row"><span class="goal-compare-key">Avg new clients / month</span><span class="goal-compare-val green" id="gB_logosPerMo">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">Services revenue</span><span class="goal-compare-val" id="gB_svc">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">ARR booked ✱</span><span class="goal-compare-val" id="gB_arr">—</span></div>
         <div class="goal-compare-row"><span class="goal-compare-key">EOY run rate ✱✱</span><span class="goal-compare-val green" id="gB_eoy">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Team can deliver?</span><span class="goal-compare-val" id="gB_feasible">—</span></div>
-        <div class="goal-compare-row"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gB_engNeeded">—</span></div>
+        <div class="goal-compare-row" id="gB_engNeededRow"><span class="goal-compare-key">Engineers needed</span><span class="goal-compare-val" id="gB_engNeeded">—</span></div>
       </div>
     </div>
   </div>
@@ -662,8 +660,8 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     <div class="chart-section-label">What each goal looks like month by month</div>
     <div class="chart-grid">
       <div class="chart-card">
-        <div class="chart-card-title">Scenario A vs B · Engagements / Month</div>
-        <div class="chart-card-sub">New logos required to hit each target</div>
+        <div class="chart-card-title">Scenario A vs B · Clients / Month</div>
+        <div class="chart-card-sub">New clients required to hit each target</div>
         <canvas id="goalEngChart" height="180"></canvas>
       </div>
       <div class="chart-card">
@@ -674,7 +672,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     </div>
   </div>
 
-  <div class="context-note" id="goalFeasNote">Adjust the goals above to see what changes.</div>
+  <div class="context-note" id="goalFeasNote">Both scenarios are achievable with the current team in Step 2.</div>
 
 </div>
 </div><!-- /step3 -->
@@ -688,7 +686,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
   <div class="step-header-text">
     <div class="step-label">Step 04 · Kara's Comp</div>
     <div class="step-title">Once we agree on the goal, <em>what does Kara earn?</em></div>
-    <div class="step-sub">Set the base retainer and commission rates. The model calculates Kara's total cash across the three scenarios: the bottoms-up plan from Step 2, Scenario A from Step 3, and Scenario B from Step 3. It also calculates the full-time conversion trigger — the revenue threshold where converting to FT saves Chiri money and unlocks the equity conversation.</div>
+    <div class="step-sub">Set the base retainer and commission rates. The model calculates Kara's total cash across three views: the bottoms-up ceiling from Step 2, Scenario A from Step 3, and Scenario B from Step 3. It also calculates the full-time conversion trigger — the revenue threshold where converting to FT saves Chiri money and unlocks the equity conversation.</div>
   </div>
 </div>
 <div class="step-body">
@@ -721,7 +719,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
       </div>
       <div class="slider-row">
         <div class="slider-label">Equity % (at conversion)</div>
-        <input type="range" class="chiri-slider" id="equity" min="0.5" max="10" step="0.25" value="2" oninput="onSlider('equity')">
+        <input type="range" class="chiri-slider" id="equity" min="0" max="3" step="0.25" value="1.5" oninput="onSlider('equity')">
         <div class="slider-val" id="equityVal">2.0%</div>
       </div>
       <div class="slider-row">
@@ -802,7 +800,7 @@ input[type=number]::-webkit-inner-spin-button { -webkit-appearance: none; }
     <div class="sidebar-big-label">EOY Run Rate</div>
     <div class="sidebar-divider"></div>
     <div class="sidebar-row">
-      <span class="sidebar-key">Total engagements</span>
+      <span class="sidebar-key">Total clients</span>
       <span class="sidebar-val" id="sb_bu_eng">—</span>
     </div>
     <div class="sidebar-row">
@@ -864,8 +862,8 @@ const N = 8;
 const MONTHS_REMAINING = [8,7,6,5,4,3,2,1]; // months left in 2026 after each month closes
 
 const PRICING = {
-  deck: { label:'Deck Pricing', acvPerSeat:300, svcFeeBlended:75000 },
-  alt:  { label:'Replacement Value', acvPerSeat:1188, svcFeeBlended:75000 }
+  deck: { label:'Deck Pricing', acvPerSeatMo:29, acvPerSeat:348, svcFeeBlended:75000 },
+  alt:  { label:'Replacement Value', acvPerSeatMo:99, acvPerSeat:1188, svcFeeBlended:75000 }
 };
 
 const TOOLS_DEFAULT = [
@@ -1024,9 +1022,12 @@ function solveEngFromTarget(targetM, p) {
 // ─── RENDER CAPACITY GRID ────────────────────────────────
 function renderCapGrid() {
   const maxEng = S.engineers.map((e,i) => e * S.capacity[i]);
-  const engRow = `<tr><td>Engineers</td>${S.engineers.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0" max="50" onchange="onCellEdit('engineers',${i},this.value)"></td>`).join('')}</tr>`;
-  const capRow = `<tr><td>Eng/mo</td>${S.capacity.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0.5" max="8" step="0.5" onchange="onCellEdit('capacity',${i},this.value)"></td>`).join('')}</tr>`;
-  const maxRow = `<tr><td style="color:var(--amber)">Max Engagements</td>${maxEng.map(v=>`<td class="month-td cap-val amber">${v.toFixed(0)}</td>`).join('')}</tr>`;
+  const totalEng = S.engineers.reduce((a,b)=>a+b,0);
+  const totalCap2 = S.capacity.reduce((a,b)=>a+b,0);
+  const totalMax = maxEng.reduce((a,b)=>a+b,0);
+  const engRow = `<tr><td>Engineers</td>${S.engineers.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0" max="50" onchange="onCellEdit('engineers',${i},this.value)"></td>`).join('')}<td class="month-td cap-val" style="border-left:1px solid var(--border-amber);color:var(--cream-muted)">${totalEng}</td></tr>`;
+  const capRow = `<tr><td>Eng/mo</td>${S.capacity.map((v,i)=>`<td class="month-td"><input type="number" class="cap-input" value="${v}" min="0.5" max="8" step="0.5" onchange="onCellEdit('capacity',${i},this.value)"></td>`).join('')}<td class="month-td cap-val" style="border-left:1px solid var(--border-amber);color:var(--cream-muted)">${(totalCap2/N).toFixed(1)} avg</td></tr>`;
+  const maxRow = `<tr><td style="color:var(--amber)">Max Clients</td>${maxEng.map(v=>`<td class="month-td cap-val amber">${v.toFixed(0)}</td>`).join('')}<td class="month-td cap-val amber" style="border-left:1px solid var(--border-amber);font-weight:700">${totalMax.toFixed(0)}</td></tr>`;
   document.getElementById('capTbody').innerHTML = engRow + capRow + maxRow;
 }
 
@@ -1159,8 +1160,10 @@ function recompute() {
   // ── Step 1 ──
   const deckP = PRICING.deck, altP = PRICING.alt;
   const seats = S.avgSeats;
-  document.getElementById('d_acv').textContent     = '$' + deckP.acvPerSeat.toLocaleString();
-  document.getElementById('a_acv').textContent     = '$' + altP.acvPerSeat.toLocaleString();
+  document.getElementById('d_acv').textContent     = '$' + deckP.acvPerSeatMo.toLocaleString();
+  document.getElementById('a_acv').textContent     = '$' + altP.acvPerSeatMo.toLocaleString();
+  document.getElementById('d_acv_annual').textContent = '= $' + deckP.acvPerSeat.toLocaleString() + '/yr';
+  document.getElementById('a_acv_annual').textContent = '= $' + altP.acvPerSeat.toLocaleString() + '/yr';
   document.getElementById('d_seats').textContent   = seats + ' seats';
   document.getElementById('a_seats').textContent   = seats + ' seats';
   document.getElementById('d_arrEng').textContent  = fmt$(deckP.acvPerSeat * seats);
@@ -1176,8 +1179,8 @@ function recompute() {
   const deckARR = deckP.acvPerSeat * seats;
   const altARR  = altP.acvPerSeat  * seats;
   const diffARR = altARR - deckARR;
-  document.getElementById('sw_deckACV').textContent   = '$' + deckP.acvPerSeat.toLocaleString();
-  document.getElementById('sw_altACV').textContent    = '$' + altP.acvPerSeat.toLocaleString();
+  document.getElementById('sw_deckACV').textContent   = '$' + deckP.acvPerSeatMo.toLocaleString() + '/mo';
+  document.getElementById('sw_altACV').textContent    = '$' + altP.acvPerSeatMo.toLocaleString() + '/mo';
   document.getElementById('sw_deck_arr').textContent  = fmtFull$(deckARR);
   document.getElementById('sw_alt_arr').textContent   = fmtFull$(altARR);
   document.getElementById('sw_diff').textContent      = (diffARR>=0?'+':'') + fmtFull$(diffARR);
@@ -1216,17 +1219,15 @@ function recompute() {
     document.getElementById(`g${prefix}_svc`).textContent = fmt$(sol.rev.svcRev);
     document.getElementById(`g${prefix}_arr`).textContent = fmt$(sol.rev.arrBooked);
     document.getElementById(`g${prefix}_eoy`).textContent = fmt$(sol.rev.eoy26);
-    const feasEl = document.getElementById(`g${prefix}_feasible`);
-    if (sol.feasible) {
-      feasEl.textContent = 'Yes ✓';
-      feasEl.style.color = 'var(--green)';
-    } else {
-      feasEl.textContent = 'No — need more eng';
-      feasEl.style.color = 'var(--red)';
-    }
+    const needRow = document.getElementById(`g${prefix}_engNeededRow`);
     const needEl = document.getElementById(`g${prefix}_engNeeded`);
-    needEl.textContent = sol.feasible ? 'Current team sufficient' : '~' + sol.engNeeded + ' engineers';
-    needEl.style.color = sol.feasible ? 'var(--green)' : 'var(--red)';
+    if (sol.feasible) {
+      needRow.style.display = 'none';
+    } else {
+      needRow.style.display = '';
+      needEl.textContent = '~' + sol.engNeeded + ' engineers';
+      needEl.style.color = 'var(--red)';
+    }
   };
   setGoalCol('A', solA, goalAM);
   setGoalCol('B', solB, goalBM);
@@ -1240,10 +1241,10 @@ function recompute() {
     noteEl.innerHTML = `Neither scenario is achievable with the current team in Step 2. Scenario A requires ~${solA.engNeeded} engineers; Scenario B requires ~${solB.engNeeded}. Adjust the hiring plan in Step 2 or lower the goals.`;
   } else if (!solB.feasible) {
     noteEl.className = 'context-note warn';
-    noteEl.innerHTML = `Scenario A ($${goalAM}M) is achievable with the current team. Scenario B ($${goalBM}M) requires ~${solB.engNeeded} engineers — more than the current ramp provides. Adjust Step 2 to unlock Scenario B.`;
+    noteEl.innerHTML = `Scenario A ($${goalAM}M) is achievable with the current team. Scenario B ($${goalBM}M) requires ~${solB.engNeeded} engineers — more than the current ramp provides. Adjust the hiring plan in Step 2 to unlock Scenario B.`;
   } else {
     noteEl.className = 'context-note';
-    noteEl.innerHTML = `Both scenarios are achievable with the current team in Step 2. The team has capacity for up to ${totalCap.toFixed(0)} total engagements.`;
+    noteEl.innerHTML = `Both scenarios are achievable with the current team in Step 2. The team has capacity for up to ${totalCap.toFixed(0)} total clients May–Dec.`;
   }
 
   // ── Step 4 ──
@@ -1280,9 +1281,9 @@ function recompute() {
 
   // ── Sidebar ──
   document.getElementById('sb_pricing').textContent = p.label;
-  document.getElementById('sb_acv').textContent     = '$' + p.acvPerSeat.toLocaleString() + '/seat/yr';
+  document.getElementById('sb_acv').textContent     = '$' + p.acvPerSeatMo.toLocaleString() + '/seat/mo';
   document.getElementById('sb_bu_eoy').textContent  = fmt$(buRev.eoy26);
-  document.getElementById('sb_bu_eng').textContent  = buRev.totalEng.toFixed(0) + ' eng';
+  document.getElementById('sb_bu_eng').textContent  = buRev.totalEng.toFixed(0) + ' clients';
   document.getElementById('sb_bu_svc').textContent  = fmt$(buRev.svcRev);
   document.getElementById('sb_bu_arr').textContent  = fmt$(buRev.arrBooked);
   document.getElementById('sb_bu_total').textContent= fmt$(buRev.totalBookings);
