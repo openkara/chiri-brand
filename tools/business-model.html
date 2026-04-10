@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
 <style>
 /* ============================================================
    CHIRI.AI DESIGN SYSTEM
@@ -264,6 +265,236 @@ nav {
 .tier-card-count { font-size:10px; color:var(--cream-muted); margin-bottom:16px; }
 .tier-slider-group { margin-bottom:10px; }
 .tier-companies { margin-top:14px; padding-top:12px; border-top:1px solid var(--border); font-size:9px; color:var(--cream-muted); line-height:1.7; }
+
+/* ── RECONCILIATION PANEL ── */
+.recon-section {
+  background:var(--obsidian-mid);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.recon-header {
+  padding:44px 48px 28px;
+  border-bottom:1px solid var(--border);
+}
+.recon-body { padding:36px 48px; }
+
+.recon-grid {
+  display:grid;
+  grid-template-columns:1fr 60px 1fr;
+  gap:0;
+  align-items:stretch;
+  margin-bottom:28px;
+}
+.recon-col {
+  background:var(--obsidian-lift);
+  border:1px solid var(--border);
+  padding:28px;
+}
+.recon-col.active-col {
+  border-color:var(--amber-dim);
+  background:var(--amber-glow);
+}
+.recon-col-label {
+  font-size:9px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--cream-muted);
+  margin-bottom:20px;
+}
+.recon-col-label.amber { color:var(--amber); }
+.recon-col-label.green { color:var(--green); }
+.recon-big {
+  font-family:'Playfair Display',serif;
+  font-size:clamp(28px,3vw,42px);
+  font-weight:700;
+  color:var(--amber);
+  line-height:1;
+  margin-bottom:6px;
+}
+.recon-big.green { color:var(--green); }
+.recon-sub {
+  font-size:10px;
+  color:var(--cream-muted);
+  margin-bottom:20px;
+  line-height:1.6;
+}
+.recon-rows { border-top:1px solid var(--border); }
+.recon-row {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:10px 0;
+  border-bottom:1px solid var(--border);
+  font-size:10px;
+}
+.recon-row:last-child { border-bottom:none; }
+.recon-row-key { color:var(--cream-muted); }
+.recon-row-val { color:var(--cream); font-weight:500; }
+.recon-row-val.amber { color:var(--amber); }
+.recon-row-val.green { color:var(--green); }
+.recon-row-val.red   { color:var(--red); }
+
+.recon-vs {
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:0 8px;
+  gap:8px;
+}
+.recon-vs-label {
+  font-size:9px;
+  letter-spacing:0.2em;
+  text-transform:uppercase;
+  color:var(--cream-muted);
+  writing-mode:vertical-rl;
+  text-orientation:mixed;
+}
+.recon-vs-line {
+  flex:1;
+  width:1px;
+  background:var(--border);
+}
+
+.recon-verdict {
+  padding:24px 28px;
+  border:1px solid var(--border-amber);
+  background:var(--amber-faint);
+  margin-bottom:28px;
+  position:relative;
+  overflow:hidden;
+}
+.recon-verdict::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse at 0% 50%, var(--amber-glow) 0%, transparent 60%);
+  pointer-events:none;
+}
+.recon-verdict-label {
+  font-size:9px;
+  letter-spacing:0.3em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:12px;
+  position:relative;
+}
+.recon-verdict-text {
+  font-size:11px;
+  color:var(--cream-dim);
+  line-height:1.8;
+  position:relative;
+}
+.recon-verdict-text strong { color:var(--cream); }
+.recon-verdict-text .green { color:var(--green); }
+.recon-verdict-text .red   { color:var(--red); }
+
+.recon-override {
+  display:flex;
+  align-items:center;
+  gap:16px;
+  padding:16px 20px;
+  background:var(--obsidian-lift);
+  border:1px solid var(--border);
+  margin-bottom:28px;
+}
+.recon-override-label {
+  font-size:9px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--cream-muted);
+  white-space:nowrap;
+}
+.recon-override select {
+  background:var(--obsidian-mid);
+  border:1px solid var(--border-amber);
+  color:var(--amber);
+  font-family:'DM Mono',monospace;
+  font-size:10px;
+  padding:6px 10px;
+  cursor:pointer;
+  letter-spacing:0.1em;
+}
+.recon-override select:focus { outline:none; }
+.recon-override-note {
+  font-size:9px;
+  color:var(--cream-muted);
+  flex:1;
+  line-height:1.6;
+}
+.recon-carries {
+  font-size:10px;
+  color:var(--cream-muted);
+  padding:12px 16px;
+  background:var(--obsidian-mid);
+  border-left:2px solid var(--amber-dim);
+}
+.recon-carries strong { color:var(--amber); }
+
+/* ── CHARTS ── */
+.charts-section {
+  border-top:1px solid var(--border);
+}
+.charts-header {
+  padding:44px 48px 28px;
+  border-bottom:1px solid var(--border);
+}
+.charts-body { padding:36px 48px; }
+
+.chart-grid {
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:2px;
+  background:var(--border);
+  margin-bottom:28px;
+}
+.chart-panel {
+  background:var(--obsidian-mid);
+  padding:28px;
+}
+.chart-panel-label {
+  font-size:9px;
+  letter-spacing:0.25em;
+  text-transform:uppercase;
+  color:var(--amber);
+  margin-bottom:6px;
+}
+.chart-panel-sub {
+  font-size:10px;
+  color:var(--cream-muted);
+  margin-bottom:20px;
+}
+.chart-panel canvas {
+  display:block;
+  width:100% !important;
+}
+.chart-totals {
+  display:flex;
+  gap:20px;
+  margin-top:14px;
+  padding-top:14px;
+  border-top:1px solid var(--border);
+}
+.chart-total-item { flex:1; }
+.chart-total-label {
+  font-size:9px;
+  letter-spacing:0.15em;
+  text-transform:uppercase;
+  color:var(--cream-muted);
+  margin-bottom:4px;
+}
+.chart-total-val {
+  font-family:'Playfair Display',serif;
+  font-size:18px;
+  font-weight:700;
+  color:var(--amber);
+}
+.chart-total-val.green { color:var(--green); }
+
+.chart-full {
+  background:var(--obsidian-mid);
+  padding:28px;
+  margin-bottom:2px;
+}
 
 /* Revenue strip */
 .rev-strip { display:grid; grid-template-columns:repeat(4,1fr); gap:2px; background:var(--border); margin-bottom:10px; }
@@ -540,6 +771,72 @@ nav {
 <div class="section-sep"></div>
 
 <!-- ══════════════════════════════════════════════════════════
+     RECONCILIATION — BOTTOMS-UP vs TOP-DOWN
+══════════════════════════════════════════════════════════ -->
+<div class="recon-section">
+<div class="recon-header">
+  <div class="section-num">Reconciliation · Before We Go Further</div>
+  <div class="section-title">Bottoms-up ceiling <em>meets</em> top-down demand.</div>
+  <div class="section-sub">The comp section at the bottom is only as reliable as the number that flows into it. Here we surface both views explicitly, show the gap, and let you choose which number carries forward into Part 4.</div>
+</div>
+<div class="recon-body">
+
+  <div class="recon-grid">
+    <div class="recon-col" id="reconBUCol">
+      <div class="recon-col-label amber">Bottoms-Up — What the team can deliver</div>
+      <div class="recon-big" id="reconBUEng">40</div>
+      <div class="recon-sub">max engagements May–Dec 2026<br>based on engineers × capacity</div>
+      <div class="recon-rows">
+        <div class="recon-row"><span class="recon-row-key">Max services revenue</span><span class="recon-row-val amber" id="reconBUSvc">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Max ARR booked</span><span class="recon-row-val amber" id="reconBUARR">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Max EOY 2026 ARR</span><span class="recon-row-val amber" id="reconBUEOY">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Constraint</span><span class="recon-row-val" id="reconBUConstraint">Engineering headcount</span></div>
+      </div>
+    </div>
+
+    <div class="recon-vs">
+      <div class="recon-vs-line"></div>
+      <div class="recon-vs-label">vs</div>
+      <div class="recon-vs-line"></div>
+    </div>
+
+    <div class="recon-col" id="reconTDCol">
+      <div class="recon-col-label green">Top-Down — What the pipeline suggests</div>
+      <div class="recon-big green" id="reconTDEng">—</div>
+      <div class="recon-sub">planned engagements May–Dec 2026<br>based on 94 accounts × close rates</div>
+      <div class="recon-rows">
+        <div class="recon-row"><span class="recon-row-key">Planned services revenue</span><span class="recon-row-val green" id="reconTDSvc">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Planned ARR booked</span><span class="recon-row-val green" id="reconTDARR">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Planned EOY 2026 ARR</span><span class="recon-row-val green" id="reconTDEOY">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Constraint</span><span class="recon-row-val" id="reconTDConstraint">Pipeline close rates</span></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="recon-verdict" id="reconVerdict">
+    <div class="recon-verdict-label">Reconciliation verdict</div>
+    <div class="recon-verdict-text" id="reconVerdictText">Calculating…</div>
+  </div>
+
+  <div class="recon-override">
+    <div class="recon-override-label">Carry into comp:</div>
+    <select id="reconChoice" onchange="S.reconChoice=this.value; recompute();">
+      <option value="reconciled">Reconciled (lower of the two)</option>
+      <option value="bu">Bottoms-Up ceiling</option>
+      <option value="td">Top-Down demand</option>
+    </select>
+    <div class="recon-override-note" id="reconChoiceNote">The model will use the lower of bottoms-up and top-down in each month — the conservative, defensible number.</div>
+  </div>
+
+  <div class="recon-carries">
+    Part 4 comp is calculated on: <strong id="reconCarriesVal">—</strong>
+  </div>
+
+</div>
+</div>
+<div class="section-sep"></div>
+
+<!-- ══════════════════════════════════════════════════════════
      PART 3 — PIPELINE
 ══════════════════════════════════════════════════════════ -->
 <div class="section-header">
@@ -614,6 +911,69 @@ nav {
     Calculating pipeline utilization…
   </div>
 
+</div>
+<div class="section-sep"></div>
+
+<!-- ══════════════════════════════════════════════════════════
+     CHARTS — REVENUE VISUALIZATION
+══════════════════════════════════════════════════════════ -->
+<div class="charts-section">
+<div class="charts-header">
+  <div class="section-num">Revenue Visualization · Investor View</div>
+  <div class="section-title">Month by month. <em>The story in charts.</em></div>
+  <div class="section-sub">Consulting revenue and ARR growth May–December 2026 · Updates live with every lever change · Investor-deck ready.</div>
+</div>
+<div class="charts-body">
+
+  <div class="chart-grid">
+    <div class="chart-panel">
+      <div class="chart-panel-label">Consulting Revenue</div>
+      <div class="chart-panel-sub">Monthly services revenue from engagements · bars = monthly · line = cumulative</div>
+      <canvas id="chartSvc" height="200"></canvas>
+      <div class="chart-totals">
+        <div class="chart-total-item">
+          <div class="chart-total-label">Total May–Dec</div>
+          <div class="chart-total-val" id="chartSvcTotal">—</div>
+        </div>
+        <div class="chart-total-item">
+          <div class="chart-total-label">Peak Month</div>
+          <div class="chart-total-val" id="chartSvcPeak">—</div>
+        </div>
+        <div class="chart-total-item">
+          <div class="chart-total-label">Dec Run Rate (ann.)</div>
+          <div class="chart-total-val" id="chartSvcRunRate">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="chart-panel">
+      <div class="chart-panel-label">ARR Growth</div>
+      <div class="chart-panel-sub">Monthly new ARR booked · bars = new ARR · line = cumulative ARR run rate</div>
+      <canvas id="chartARR" height="200"></canvas>
+      <div class="chart-totals">
+        <div class="chart-total-item">
+          <div class="chart-total-label">Total ARR Booked</div>
+          <div class="chart-total-val" id="chartARRTotal">—</div>
+        </div>
+        <div class="chart-total-item">
+          <div class="chart-total-label">EOY 2026 ARR</div>
+          <div class="chart-total-val green" id="chartARREOY">—</div>
+        </div>
+        <div class="chart-total-item">
+          <div class="chart-total-label">Dec Monthly ARR</div>
+          <div class="chart-total-val" id="chartARRDec">—</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="chart-full">
+    <div class="chart-panel-label">Combined Revenue View</div>
+    <div class="chart-panel-sub">Consulting revenue (bars) stacked with ARR booked (bars) · line = total cumulative revenue · both models shown when toggled</div>
+    <canvas id="chartCombined" height="160"></canvas>
+  </div>
+
+</div>
 </div>
 <div class="section-sep"></div>
 
@@ -837,6 +1197,15 @@ const PRESETS = {
 // May=8, Jun=7, Jul=6, Aug=5, Sep=4, Oct=3, Nov=2, Dec=1
 const MONTHS_REMAINING = [8,7,6,5,4,3,2,1];
 
+// ─── CHART INSTANCES ────────────────────────────────────
+let chartSvc = null, chartARR = null, chartCombined = null;
+
+// ─── CHART DEFAULTS ──────────────────────────────────────
+Chart.defaults.color = 'rgba(240,234,214,0.38)';
+Chart.defaults.borderColor = 'rgba(240,234,214,0.06)';
+Chart.defaults.font.family = "'DM Mono', monospace";
+Chart.defaults.font.size = 9;
+
 // ─── STATE ───────────────────────────────────────────────
 let S = {
   pricingModel: 'deck',
@@ -860,6 +1229,7 @@ let S = {
   ftComp:    250000,
   ftVest:    25,
   tools:     TOOLS_DEFAULT.map(t => ({...t})),
+  reconChoice: 'reconciled',
 };
 
 // ─── PRICING MODELS ──────────────────────────────────────
@@ -1055,13 +1425,143 @@ function loadFromURL() {
   } catch(e) { return false; }
 }
 
+// ─── RECONCILIATION LOGIC ────────────────────────────────
+function getReconciledRamp(rampTD, capCeil) {
+  // Returns per-month reconciled engagements based on user choice
+  return rampTD.map((m, i) => {
+    let planned;
+    if (S.reconChoice === 'bu')          planned = capCeil[i];
+    else if (S.reconChoice === 'td')     planned = m.planned;
+    else                                  planned = Math.min(m.planned, capCeil[i]);
+    return { ...m, planned: parseFloat(planned.toFixed(1)), atCap: planned < m.raw - 0.05 };
+  });
+}
+
+// ─── CHART RENDERING ─────────────────────────────────────
+function renderCharts(ramp, p, avgSeatsW) {
+  const amber     = '#C17E35';
+  const amberFaint= 'rgba(193,126,53,0.25)';
+  const green     = '#5aff8a';
+  const greenFaint= 'rgba(90,255,138,0.2)';
+  const cream     = 'rgba(240,234,214,0.65)';
+  const border    = 'rgba(240,234,214,0.06)';
+
+  const svcData = ramp.map(m => Math.round(m.planned * p.svcFeeBlended));
+  const arrData = ramp.map(m => Math.round(m.planned * avgSeatsW * p.acvPerSeat));
+
+  // Cumulative lines
+  let svcCum = 0, arrCum = 0;
+  const svcCumData = svcData.map(v => { svcCum += v; return svcCum; });
+  const arrCumData = arrData.map(v => { arrCum += v; return arrCum; });
+
+  // EOY ARR run rate (annualized from each month's new ARR)
+  const arrRunRate = ramp.map((m,i) => Math.round(m.planned * avgSeatsW * p.acvPerSeat * MONTHS_REMAINING[i] / 12 * 12 / Math.max(MONTHS_REMAINING[i],1)));
+
+  const chartOpts = (yLabel) => ({
+    responsive: true,
+    maintainAspectRatio: true,
+    interaction: { mode:'index', intersect:false },
+    plugins: {
+      legend: { display:true, position:'top', labels:{ boxWidth:10, padding:16, color:cream } },
+      tooltip: {
+        backgroundColor:'rgba(10,10,10,0.95)',
+        borderColor:'rgba(193,126,53,0.3)',
+        borderWidth:1,
+        titleColor:amber,
+        bodyColor:cream,
+        padding:12,
+        callbacks: { label: ctx => ' ' + ctx.dataset.label + ': ' + fmt$(ctx.raw) }
+      }
+    },
+    scales: {
+      x: { grid:{ color:border }, ticks:{ color:cream } },
+      y: {
+        grid:{ color:border }, ticks:{ color:cream,
+          callback: v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v
+        },
+        title:{ display:false }
+      },
+      y2: {
+        position:'right', grid:{ drawOnChartArea:false }, ticks:{ color:'rgba(240,234,214,0.25)',
+          callback: v => v>=1e6?'$'+(v/1e6).toFixed(1)+'M':v>=1e3?'$'+(v/1e3).toFixed(0)+'K':'$'+v
+        }
+      }
+    }
+  });
+
+  // ── Services chart ──
+  if (chartSvc) chartSvc.destroy();
+  chartSvc = new Chart(document.getElementById('chartSvc'), {
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { type:'bar',  label:'Monthly Consulting', data:svcData,    backgroundColor:amberFaint, borderColor:amber, borderWidth:1, yAxisID:'y' },
+        { type:'line', label:'Cumulative',          data:svcCumData, borderColor:amber, borderWidth:2, pointRadius:3, pointBackgroundColor:amber, fill:false, tension:0.3, yAxisID:'y2' }
+      ]
+    },
+    options: chartOpts('Revenue')
+  });
+
+  // ── ARR chart ──
+  if (chartARR) chartARR.destroy();
+  chartARR = new Chart(document.getElementById('chartARR'), {
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { type:'bar',  label:'New ARR Booked',   data:arrData,    backgroundColor:greenFaint, borderColor:green, borderWidth:1, yAxisID:'y' },
+        { type:'line', label:'Cumulative ARR',   data:arrCumData, borderColor:green, borderWidth:2, pointRadius:3, pointBackgroundColor:green, fill:false, tension:0.3, yAxisID:'y2' }
+      ]
+    },
+    options: chartOpts('ARR')
+  });
+
+  // ── Combined chart ──
+  if (chartCombined) chartCombined.destroy();
+  const totalData = svcData.map((v,i) => v + arrData[i]);
+  let totCum = 0;
+  const totCumData = totalData.map(v => { totCum += v; return totCum; });
+  chartCombined = new Chart(document.getElementById('chartCombined'), {
+    data: {
+      labels: MONTHS,
+      datasets: [
+        { type:'bar',  label:'Consulting Revenue', data:svcData, backgroundColor:amberFaint, borderColor:amber, borderWidth:1, stack:'rev', yAxisID:'y' },
+        { type:'bar',  label:'ARR Booked',          data:arrData, backgroundColor:greenFaint, borderColor:green, borderWidth:1, stack:'rev', yAxisID:'y' },
+        { type:'line', label:'Cumulative Total',    data:totCumData, borderColor:cream, borderWidth:2, pointRadius:3, pointBackgroundColor:cream, fill:false, tension:0.3, yAxisID:'y2' }
+      ]
+    },
+    options: {
+      ...chartOpts('Revenue'),
+      scales: {
+        ...chartOpts('Revenue').scales,
+        x: { ...chartOpts('Revenue').scales.x, stacked:true }
+      }
+    }
+  });
+
+  // Chart stat totals
+  const peakSvc = Math.max(...svcData);
+  const decSvc  = svcData[N-1];
+  document.getElementById('chartSvcTotal').textContent   = fmt$(svcCum);
+  document.getElementById('chartSvcPeak').textContent    = fmt$(peakSvc);
+  document.getElementById('chartSvcRunRate').textContent = fmt$(decSvc * 12);
+  document.getElementById('chartARRTotal').textContent   = fmt$(arrCum);
+  document.getElementById('chartARREOY').textContent     = fmt$(ramp.reduce((a,m,i)=>a+m.planned*avgSeatsW*p.acvPerSeat*MONTHS_REMAINING[i]/12,0));
+  document.getElementById('chartARRDec').textContent     = fmt$(arrData[N-1]);
+}
+
 // ─── MAIN RECOMPUTE ──────────────────────────────────────
 function recompute() {
   const p = PRICING[S.pricingModel];
   const capCeil = S.engineers.map((e,i) => e * S.capacity[i]);
   const totalCap = capCeil.reduce((a,b)=>a+b, 0);
 
-  const ramp = computeRamp(S.m1Eng, S.growthFactor, S.growthPattern, capCeil);
+  // Top-down ramp (uncapped by capacity — pure demand signal)
+  const rampTD_raw = computeRamp(S.m1Eng, S.growthFactor, S.growthPattern, Array(N).fill(9999));
+  // Top-down capped at capacity (what Part 3 shows)
+  const rampTD = computeRamp(S.m1Eng, S.growthFactor, S.growthPattern, capCeil);
+  // Reconciled ramp (feeds comp)
+  const ramp = getReconciledRamp(rampTD, capCeil);
+
   const rev  = computeRevenue(ramp, p);
   const comp = computeComp(rev);
 
@@ -1099,6 +1599,52 @@ function recompute() {
   document.getElementById('buMaxSeats').textContent = Math.round(totalCap * S.avgSeats).toLocaleString();
   const buRev = totalCap * p.svcFeeBlended + totalCap * S.avgSeats * p.acvPerSeat;
   document.getElementById('buRevenue').textContent  = fmt$(buRev);
+
+  // ── Reconciliation Panel ──
+  const buRevFull = computeRevenue(capCeil.map((_,i)=>({planned:capCeil[i],raw:capCeil[i],atCap:false})), p);
+  const tdRevFull = computeRevenue(rampTD, p);
+  const reconRev  = computeRevenue(ramp, p);
+
+  const buTotal = capCeil.reduce((a,b)=>a+b,0);
+  const tdTotal = rampTD.reduce((a,m)=>a+m.planned,0);
+  const reconTotal = ramp.reduce((a,m)=>a+m.planned,0);
+
+  document.getElementById('reconBUEng').textContent = buTotal.toFixed(1);
+  document.getElementById('reconTDEng').textContent = tdTotal.toFixed(1);
+  document.getElementById('reconBUSvc').textContent = fmt$(buTotal * p.svcFeeBlended);
+  document.getElementById('reconBUARR').textContent = fmt$(buTotal * rev.avgSeatsW * p.acvPerSeat);
+  document.getElementById('reconBUEOY').textContent = fmt$(capCeil.reduce((a,v,i)=>a+v*rev.avgSeatsW*p.acvPerSeat*MONTHS_REMAINING[i]/12,0));
+  document.getElementById('reconTDSvc').textContent = fmt$(tdRevFull.svcRev);
+  document.getElementById('reconTDARR').textContent = fmt$(tdRevFull.arrBooked);
+  document.getElementById('reconTDEOY').textContent = fmt$(tdRevFull.eoy26);
+
+  const gap = tdTotal - buTotal;
+  const gapPct = buTotal > 0 ? (gap / buTotal * 100).toFixed(0) : 0;
+  let verdictHTML = '';
+  if (Math.abs(gap) < 0.5) {
+    verdictHTML = `<strong>Supply and demand are in balance.</strong> The top-down pipeline and bottoms-up capacity are aligned at <strong>${reconTotal.toFixed(1)} engagements</strong>. Either number is defensible. The reconciled model carries <strong>${fmt$(reconRev.totalRev)}</strong> into comp.`;
+  } else if (gap > 0) {
+    verdictHTML = `<strong class="red">Demand exceeds supply by ${Math.abs(gap).toFixed(1)} engagements (${Math.abs(gapPct)}%).</strong> The pipeline is generating more qualified demand than the team can deliver. The reconciled model uses the <strong>bottoms-up ceiling</strong> — <strong>${buTotal.toFixed(1)} engagements</strong> — as the conservative, defensible number. To close the gap, hire faster or tighten close rates in Part 3.`;
+  } else {
+    verdictHTML = `<strong class="green">Capacity exceeds demand by ${Math.abs(gap).toFixed(1)} engagements (${Math.abs(gapPct)}%).</strong> The team has more bandwidth than the pipeline can fill. The reconciled model uses the <strong>top-down demand</strong> — <strong>${tdTotal.toFixed(1)} engagements</strong>. Consider accelerating the growth target or expanding the account list.`;
+  }
+  document.getElementById('reconVerdictText').innerHTML = verdictHTML;
+
+  const choiceLabels = { reconciled:'Reconciled (conservative)', bu:'Bottoms-Up ceiling', td:'Top-Down demand' };
+  const choiceNotes  = {
+    reconciled: 'The model uses the lower of bottoms-up and top-down each month — the conservative, defensible number.',
+    bu:         'Using the full capacity ceiling — assumes the team is 100% utilized every month.',
+    td:         'Using the top-down demand signal — assumes every planned engagement closes and delivers.'
+  };
+  document.getElementById('reconChoiceNote').textContent = choiceNotes[S.reconChoice];
+  document.getElementById('reconCarriesVal').textContent = `${reconTotal.toFixed(1)} engagements · ${fmt$(reconRev.totalRev)} total revenue (${choiceLabels[S.reconChoice]})`;
+
+  // Highlight active column
+  document.getElementById('reconBUCol').classList.toggle('active-col', S.reconChoice === 'bu');
+  document.getElementById('reconTDCol').classList.toggle('active-col', S.reconChoice === 'td');
+
+  // ── Charts ──
+  renderCharts(ramp, p, rev.avgSeatsW);
 
   // ── Part 3 ──
   renderRampGrid('rampY1', ramp);
