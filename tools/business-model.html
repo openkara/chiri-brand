@@ -775,57 +775,66 @@ nav {
 ══════════════════════════════════════════════════════════ -->
 <div class="recon-section">
 <div class="recon-header">
-  <div class="section-num">Reconciliation · Before We Go Further</div>
-  <div class="section-title">Bottoms-up ceiling <em>meets</em> top-down demand.</div>
-  <div class="section-sub">The comp section at the bottom is only as reliable as the number that flows into it. Here we surface both views explicitly, show the gap, and let you choose which number carries forward into Part 4.</div>
+  <div class="section-num">Capacity Check · Before We Go Further</div>
+  <div class="section-title">The ceiling. <em>And the plan.</em></div>
+  <div class="section-sub">These two numbers answer different questions. The bottoms-up ceiling tells you the maximum the team could ever deliver if fully utilized — it is a physical constraint, not a forecast. The top-down demand is the actual revenue plan, driven by pipeline close rates. A large gap between them is not a problem. It means you will never hit a capacity wall. The binding constraint is always demand generation.</div>
 </div>
 <div class="recon-body">
 
   <div class="recon-grid">
     <div class="recon-col" id="reconBUCol">
-      <div class="recon-col-label amber">Bottoms-Up — What the team can deliver</div>
-      <div class="recon-big" id="reconBUEng">40</div>
-      <div class="recon-sub">max engagements May–Dec 2026<br>based on engineers × capacity</div>
+      <div class="recon-col-label amber">Delivery Ceiling — Maximum the team can handle</div>
+      <div class="recon-big" id="reconBUEng">—</div>
+      <div class="recon-sub">max engagements May–Dec 2026<br>if every engineer is 100% utilized</div>
       <div class="recon-rows">
-        <div class="recon-row"><span class="recon-row-key">Max services revenue</span><span class="recon-row-val amber" id="reconBUSvc">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Max ARR booked</span><span class="recon-row-val amber" id="reconBUARR">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Max EOY 2026 ARR</span><span class="recon-row-val amber" id="reconBUEOY">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Constraint</span><span class="recon-row-val" id="reconBUConstraint">Engineering headcount</span></div>
+        <div class="recon-row"><span class="recon-row-key">If fully utilized — services</span><span class="recon-row-val amber" id="reconBUSvc">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">If fully utilized — ARR booked ✱</span><span class="recon-row-val amber" id="reconBUARR">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">If fully utilized — EOY run rate ✱✱</span><span class="recon-row-val amber" id="reconBUEOY">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">What limits this number</span><span class="recon-row-val" id="reconBUConstraint">Engineering headcount</span></div>
       </div>
+      <div style="margin-top:1rem;padding:0.75rem;background:rgba(193,126,53,0.08);border:1px solid rgba(193,126,53,0.2);font-size:0.72rem;line-height:1.5;color:var(--cream-dim)">This is a theoretical maximum. It assumes zero sales cycle, zero onboarding lag, and 100% utilization from day one. Use it to confirm you will never be capacity-constrained — not as a revenue target.</div>
     </div>
 
     <div class="recon-vs">
       <div class="recon-vs-line"></div>
-      <div class="recon-vs-label">vs</div>
+      <div class="recon-vs-label">→</div>
       <div class="recon-vs-line"></div>
     </div>
 
     <div class="recon-col" id="reconTDCol">
-      <div class="recon-col-label green">Top-Down — What the pipeline suggests</div>
+      <div class="recon-col-label green">Revenue Plan — What the pipeline actually generates</div>
       <div class="recon-big green" id="reconTDEng">—</div>
-      <div class="recon-sub">planned engagements May–Dec 2026<br>based on 94 accounts × close rates</div>
+      <div class="recon-sub">planned engagements May–Dec 2026<br>based on named accounts × close rates</div>
       <div class="recon-rows">
         <div class="recon-row"><span class="recon-row-key">Planned services revenue</span><span class="recon-row-val green" id="reconTDSvc">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Planned ARR booked</span><span class="recon-row-val green" id="reconTDARR">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Planned EOY 2026 ARR</span><span class="recon-row-val green" id="reconTDEOY">—</span></div>
-        <div class="recon-row"><span class="recon-row-key">Constraint</span><span class="recon-row-val" id="reconTDConstraint">Pipeline close rates</span></div>
+        <div class="recon-row"><span class="recon-row-key">Planned ARR booked ✱</span><span class="recon-row-val green" id="reconTDARR">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">Planned EOY run rate ✱✱</span><span class="recon-row-val green" id="reconTDEOY">—</span></div>
+        <div class="recon-row"><span class="recon-row-key">What limits this number</span><span class="recon-row-val" id="reconTDConstraint">Pipeline close rates</span></div>
       </div>
+      <div style="margin-top:1rem;padding:0.75rem;background:rgba(100,200,120,0.06);border:1px solid rgba(100,200,120,0.2);font-size:0.72rem;line-height:1.5;color:var(--cream-dim)">⚠ TAM is incomplete. The account list and close rates below are working assumptions — not a fully prospected pipeline. These numbers will sharpen once Apollo prospecting is complete. Adjust close rates in Part 3 as the pipeline develops.</div>
     </div>
   </div>
 
   <div class="recon-verdict" id="reconVerdict">
-    <div class="recon-verdict-label">Reconciliation verdict</div>
+    <div class="recon-verdict-label">What this means for the model</div>
     <div class="recon-verdict-text" id="reconVerdictText">Calculating…</div>
   </div>
 
   <div class="recon-override">
-    <div class="recon-override-label">Carry into comp:</div>
+    <div class="recon-override-label">Number to carry into comp (Part 4):</div>
     <select id="reconChoice" onchange="S.reconChoice=this.value; recompute();">
-      <option value="reconciled">Reconciled (lower of the two)</option>
-      <option value="bu">Bottoms-Up ceiling</option>
+      <option value="reconciled">Top-Down demand (recommended)</option>
+      <option value="bu">Delivery ceiling (theoretical max)</option>
       <option value="td">Top-Down demand</option>
     </select>
-    <div class="recon-override-note" id="reconChoiceNote">The model will use the lower of bottoms-up and top-down in each month — the conservative, defensible number.</div>
+      <div class="recon-override-note" id="reconChoiceNote">Use the top-down demand as your planning number. The delivery ceiling is only useful to confirm you will never be capacity-constrained.</div>
+  </div>
+
+  <div style="margin:1.5rem 0 0.5rem;padding:1rem 1.25rem;background:rgba(255,255,255,0.03);border:1px solid var(--border);font-size:0.72rem;line-height:1.7;color:var(--cream-dim)">
+    <strong style="color:var(--cream-muted);letter-spacing:0.08em">METRIC DEFINITIONS</strong><br><br>
+    <strong style="color:var(--cream)">Services Revenue</strong> — Cash collected from consulting engagement fees. One-time per engagement. Recognized when the work is delivered.<br><br>
+    <strong style="color:var(--cream)">✱ ARR Booked</strong> — The total annualized value of all SaaS seat contracts signed May–Dec, as if every customer stayed for a full 12 months from signing. This is the full contract value on paper — not what you’ve collected yet.<br><br>
+    <strong style="color:var(--cream)">✱✱ EOY 2026 Run Rate</strong> — The ARR meter reading on December 31. Because customers sign at different points in the year, you only capture a fraction of their annual contract value before year-end. A customer who signs in May contributes 8 months; one who signs in November contributes 2 months. This is always lower than ARR Booked — that is not a problem. It is a timing effect. The gap represents ARR that continues accruing into 2027. The EOY run rate is the number investors use to assess your exit velocity.
   </div>
 
   <div class="recon-carries">
@@ -1125,11 +1134,11 @@ nav {
       <span class="sidebar-val" id="sbSvcRev">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key">ARR booked</span>
+      <span class="sidebar-key" title="Full annualized value of all contracts signed. Not yet collected.">ARR booked ✱</span>
       <span class="sidebar-val" id="sbARR">—</span>
     </div>
     <div class="sidebar-row">
-      <span class="sidebar-key">EOY 2026 ARR</span>
+      <span class="sidebar-key" title="Dec 31 run rate. Always lower than ARR Booked due to timing — contracts signed later in the year haven't had time to accumulate. This is your investor exit velocity number.">EOY run rate ✱✱</span>
       <span class="sidebar-val accent" id="sbEOY26b">—</span>
     </div>
     <div class="sidebar-row">
