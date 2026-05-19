@@ -1,0 +1,2297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Chiri — Business Model Working Session</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+/* ─── RESET & BASE ─────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  /* Brand palette */
+  --bg:        #0a0e1a;
+  --bg2:       #0f1525;
+  --bg3:       #141c30;
+  --surface:   #1a2340;
+  --surface2:  #1f2a4a;
+  --border:    #2a3556;
+  --border2:   #3a4870;
+
+  /* Text */
+  --text:      #e8edf8;
+  --text2:     #a0aec8;
+  --text3:     #6b7fa8;
+
+  /* Accents */
+  --blue:      #3a86ff;
+  --blue-dim:  rgba(58,134,255,0.15);
+  --blue-glow: rgba(58,134,255,0.3);
+  --purple:    #9b5de5;
+  --purple-dim:rgba(155,93,229,0.15);
+  --purple-glow:rgba(155,93,229,0.3);
+  --green:     #06d6a0;
+  --green-dim: rgba(6,214,160,0.15);
+  --amber:     #ffd166;
+  --amber-dim: rgba(255,209,102,0.15);
+  --red:       #ef476f;
+  --red-dim:   rgba(239,71,111,0.15);
+  --cyan:      #51ccfc;
+
+  /* Sizing */
+  --radius:    10px;
+  --radius-sm: 6px;
+  --sidebar-w: 280px;
+  --header-h:  64px;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: 'Poppins', system-ui, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 14px;
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* ─── LAYOUT ───────────────────────────────────────────────────────────── */
+.app-header {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-h);
+  background: rgba(10,14,26,0.97);
+  backdrop-filter: blur(16px);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  padding: 0 28px;
+  gap: 16px;
+  box-shadow: 0 1px 0 rgba(58,134,255,0.08), 0 4px 24px rgba(0,0,0,0.4);
+}
+
+.header-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.header-logo .logo-mark {
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 14px;
+  color: #fff;
+  letter-spacing: -0.5px;
+}
+
+.header-logo .logo-text {
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.header-logo .logo-sub {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 400;
+}
+
+.header-spacer { flex: 1; }
+
+.header-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+}
+
+.header-badge.deck {
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-glow);
+  color: var(--blue);
+}
+
+.header-badge.alt {
+  background: var(--purple-dim);
+  border: 1px solid var(--purple-glow);
+  color: var(--purple);
+}
+
+.header-badge .dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.app-body {
+  display: flex;
+  min-height: calc(100vh - var(--header-h));
+}
+
+.main-content {
+  flex: 1;
+  min-width: 0;
+  padding: 32px 28px 80px;
+  max-width: calc(100vw - var(--sidebar-w));
+}
+
+.sidebar {
+  width: var(--sidebar-w);
+  flex-shrink: 0;
+  position: sticky;
+  top: var(--header-h);
+  height: calc(100vh - var(--header-h));
+  overflow-y: auto;
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  padding: 20px 16px;
+}
+
+/* ─── SECTION HEADERS ──────────────────────────────────────────────────── */
+.section {
+  margin-bottom: 48px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 24px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.section-num {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--blue), var(--purple));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #fff;
+  flex-shrink: 0;
+}
+
+.section-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.section-sub {
+  font-size: 13px;
+  color: var(--text3);
+  font-weight: 400;
+}
+
+/* ─── CARDS ────────────────────────────────────────────────────────────── */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 20px;
+}
+
+.card.blue-accent {
+  border-color: var(--blue-glow);
+  background: linear-gradient(135deg, var(--surface), rgba(58,134,255,0.05));
+}
+
+.card.purple-accent {
+  border-color: var(--purple-glow);
+  background: linear-gradient(135deg, var(--surface), rgba(155,93,229,0.05));
+}
+
+.card-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text2);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  margin-bottom: 4px;
+}
+
+.card-value {
+  font-size: 26px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.card-value.green { color: var(--green); }
+.card-value.blue  { color: var(--blue); }
+.card-value.purple{ color: var(--purple); }
+.card-value.amber { color: var(--amber); }
+.card-value.red   { color: var(--red); }
+
+.card-note {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 4px;
+}
+
+/* ─── METRIC GRID ──────────────────────────────────────────────────────── */
+.metric-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.metric-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.metric-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  margin-bottom: 6px;
+}
+
+.metric-value {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.5px;
+  line-height: 1.2;
+}
+
+.metric-value.green  { color: var(--green); }
+.metric-value.blue   { color: var(--blue); }
+.metric-value.purple { color: var(--purple); }
+.metric-value.amber  { color: var(--amber); }
+.metric-value.red    { color: var(--red); }
+.metric-value.cyan   { color: var(--cyan); }
+
+.metric-sub {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* ─── TOGGLE / RADIO ───────────────────────────────────────────────────── */
+.toggle-group {
+  display: flex;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 4px;
+  gap: 4px;
+  width: fit-content;
+}
+
+.toggle-btn {
+  padding: 8px 18px;
+  border-radius: 7px;
+  border: none;
+  background: transparent;
+  color: var(--text2);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.toggle-btn.active.deck {
+  background: var(--blue-dim);
+  color: var(--blue);
+  border: 1px solid var(--blue-glow);
+}
+
+.toggle-btn.active.alt {
+  background: var(--purple-dim);
+  color: var(--purple);
+  border: 1px solid var(--purple-glow);
+}
+
+.toggle-btn:not(.active):hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ─── PRICING COLUMNS ──────────────────────────────────────────────────── */
+.pricing-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.pricing-col {
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  overflow: hidden;
+  transition: opacity 0.3s;
+}
+
+.pricing-col.dimmed {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
+.pricing-col-header {
+  padding: 16px 20px;
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.pricing-col.deck .pricing-col-header {
+  background: var(--blue-dim);
+  border-bottom: 1px solid var(--blue-glow);
+  color: var(--blue);
+}
+
+.pricing-col.alt .pricing-col-header {
+  background: var(--purple-dim);
+  border-bottom: 1px solid var(--purple-glow);
+  color: var(--purple);
+}
+
+.pricing-col-body {
+  padding: 20px;
+  background: var(--surface);
+}
+
+.pricing-tier {
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.pricing-tier:last-child { border-bottom: none; }
+
+.pricing-tier-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 4px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.tier-badge {
+  font-size: 10px;
+  padding: 2px 7px;
+  border-radius: 10px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.tier-badge.popular {
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(6,214,160,0.3);
+}
+
+.tier-badge.new {
+  background: var(--purple-dim);
+  color: var(--purple);
+  border: 1px solid var(--purple-glow);
+}
+
+.pricing-tier-price {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+}
+
+.pricing-tier-detail {
+  font-size: 12px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+/* ─── TOOL BUNDLING ────────────────────────────────────────────────────── */
+.tool-bundle {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.tool-bundle-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 12px;
+}
+
+.tool-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(42,53,86,0.5);
+}
+
+.tool-row:last-child { border-bottom: none; }
+
+.tool-check {
+  width: 16px;
+  height: 16px;
+  accent-color: var(--purple);
+  cursor: pointer;
+  flex-shrink: 0;
+}
+
+.tool-name {
+  flex: 1;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.tool-price-input {
+  width: 70px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  padding: 4px 8px;
+  text-align: right;
+}
+
+.tool-price-input:focus {
+  outline: none;
+  border-color: var(--purple);
+}
+
+.tool-bundle-summary {
+  margin-top: 14px;
+  padding: 14px;
+  background: var(--bg3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+}
+
+.bundle-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 12px;
+  color: var(--text2);
+  padding: 3px 0;
+}
+
+.bundle-row.total {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--text);
+}
+
+.bundle-savings {
+  margin-top: 8px;
+  padding: 8px 12px;
+  background: var(--green-dim);
+  border: 1px solid rgba(6,214,160,0.3);
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--green);
+  text-align: center;
+}
+
+/* ─── SLIDERS ──────────────────────────────────────────────────────────── */
+.slider-row {
+  margin-bottom: 16px;
+}
+
+.slider-label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 6px;
+}
+
+.slider-name {
+  font-size: 13px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+.slider-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  min-width: 60px;
+  text-align: right;
+}
+
+input[type="range"] {
+  width: 100%;
+  height: 4px;
+  appearance: none;
+  background: var(--border);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+
+input[type="range"].blue::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--blue);
+  box-shadow: 0 0 8px var(--blue-glow);
+  cursor: pointer;
+}
+
+input[type="range"].purple::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--purple);
+  box-shadow: 0 0 8px var(--purple-glow);
+  cursor: pointer;
+}
+
+input[type="range"].green::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green-dim);
+  cursor: pointer;
+}
+
+input[type="range"].amber::-webkit-slider-thumb {
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--amber);
+  cursor: pointer;
+}
+
+input[type="range"]::-webkit-slider-track {
+  height: 4px;
+  border-radius: 2px;
+}
+
+/* ─── GRID TABLE ───────────────────────────────────────────────────────── */
+.grid-table-wrap {
+  overflow-x: auto;
+  margin-bottom: 16px;
+}
+
+.grid-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 900px;
+}
+
+.grid-table th {
+  background: var(--bg3);
+  color: var(--text3);
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  padding: 8px 10px;
+  text-align: center;
+  border: 1px solid var(--border);
+  white-space: nowrap;
+}
+
+.grid-table th.row-label {
+  text-align: left;
+  min-width: 160px;
+}
+
+.grid-table th.totals-col {
+  background: var(--surface2);
+  color: var(--text2);
+}
+
+.grid-table td {
+  border: 1px solid var(--border);
+  padding: 6px 8px;
+  text-align: center;
+  vertical-align: middle;
+}
+
+.grid-table td.row-label {
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text2);
+  background: var(--bg3);
+  white-space: nowrap;
+  padding: 8px 12px;
+}
+
+.grid-table td.computed {
+  background: var(--surface2);
+  font-weight: 700;
+  color: var(--text);
+  font-size: 13px;
+}
+
+.grid-table td.totals-col {
+  background: var(--surface2);
+  font-weight: 700;
+  color: var(--text);
+}
+
+.cell-input {
+  width: 56px;
+  background: var(--bg3);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  color: var(--text);
+  font-family: 'Poppins', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  padding: 4px 6px;
+  text-align: center;
+  transition: border-color 0.15s;
+}
+
+.cell-input:focus {
+  outline: none;
+  border-color: var(--blue);
+  background: var(--surface);
+}
+
+/* ─── UTILIZATION BAR ──────────────────────────────────────────────────── */
+.util-bar-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.util-bar {
+  width: 48px;
+  height: 6px;
+  background: var(--border);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.util-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.3s, background 0.3s;
+}
+
+.util-fill.green  { background: var(--green); }
+.util-fill.amber  { background: var(--amber); }
+.util-fill.red    { background: var(--red); }
+
+.util-pct {
+  font-size: 10px;
+  font-weight: 600;
+}
+
+.util-pct.green  { color: var(--green); }
+.util-pct.amber  { color: var(--amber); }
+.util-pct.red    { color: var(--red); }
+
+/* ─── PRESET BUTTONS ───────────────────────────────────────────────────── */
+.preset-row {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  padding: 6px 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text2);
+  font-family: 'Poppins', sans-serif;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preset-btn:hover {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--blue-dim);
+}
+
+.preset-btn.active {
+  border-color: var(--blue);
+  color: var(--blue);
+  background: var(--blue-dim);
+  font-weight: 700;
+}
+
+/* ─── ACCOUNT TIER CARDS ───────────────────────────────────────────────── */
+.tier-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin-bottom: 20px;
+}
+
+.tier-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+}
+
+.tier-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 12px;
+}
+
+.tier-card-name {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.tier-card-count {
+  font-size: 11px;
+  color: var(--text3);
+  margin-top: 2px;
+}
+
+.tier-card-acv {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--cyan);
+}
+
+/* ─── RAMP VISUAL GRID ─────────────────────────────────────────────────── */
+.ramp-grid {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  gap: 6px;
+  margin-bottom: 8px;
+}
+
+.ramp-cell {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 10px 6px;
+  text-align: center;
+  position: relative;
+  transition: background 0.2s;
+}
+
+.ramp-cell.capped {
+  border-color: var(--red);
+  background: var(--red-dim);
+}
+
+.ramp-cell-month {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+
+.ramp-cell-val {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--blue);
+}
+
+.ramp-cell.capped .ramp-cell-val {
+  color: var(--red);
+}
+
+.ramp-cell-bar {
+  height: 3px;
+  background: var(--border);
+  border-radius: 2px;
+  margin-top: 6px;
+  overflow: hidden;
+}
+
+.ramp-cell-fill {
+  height: 100%;
+  background: var(--blue);
+  border-radius: 2px;
+  transition: width 0.3s;
+}
+
+.ramp-cell.capped .ramp-cell-fill {
+  background: var(--red);
+}
+
+/* ─── COMP SECTION ─────────────────────────────────────────────────────── */
+.trigger-box {
+  background: linear-gradient(135deg, var(--surface), rgba(255,209,102,0.04));
+  border: 1px solid rgba(255,209,102,0.25);
+  border-radius: var(--radius);
+  padding: 32px 24px;
+  margin-top: 20px;
+  text-align: center;
+  box-shadow: 0 0 40px rgba(255,209,102,0.06);
+}
+
+.trigger-label {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 8px;
+}
+
+.trigger-revenue {
+  font-size: 40px;
+  font-weight: 800;
+  letter-spacing: -1px;
+  margin-bottom: 4px;
+}
+
+.trigger-month {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text2);
+  margin-bottom: 12px;
+}
+
+.trigger-note {
+  font-size: 12px;
+  color: var(--text3);
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.7;
+}
+
+/* ─── SIDEBAR ──────────────────────────────────────────────────────────── */
+.sidebar-title {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-model-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  margin-bottom: 16px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.sidebar-model-badge.deck {
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-glow);
+  color: var(--blue);
+}
+
+.sidebar-model-badge.alt {
+  background: var(--purple-dim);
+  border: 1px solid var(--purple-glow);
+  color: var(--purple);
+}
+
+.sidebar-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  padding: 8px 0;
+  border-bottom: 1px solid rgba(42,53,86,0.5);
+  gap: 8px;
+}
+
+.sidebar-row:last-child { border-bottom: none; }
+
+.sidebar-row-label {
+  font-size: 11px;
+  color: var(--text3);
+  font-weight: 500;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.sidebar-row-value {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: right;
+  white-space: nowrap;
+}
+
+.sidebar-row-value.green  { color: var(--green); }
+.sidebar-row-value.blue   { color: var(--blue); }
+.sidebar-row-value.purple { color: var(--purple); }
+.sidebar-row-value.amber  { color: var(--amber); }
+.sidebar-row-value.red    { color: var(--red); }
+.sidebar-row-value.cyan   { color: var(--cyan); }
+
+.sidebar-section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.sidebar-section:last-child {
+  border-bottom: none;
+}
+
+.sidebar-section-title {
+  font-size: 10px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 10px;
+}
+
+/* ─── CONTEXTUAL NOTES ─────────────────────────────────────────────────── */
+.context-note {
+  display: flex;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-sm);
+  font-size: 12px;
+  line-height: 1.6;
+  margin-top: 12px;
+}
+
+.context-note.info {
+  background: var(--blue-dim);
+  border: 1px solid var(--blue-glow);
+  color: var(--text2);
+}
+
+.context-note.warn {
+  background: var(--amber-dim);
+  border: 1px solid rgba(255,209,102,0.3);
+  color: var(--amber);
+}
+
+.context-note.danger {
+  background: var(--red-dim);
+  border: 1px solid rgba(239,71,111,0.3);
+  color: var(--red);
+}
+
+.context-note.success {
+  background: var(--green-dim);
+  border: 1px solid rgba(6,214,160,0.3);
+  color: var(--green);
+}
+
+.context-note-icon {
+  flex-shrink: 0;
+  font-size: 14px;
+}
+
+/* ─── DIVIDER ──────────────────────────────────────────────────────────── */
+.divider {
+  height: 1px;
+  background: var(--border);
+  margin: 24px 0;
+}
+
+/* ─── INLINE LABEL ─────────────────────────────────────────────────────── */
+.inline-label {
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+  color: var(--text3);
+  margin-bottom: 8px;
+  display: block;
+}
+
+/* ─── TWO COL ──────────────────────────────────────────────────────────── */
+.two-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.three-col {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 16px;
+}
+
+/* ─── SUMMARY ACTIVE MODEL ─────────────────────────────────────────────── */
+.active-model-summary {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  padding: 16px;
+  background: var(--bg3);
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  margin-top: 16px;
+}
+
+/* ─── PRINT ────────────────────────────────────────────────────────────── */
+@media print {
+  .sidebar, .app-header, .preset-row, .toggle-group { display: none !important; }
+  .main-content { max-width: 100%; padding: 20px; }
+  .app-body { display: block; }
+  body { background: #fff; color: #000; }
+  .card, .metric-card, .pricing-col-body, .tier-card, .ramp-cell, .trigger-box {
+    background: #f8f8f8 !important;
+    border-color: #ccc !important;
+    color: #000 !important;
+  }
+}
+
+/* ─── RESPONSIVE ───────────────────────────────────────────────────────── */
+@media (max-width: 1100px) {
+  .sidebar { display: none; }
+  .main-content { max-width: 100%; }
+  .tier-grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 768px) {
+  .pricing-grid { grid-template-columns: 1fr; }
+  .two-col { grid-template-columns: 1fr; }
+  .three-col { grid-template-columns: 1fr; }
+  .active-model-summary { grid-template-columns: 1fr 1fr; }
+  .ramp-grid { grid-template-columns: repeat(6, 1fr); }
+  .main-content { padding: 16px 12px 60px; }
+}
+
+/* ─── SCROLLBAR ────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: var(--bg2); }
+::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+
+/* ─── GLOW EFFECTS ─────────────────────────────────────────────────────── */
+.glow-blue  { text-shadow: 0 0 20px var(--blue-glow); }
+.glow-green { text-shadow: 0 0 20px rgba(6,214,160,0.4); }
+
+/* ─── Y2 RAMP ──────────────────────────────────────────────────────────── */
+.ramp-cell.y2 .ramp-cell-val { color: var(--purple); }
+.ramp-cell.y2 .ramp-cell-fill { background: var(--purple); }
+.ramp-year-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+  color: var(--text3);
+  margin-bottom: 6px;
+}
+</style>
+</head>
+<body>
+
+<!-- ─── HEADER ─────────────────────────────────────────────────────────── -->
+<header class="app-header">
+  <div class="header-logo">
+    <div class="logo-mark">Ch</div>
+    <div>
+      <div class="logo-text">Chiri</div>
+      <div class="logo-sub">Autonomous Enterprise</div>
+    </div>
+  </div>
+  <div style="width:1px;height:28px;background:var(--border);margin:0 8px;"></div>
+  <span style="font-size:12px;color:var(--text3);font-weight:500;">Business Model Working Session</span>
+  <div class="header-spacer"></div>
+  <span style="font-size:11px;color:var(--text3);margin-right:8px;letter-spacing:0.3px;">Active model:</span>
+  <div id="headerBadge" class="header-badge deck">
+    <span class="dot"></span>
+    <span id="headerBadgeText">Deck Pricing</span>
+  </div>
+</header>
+
+<!-- ─── APP BODY ───────────────────────────────────────────────────────── -->
+<div class="app-body">
+
+<!-- ─── MAIN CONTENT ───────────────────────────────────────────────────── -->
+<main class="main-content">
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PART 1: PRICING
+═══════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="part1">
+  <div class="section-header">
+    <div class="section-num">1</div>
+    <div>
+      <div class="section-title">Pricing — Side by Side</div>
+      <div class="section-sub">Select the active model to feed Parts 2–4</div>
+    </div>
+  </div>
+
+  <!-- Model Toggle -->
+  <div style="display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap;">
+    <div class="toggle-group">
+      <button class="toggle-btn active deck" id="toggleDeck" onclick="setPricingModel('deck')">Use Deck Pricing</button>
+      <button class="toggle-btn alt" id="toggleAlt" onclick="setPricingModel('alt')">Use Replacement-Value Pricing</button>
+    </div>
+  </div>
+
+  <!-- Pricing Columns -->
+  <div class="pricing-grid">
+
+    <!-- LEFT: Deck Pricing -->
+    <div class="pricing-col deck" id="colDeck">
+      <div class="pricing-col-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg>
+        In the Deck Today
+      </div>
+      <div class="pricing-col-body">
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Services</div>
+          <div class="pricing-tier-price">$25–50K<span style="font-size:14px;font-weight:400;color:var(--text3)">/month</span></div>
+          <div class="pricing-tier-detail">2-month minimum · FDE Sherpas · Channel Partner</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Individual</div>
+          <div class="pricing-tier-price">$19<span style="font-size:14px;font-weight:400;color:var(--text3)">/user/mo</span></div>
+          <div class="pricing-tier-detail">1,000 credits included</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Team <span class="tier-badge popular">Most Popular</span></div>
+          <div class="pricing-tier-price">$29<span style="font-size:14px;font-weight:400;color:var(--text3)">/user/mo</span></div>
+          <div class="pricing-tier-detail">3,000 credits pooled</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Enterprise</div>
+          <div class="pricing-tier-price">Custom</div>
+          <div class="pricing-tier-detail">No published floor</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RIGHT: Alt Pricing -->
+    <div class="pricing-col alt" id="colAlt">
+      <div class="pricing-col-header">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        Replacement-Value Proposal
+      </div>
+      <div class="pricing-col-body">
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Services</div>
+          <div class="pricing-tier-price">$75K–225K<span style="font-size:14px;font-weight:400;color:var(--text3)">/engagement</span></div>
+          <div class="pricing-tier-detail">Starter $75K · Premium $225K · 30% premium mix</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Team</div>
+          <div class="pricing-tier-price">$29<span style="font-size:14px;font-weight:400;color:var(--text3)">/user/mo</span></div>
+          <div class="pricing-tier-detail">Unchanged — keeps PLG/SMB motion</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Business <span class="tier-badge new">New</span></div>
+          <div class="pricing-tier-price">$99<span style="font-size:14px;font-weight:400;color:var(--text3)">/user/mo</span></div>
+          <div class="pricing-tier-detail">Replaces ChatGPT Enterprise + Glean · +$15/user/mo avg modules</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Enterprise</div>
+          <div class="pricing-tier-price">$199+<span style="font-size:14px;font-weight:400;color:var(--text3)">/user/mo</span></div>
+          <div class="pricing-tier-detail">Published floor · replaces "custom" ambiguity</div>
+        </div>
+        <div class="pricing-tier">
+          <div class="pricing-tier-name">Credit Overage</div>
+          <div class="pricing-tier-price">$10<span style="font-size:14px;font-weight:400;color:var(--text3)">/1K credits</span></div>
+          <div class="pricing-tier-detail">Above 3,000 included credits</div>
+        </div>
+
+        <!-- Tool Bundling Justification -->
+        <div class="tool-bundle">
+          <div class="tool-bundle-title">Tool-Replacement Stack Calculator</div>
+          <div id="toolRows"></div>
+          <div class="tool-bundle-summary">
+            <div class="bundle-row">
+              <span>Current stack cost</span>
+              <span id="stackCost" style="font-weight:700;color:var(--red)">$0/user/mo</span>
+            </div>
+            <div class="bundle-row">
+              <span>Chiri Business tier</span>
+              <span style="font-weight:700;color:var(--purple)">$99/user/mo</span>
+            </div>
+            <div class="bundle-row total">
+              <span>Net savings per user/mo</span>
+              <span id="stackSavings" style="color:var(--green)">$0</span>
+            </div>
+          </div>
+          <div class="bundle-savings" id="bundleSavingsNote">Select tools above to calculate savings</div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /pricing-grid -->
+
+  <!-- Active Model Summary -->
+  <div class="active-model-summary" id="activeSummary">
+    <div class="metric-card">
+      <div class="metric-label">Per-Seat ACV (Annual)</div>
+      <div class="metric-value" id="sumACV">$348</div>
+      <div class="metric-sub">avg across tiers</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Avg Engagement Fee</div>
+      <div class="metric-value" id="sumSvcFee">$75K</div>
+      <div class="metric-sub">blended</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Bottoms-Up Ceiling</div>
+      <div class="metric-value" id="sumCeiling">60</div>
+      <div class="metric-sub">engagements/yr (flat preset)</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EOY ARR (Y1)</div>
+      <div class="metric-value green" id="sumEOYARR">$464K</div>
+      <div class="metric-sub">exit-weighted</div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PART 2: BOTTOMS-UP
+═══════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="part2">
+  <div class="section-header">
+    <div class="section-num">2</div>
+    <div>
+      <div class="section-title">Bottoms-Up — Capacity Planning</div>
+      <div class="section-sub">Supply-side: how many engineers, how many engagements can they deliver?</div>
+    </div>
+  </div>
+
+  <!-- Presets -->
+  <div class="preset-row">
+    <button class="preset-btn active" id="presetFlat" onclick="applyPreset('flat')">Flat (5 eng)</button>
+    <button class="preset-btn" id="presetHire" onclick="applyPreset('hire')">Hire 1/Quarter</button>
+    <button class="preset-btn" id="presetAgg" onclick="applyPreset('aggressive')">Aggressive (3→10)</button>
+    <button class="preset-btn" id="presetCustom" onclick="applyPreset('custom')">Custom</button>
+  </div>
+
+  <!-- Grid -->
+  <div class="grid-table-wrap">
+    <table class="grid-table" id="capacityGrid">
+      <thead>
+        <tr>
+          <th class="row-label">Metric</th>
+          <th>M1</th><th>M2</th><th>M3</th><th>M4</th><th>M5</th><th>M6</th>
+          <th>M7</th><th>M8</th><th>M9</th><th>M10</th><th>M11</th><th>M12</th>
+          <th class="totals-col">Total / Avg</th>
+        </tr>
+      </thead>
+      <tbody id="capacityBody"></tbody>
+    </table>
+  </div>
+
+  <!-- Avg Seats Slider -->
+  <div class="slider-row" style="max-width:480px;">
+    <div class="slider-label">
+      <span class="slider-name">Avg seats per deployment</span>
+      <span class="slider-value" id="avgSeatsVal">80 seats</span>
+    </div>
+    <input type="range" class="blue" id="avgSeats" min="10" max="500" value="80" oninput="onSlider('avgSeats')">
+  </div>
+
+  <!-- Summary -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Y1 Max Engagements</div>
+      <div class="metric-value blue" id="buMaxEng">60</div>
+      <div class="metric-sub">if fully utilized</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Y1 Max Seats</div>
+      <div class="metric-value blue" id="buMaxSeats">4,800</div>
+      <div class="metric-sub">at avg seats/deployment</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Bottoms-Up Y1 Revenue</div>
+      <div class="metric-value green" id="buRevenue">$9.0M</div>
+      <div class="metric-sub">services + ARR if fully utilized</div>
+    </div>
+  </div>
+
+  <div class="context-note info">
+    <span class="context-note-icon">ℹ</span>
+    <span>The capacity ceiling is the hard constraint on growth. Part 3's demand ramp is capped at this ceiling each month — the model never plans for more engagements than the team can deliver.</span>
+  </div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PART 3: TOP-DOWN
+═══════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="part3">
+  <div class="section-header">
+    <div class="section-num">3</div>
+    <div>
+      <div class="section-title">Top-Down — Pipeline &amp; Growth Ramp</div>
+      <div class="section-sub">Demand-side: 94 named accounts, close rates, exponential growth</div>
+    </div>
+  </div>
+
+  <!-- Growth Ramp Controls -->
+  <div class="two-col" style="margin-bottom:20px;">
+    <div>
+      <span class="inline-label">Growth Pattern</span>
+      <div class="toggle-group">
+        <button class="toggle-btn" id="gpFlat" onclick="setGrowthPattern('flat')">Flat</button>
+        <button class="toggle-btn" id="gpLinear" onclick="setGrowthPattern('linear')">Linear</button>
+        <button class="toggle-btn active deck" id="gpExp" onclick="setGrowthPattern('exp')">Exponential</button>
+        <button class="toggle-btn" id="gpScurve" onclick="setGrowthPattern('scurve')">S-Curve</button>
+      </div>
+    </div>
+    <div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">Month 1 engagements</span>
+          <span class="slider-value" id="m1EngVal">2</span>
+        </div>
+        <input type="range" class="blue" id="m1Eng" min="1" max="8" value="2" step="1" oninput="onSlider('m1Eng')">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">Growth factor (end-of-year target)</span>
+          <span class="slider-value" id="growthFactorVal">4</span>
+        </div>
+        <input type="range" class="blue" id="growthFactor" min="1" max="10" value="4" step="0.5" oninput="onSlider('growthFactor')">
+      </div>
+    </div>
+  </div>
+
+  <!-- Y1 Ramp Visual -->
+  <div class="ramp-year-label">Year 1 — Monthly Engagements</div>
+  <div class="ramp-grid" id="rampY1"></div>
+
+  <!-- Y2 Ramp Visual -->
+  <div class="ramp-year-label" style="margin-top:16px;">Year 2 — Monthly Engagements (with NRR expansion)</div>
+  <div class="ramp-grid" id="rampY2"></div>
+
+  <!-- NRR Slider -->
+  <div class="slider-row" style="max-width:400px;margin-top:16px;">
+    <div class="slider-label">
+      <span class="slider-name">Net Revenue Retention (Y2)</span>
+      <span class="slider-value" id="nrrVal">125%</span>
+    </div>
+    <input type="range" class="purple" id="nrr" min="100" max="150" value="125" step="5" oninput="onSlider('nrr')">
+  </div>
+
+  <!-- Account Tiers -->
+  <div class="divider"></div>
+  <span class="inline-label">Account Tiers — 94 Named Accounts</span>
+  <div class="tier-grid" id="tierGrid"></div>
+
+  <!-- Summary Cards -->
+  <div class="metric-grid">
+    <div class="metric-card">
+      <div class="metric-label">Y1 Services Revenue</div>
+      <div class="metric-value green" id="tdSvcRev">—</div>
+      <div class="metric-sub">engagements × avg fee</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Y1 Platform ARR Booked</div>
+      <div class="metric-value blue" id="tdARR">—</div>
+      <div class="metric-sub">seats × ACV</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EOY 2026 ARR</div>
+      <div class="metric-value green glow-green" id="tdEOY26">—</div>
+      <div class="metric-sub">exit-weighted</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">EOY 2027 ARR</div>
+      <div class="metric-value purple" id="tdEOY27">—</div>
+      <div class="metric-sub">Y2 with NRR expansion</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Y1 Total Revenue</div>
+      <div class="metric-value cyan" id="tdTotal">—</div>
+      <div class="metric-sub">services + ARR</div>
+    </div>
+    <div class="metric-card">
+      <div class="metric-label">Deck vs Alt Delta</div>
+      <div class="metric-value amber" id="tdDelta">—</div>
+      <div class="metric-sub">EOY ARR difference</div>
+    </div>
+  </div>
+
+  <!-- Pipeline Utilization Note -->
+  <div class="context-note" id="pipelineNote" style="margin-top:8px;"></div>
+
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════════════
+     PART 4: GTM PARTNERSHIP
+═══════════════════════════════════════════════════════════════════════ -->
+<section class="section" id="part4">
+  <div class="section-header">
+    <div class="section-num">4</div>
+    <div>
+      <div class="section-title">GTM Partnership — Comp &amp; Conversion</div>
+      <div class="section-sub">Kara Burney · Founding GTM Hire</div>
+    </div>
+  </div>
+
+  <div class="two-col">
+    <!-- Comp Sliders -->
+    <div>
+      <span class="inline-label">Compensation Structure</span>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">Monthly retainer</span>
+          <span class="slider-value" id="retainerVal">$12,000</span>
+        </div>
+        <input type="range" class="green" id="retainer" min="0" max="25000" value="12000" step="500" oninput="onSlider('retainer')">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">% of services revenue</span>
+          <span class="slider-value" id="svcPctVal">15%</span>
+        </div>
+        <input type="range" class="green" id="svcPct" min="0" max="25" value="15" step="0.5" oninput="onSlider('svcPct')">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">% of new ARR booked</span>
+          <span class="slider-value" id="arrPctVal">15%</span>
+        </div>
+        <input type="range" class="green" id="arrPct" min="0" max="25" value="15" step="0.5" oninput="onSlider('arrPct')">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">Equity grant</span>
+          <span class="slider-value" id="equityVal">1.5%</span>
+        </div>
+        <input type="range" class="purple" id="equity" min="0" max="3" value="1.5" step="0.1" oninput="onSlider('equity')">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name">Post-money valuation</span>
+          <span class="slider-value" id="valuationVal">$25M</span>
+        </div>
+        <input type="range" class="purple" id="valuation" min="5" max="100" value="25" step="5" oninput="onSlider('valuation')">
+      </div>
+    </div>
+
+    <!-- Comp Summary Cards -->
+    <div>
+      <span class="inline-label">Year 1 Compensation Summary</span>
+      <div class="metric-grid" style="grid-template-columns:1fr 1fr;">
+        <div class="metric-card">
+          <div class="metric-label">Retainer (Y1)</div>
+          <div class="metric-value green" id="compRetainer">$144K</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Services Variable</div>
+          <div class="metric-value green" id="compSvc">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">ARR Variable</div>
+          <div class="metric-value green" id="compARR">—</div>
+        </div>
+        <div class="metric-card">
+          <div class="metric-label">Total Y1 Cash</div>
+          <div class="metric-value green glow-green" id="compTotal">—</div>
+        </div>
+        <div class="metric-card" style="grid-column:span 2;">
+          <div class="metric-label">Equity Paper Value</div>
+          <div class="metric-value purple" id="compEquity">—</div>
+          <div class="metric-sub">at post-money valuation</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Full-Time Conversion -->
+  <div class="divider"></div>
+  <span class="inline-label">Full-Time Conversion Trigger</span>
+
+  <div class="two-col" style="margin-bottom:20px;">
+    <div class="slider-row">
+      <div class="slider-label">
+        <span class="slider-name">FT annual comp target</span>
+        <span class="slider-value" id="ftCompVal">$250,000</span>
+      </div>
+      <input type="range" class="amber" id="ftComp" min="150000" max="400000" value="250000" step="5000" oninput="onSlider('ftComp')">
+    </div>
+    <div class="slider-row">
+      <div class="slider-label">
+        <span class="slider-name">FT equity vest per year</span>
+        <span class="slider-value" id="ftVestVal">25%</span>
+      </div>
+      <input type="range" class="amber" id="ftVest" min="0" max="50" value="25" step="5" oninput="onSlider('ftVest')">
+    </div>
+  </div>
+
+  <!-- Trigger Display -->
+  <div class="trigger-box">
+    <div class="trigger-label">Annual Revenue Trigger for Full-Time Conversion</div>
+    <div class="trigger-revenue" id="triggerRevenue" style="color:var(--amber);">—</div>
+    <div class="trigger-month" id="triggerMonth">—</div>
+    <div class="trigger-note" id="triggerNote">—</div>
+  </div>
+
+</section>
+
+</main><!-- /main-content -->
+
+<!-- ─── SIDEBAR ────────────────────────────────────────────────────────── -->
+<aside class="sidebar">
+  <div class="sidebar-title">Live Model Summary</div>
+
+  <div id="sidebarModelBadge" class="sidebar-model-badge deck">
+    <span class="dot" style="width:6px;height:6px;border-radius:50%;background:currentColor;display:inline-block;"></span>
+    <span id="sidebarModelText">Deck Pricing</span>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Capacity</div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Bottoms-up ceiling</span>
+      <span class="sidebar-row-value blue" id="sb_ceiling">60 eng/yr</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Top-down Y1 engagements</span>
+      <span class="sidebar-row-value" id="sb_tdEng">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Pipeline utilization</span>
+      <span class="sidebar-row-value" id="sb_util">—</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">Revenue</div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Y1 services revenue</span>
+      <span class="sidebar-row-value green" id="sb_svc">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Y1 ARR booked</span>
+      <span class="sidebar-row-value blue" id="sb_arr">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">EOY 2026 ARR</span>
+      <span class="sidebar-row-value green" id="sb_eoy26">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">EOY 2027 ARR</span>
+      <span class="sidebar-row-value purple" id="sb_eoy27">—</span>
+    </div>
+  </div>
+
+  <div class="sidebar-section">
+    <div class="sidebar-section-title">GTM Comp</div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Kara Y1 total cash</span>
+      <span class="sidebar-row-value green" id="sb_kara">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">FT trigger revenue</span>
+      <span class="sidebar-row-value amber" id="sb_trigger">—</span>
+    </div>
+    <div class="sidebar-row">
+      <span class="sidebar-row-label">Trajectory hits trigger</span>
+      <span class="sidebar-row-value" id="sb_trigMonth">—</span>
+    </div>
+  </div>
+
+  <div style="margin-top:16px;padding-top:12px;border-top:1px solid var(--border);">
+    <button onclick="copyShareURL()" style="width:100%;padding:8px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius-sm);color:var(--text2);font-family:'Poppins',sans-serif;font-size:11px;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:0.6px;transition:all 0.2s;" onmouseover="this.style.borderColor='var(--blue)';this.style.color='var(--blue)'" onmouseout="this.style.borderColor='var(--border)';this.style.color='var(--text2)'">
+      Share This Configuration
+    </button>
+    <div id="copyMsg" style="text-align:center;font-size:11px;color:var(--green);margin-top:6px;display:none;">URL copied to clipboard!</div>
+  </div>
+</aside>
+
+</div><!-- /app-body -->
+
+<script>
+// ═══════════════════════════════════════════════════════════════════════════
+// STATE
+// ═══════════════════════════════════════════════════════════════════════════
+const MONTHS = ['M1','M2','M3','M4','M5','M6','M7','M8','M9','M10','M11','M12'];
+
+const PRESETS = {
+  flat:       { eng:[5,5,5,5,5,5,5,5,5,5,5,5], cap:[1,1,1,1,1,1,1,1,1,1,1,1] },
+  hire:       { eng:[3,3,3,4,4,4,5,5,5,6,6,6], cap:[1,1,1,1,1,1,1,1,1,1,1,1] },
+  aggressive: { eng:[3,3,4,4,5,6,6,7,8,8,9,10], cap:[0.75,0.75,1,1,1,1,1,1.25,1.25,1.25,1.5,1.5] }
+};
+
+const TOOLS_DEFAULT = [
+  { name:'Claude Enterprise',        price:25,  on:true,  optional:false },
+  { name:'ChatGPT Enterprise',       price:60,  on:true,  optional:false },
+  { name:'Glean',                    price:35,  on:true,  optional:false },
+  { name:'Notion AI',                price:10,  on:true,  optional:false },
+  { name:'Zapier Team',              price:20,  on:true,  optional:false },
+  { name:'MCP Orchestration',        price:15,  on:true,  optional:false },
+  { name:'In-house Glue Maintenance',price:25,  on:true,  optional:false },
+  { name:'Harvey / Specialist',      price:50,  on:false, optional:true  },
+  { name:'Copilot Enterprise',       price:39,  on:false, optional:true  },
+  { name:'Perplexity Enterprise',    price:40,  on:false, optional:true  },
+];
+
+const ACCOUNT_TIERS = [
+  { name:'Tier 1 — Enterprise Anchors', count:30, closeRate:8,  avgSeats:200,
+    examples:'McDonald\'s, Nike, T-Mobile, Target, UPS, FedEx, Walmart, Home Depot' },
+  { name:'Tier 2 — Growth SaaS',        count:32, closeRate:15, avgSeats:60,
+    examples:'Notion, Figma, Stripe, Airtable, Retool, Miro, Loom, Linear' },
+  { name:'Tier 3 — AI-Native',          count:32, closeRate:20, avgSeats:30,
+    examples:'Anthropic, Cohere, Harvey, Hebbia, Perplexity, Writer, Glean' },
+];
+
+// Mutable state
+let S = {
+  pricingModel: 'deck',
+  preset: 'flat',
+  engineers: [...PRESETS.flat.eng],
+  capacity:  [...PRESETS.flat.cap],
+  avgSeats: 80,
+  growthPattern: 'exp',
+  m1Eng: 2,
+  growthFactor: 4,
+  nrr: 125,
+  tiers: ACCOUNT_TIERS.map(t => ({ closeRate: t.closeRate, avgSeats: t.avgSeats })),
+  tools: TOOLS_DEFAULT.map(t => ({ price: t.price, on: t.on })),
+  retainer: 12000,
+  svcPct: 15,
+  arrPct: 15,
+  equity: 1.5,
+  valuation: 25,
+  ftComp: 250000,
+  ftVest: 25,
+};
+
+// ═══════════════════════════════════════════════════════════════════════════
+// PRICING CONSTANTS
+// ═══════════════════════════════════════════════════════════════════════════
+function getPricingParams() {
+  if (S.pricingModel === 'deck') {
+    return {
+      svcFeeBlended: 75000,   // $25–50K/mo × 2mo = $50–100K; use $75K midpoint
+      acvPerSeat: 348,        // $29/user/mo × 12
+      label: 'Deck Pricing',
+    };
+  } else {
+    // Alt: 30% premium ($225K) + 70% starter ($75K) = blended ~$127.5K
+    const blendedSvc = 0.7 * 75000 + 0.3 * 225000;
+    return {
+      svcFeeBlended: blendedSvc,
+      acvPerSeat: 1500,       // ~$125/user/mo blended Business/Enterprise × 12
+      label: 'Replacement-Value Pricing',
+    };
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// CAPACITY (PART 2)
+// ═══════════════════════════════════════════════════════════════════════════
+function getCapacityCeiling() {
+  // Per-month max engagements
+  return S.engineers.map((e, i) => Math.floor(e * S.capacity[i]));
+}
+
+function getTotalCapacity() {
+  return getCapacityCeiling().reduce((a, b) => a + b, 0);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// GROWTH RAMP (PART 3)
+// ═══════════════════════════════════════════════════════════════════════════
+function getRawRamp(start, end, pattern, months) {
+  const ramp = [];
+  for (let m = 0; m < months; m++) {
+    let val;
+    const t = m / (months - 1);
+    if (pattern === 'flat') {
+      val = start;
+    } else if (pattern === 'linear') {
+      val = start + (end - start) * t;
+    } else if (pattern === 'exp') {
+      // start × (end/start)^(m/11)
+      val = start * Math.pow(end / start, m / (months - 1));
+    } else if (pattern === 'scurve') {
+      // Logistic
+      const k = 8;
+      const sig = 1 / (1 + Math.exp(-k * (t - 0.5)));
+      const sig0 = 1 / (1 + Math.exp(-k * (0 - 0.5)));
+      const sig1 = 1 / (1 + Math.exp(-k * (1 - 0.5)));
+      val = start + (end - start) * (sig - sig0) / (sig1 - sig0);
+    }
+    ramp.push(Math.max(0, val));
+  }
+  return ramp;
+}
+
+function getY1Ramp() {
+  const ceiling = getCapacityCeiling();
+  const raw = getRawRamp(S.m1Eng, S.growthFactor, S.growthPattern, 12);
+  return raw.map((v, i) => ({
+    raw: v,
+    planned: Math.min(v, ceiling[i]),
+    ceiling: ceiling[i],
+    capped: v > ceiling[i],
+  }));
+}
+
+function getY2Ramp() {
+  const y1 = getY1Ramp();
+  const y1Last = y1[11].planned;
+  const y2Start = y1Last * (S.nrr / 100);
+  const y2End = y2Start * (S.nrr / 100);
+  const raw = getRawRamp(y2Start, y2End, S.growthPattern, 12);
+  // Y2 ceiling: assume same as last month of Y1 (no new hires modeled)
+  const lastCeiling = getCapacityCeiling()[11];
+  return raw.map(v => ({
+    raw: v,
+    planned: Math.min(v, lastCeiling * 1.2), // slight buffer for Y2
+    ceiling: lastCeiling * 1.2,
+    capped: v > lastCeiling * 1.2,
+  }));
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// REVENUE CALCS
+// ═══════════════════════════════════════════════════════════════════════════
+function calcRevenue() {
+  const p = getPricingParams();
+  const y1 = getY1Ramp();
+  const y2 = getY2Ramp();
+
+  // Weighted avg seats: distribute across tiers by (count × closeRate)
+  const totalWeight = ACCOUNT_TIERS.reduce((a, t, i) => a + t.count * S.tiers[i].closeRate, 0);
+  const avgSeatsWeighted = ACCOUNT_TIERS.reduce((a, t, i) =>
+    a + (t.count * S.tiers[i].closeRate / totalWeight) * S.tiers[i].avgSeats, 0);
+
+  // Y1 services revenue
+  const y1TotalEng = y1.reduce((a, m) => a + m.planned, 0);
+  const svcRev = y1TotalEng * p.svcFeeBlended;
+
+  // Y1 ARR booked (seats × ACV)
+  const arrBooked = y1TotalEng * avgSeatsWeighted * p.acvPerSeat;
+
+  // EOY 2026 ARR — exit-weighted: each month m contributes (12-m)/12 of annual value
+  let eoy26 = 0;
+  y1.forEach((m, i) => {
+    const monthlyARR = m.planned * avgSeatsWeighted * p.acvPerSeat;
+    eoy26 += monthlyARR * (12 - i) / 12;
+  });
+
+  // EOY 2027 ARR — Y2 with NRR
+  const y2TotalEng = y2.reduce((a, m) => a + m.planned, 0);
+  let eoy27 = eoy26 * (S.nrr / 100);
+  y2.forEach((m, i) => {
+    const monthlyARR = m.planned * avgSeatsWeighted * p.acvPerSeat;
+    eoy27 += monthlyARR * (12 - i) / 12;
+  });
+
+  const totalRev = svcRev + arrBooked;
+
+  return { svcRev, arrBooked, eoy26, eoy27, totalRev, y1TotalEng, avgSeatsWeighted };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// COMP CALCS (PART 4)
+// ═══════════════════════════════════════════════════════════════════════════
+function calcComp(rev) {
+  const retainerAnnual = S.retainer * 12;
+  const svcVar = (S.svcPct / 100) * rev.svcRev;
+  const arrVar = (S.arrPct / 100) * rev.arrBooked;
+  const totalCash = retainerAnnual + svcVar + arrVar;
+  const equityValue = (S.equity / 100) * S.valuation * 1e6;
+
+  // FT trigger
+  const ftTrigger = (S.ftComp - retainerAnnual) /
+    ((S.svcPct / 100) * 0.6 + (S.arrPct / 100) * 0.4);
+
+  return { retainerAnnual, svcVar, arrVar, totalCash, equityValue, ftTrigger };
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FIND TRIGGER MONTH
+// ═══════════════════════════════════════════════════════════════════════════
+function findTriggerMonth(ftTrigger) {
+  const p = getPricingParams();
+  const y1 = getY1Ramp();
+  const y2 = getY2Ramp();
+  const totalWeight = ACCOUNT_TIERS.reduce((a, t, i) => a + t.count * S.tiers[i].closeRate, 0);
+  const avgSeatsW = ACCOUNT_TIERS.reduce((a, t, i) =>
+    a + (t.count * S.tiers[i].closeRate / totalWeight) * S.tiers[i].avgSeats, 0);
+
+  let cumRev = 0;
+  const allMonths = [...y1, ...y2];
+  for (let i = 0; i < allMonths.length; i++) {
+    const m = allMonths[i];
+    const monthSvc = m.planned * p.svcFeeBlended;
+    const monthARR = m.planned * avgSeatsW * p.acvPerSeat;
+    cumRev += monthSvc + monthARR;
+    if (cumRev >= ftTrigger) {
+      return i < 12 ? `Month ${i + 1} (Year 1)` : `Month ${i - 11} (Year 2)`;
+    }
+  }
+  return 'Beyond Year 2 trajectory';
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// FORMAT HELPERS
+// ═══════════════════════════════════════════════════════════════════════════
+function fmt$(n, compact=true) {
+  if (n === undefined || n === null || isNaN(n)) return '—';
+  if (compact) {
+    if (Math.abs(n) >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+    if (Math.abs(n) >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+    return '$' + n.toFixed(0);
+  }
+  return '$' + n.toLocaleString('en-US', {maximumFractionDigits:0});
+}
+
+function fmtN(n, dec=1) {
+  if (n === undefined || isNaN(n)) return '—';
+  return n.toFixed(dec);
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// RENDER FUNCTIONS
+// ═══════════════════════════════════════════════════════════════════════════
+
+function renderCapacityGrid() {
+  const ceiling = getCapacityCeiling();
+  const y1 = getY1Ramp();
+  const tbody = document.getElementById('capacityBody');
+
+  const rows = [
+    {
+      label: 'Engineers',
+      cells: S.engineers.map((v, i) => `<input class="cell-input" type="number" min="0" max="50" step="1" value="${v}" oninput="onCellEdit('engineers',${i},this.value)">`),
+      total: S.engineers.reduce((a,b)=>a+b,0),
+      totalFmt: v => v.toFixed(0),
+    },
+    {
+      label: 'Engagements / Eng / Mo',
+      cells: S.capacity.map((v, i) => `<input class="cell-input" type="number" min="0" max="5" step="0.25" value="${v}" oninput="onCellEdit('capacity',${i},this.value)">`),
+      total: (S.capacity.reduce((a,b)=>a+b,0)/12),
+      totalFmt: v => v.toFixed(2) + ' avg',
+    },
+    {
+      label: 'Max Engagements',
+      cells: ceiling.map(v => `<span style="font-weight:700;color:var(--blue);">${v.toFixed(1)}</span>`),
+      total: ceiling.reduce((a,b)=>a+b,0),
+      totalFmt: v => v.toFixed(0),
+      computed: true,
+    },
+    {
+      label: 'Planned (from Part 3)',
+      cells: y1.map((m, i) => {
+        const pct = ceiling[i] > 0 ? m.planned / ceiling[i] : 0;
+        const cls = pct < 0.6 ? 'green' : pct < 0.9 ? 'amber' : 'red';
+        const pctDisp = (pct * 100).toFixed(0);
+        return `<div class="util-bar-wrap">
+          <span style="font-size:12px;font-weight:700;color:var(--${cls});">${fmtN(m.planned,1)}</span>
+          <div class="util-bar"><div class="util-fill ${cls}" style="width:${Math.min(pct*100,100)}%"></div></div>
+          <span class="util-pct ${cls}">${pctDisp}%</span>
+        </div>`;
+      }),
+      total: y1.reduce((a,m)=>a+m.planned,0),
+      totalFmt: v => v.toFixed(1),
+      computed: true,
+    },
+  ];
+
+  tbody.innerHTML = rows.map(row => `
+    <tr>
+      <td class="row-label">${row.label}</td>
+      ${row.cells.map(c => `<td class="${row.computed ? 'computed' : ''}">${c}</td>`).join('')}
+      <td class="totals-col" style="font-size:13px;">${row.totalFmt(row.total)}</td>
+    </tr>
+  `).join('');
+}
+
+function renderRampGrid(containerId, rampData, year) {
+  const el = document.getElementById(containerId);
+  const maxVal = Math.max(...rampData.map(m => m.ceiling), 1);
+  el.innerHTML = rampData.map((m, i) => {
+    const fillPct = Math.min((m.planned / maxVal) * 100, 100);
+    const cls = (year === 2 ? 'y2 ' : '') + (m.capped ? 'capped' : '');
+    return `<div class="ramp-cell ${cls}">
+      <div class="ramp-cell-month">${year === 1 ? MONTHS[i] : 'M'+(i+1)+'Y2'}</div>
+      <div class="ramp-cell-val">${fmtN(m.planned, 1)}</div>
+      ${m.capped ? '<div style="font-size:9px;color:var(--red);font-weight:700;">CAP</div>' : ''}
+      <div class="ramp-cell-bar"><div class="ramp-cell-fill" style="width:${fillPct}%"></div></div>
+    </div>`;
+  }).join('');
+}
+
+function renderTierGrid() {
+  const el = document.getElementById('tierGrid');
+  el.innerHTML = ACCOUNT_TIERS.map((t, i) => {
+    const p = getPricingParams();
+    const expectedEng = t.count * S.tiers[i].closeRate / 100;
+    const tierARR = expectedEng * S.tiers[i].avgSeats * p.acvPerSeat;
+    return `<div class="tier-card">
+      <div class="tier-card-header">
+        <div>
+          <div class="tier-card-name">${t.name}</div>
+          <div class="tier-card-count">${t.count} accounts</div>
+        </div>
+        <div class="tier-card-acv">${fmt$(tierARR)}</div>
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name" style="font-size:12px;">Close rate</span>
+          <span class="slider-value" id="cr${i}">${S.tiers[i].closeRate}%</span>
+        </div>
+        <input type="range" class="blue" min="1" max="40" value="${S.tiers[i].closeRate}" step="1"
+          oninput="onTierSlider(${i},'closeRate',this.value)">
+      </div>
+      <div class="slider-row">
+        <div class="slider-label">
+          <span class="slider-name" style="font-size:12px;">Avg seats</span>
+          <span class="slider-value" id="as${i}">${S.tiers[i].avgSeats}</span>
+        </div>
+        <input type="range" class="blue" min="5" max="500" value="${S.tiers[i].avgSeats}" step="5"
+          oninput="onTierSlider(${i},'avgSeats',this.value)">
+      </div>
+      <div style="font-size:11px;color:var(--text3);margin-top:8px;line-height:1.5;">${t.examples}</div>
+    </div>`;
+  }).join('');
+}
+
+function renderToolRows() {
+  const el = document.getElementById('toolRows');
+  el.innerHTML = TOOLS_DEFAULT.map((t, i) => `
+    <div class="tool-row">
+      <input type="checkbox" class="tool-check" ${S.tools[i].on ? 'checked' : ''}
+        onchange="onToolToggle(${i},this.checked)">
+      <span class="tool-name" style="${!S.tools[i].on ? 'opacity:0.4' : ''}">${t.name}${t.optional ? ' <span style="font-size:10px;color:var(--text3);">(opt)</span>' : ''}</span>
+      <input class="tool-price-input" type="number" min="0" max="500" value="${S.tools[i].price}"
+        oninput="onToolPrice(${i},this.value)">
+      <span style="font-size:11px;color:var(--text3);width:32px;">/user</span>
+    </div>
+  `).join('');
+}
+
+function renderToolSummary() {
+  const total = S.tools.reduce((a, t) => a + (t.on ? t.price : 0), 0);
+  const savings = total - 99;
+  document.getElementById('stackCost').textContent = total > 0 ? `$${total}/user/mo` : '$0/user/mo';
+  document.getElementById('stackSavings').textContent = savings > 0 ? `$${savings}/user/mo` : `$0/user/mo`;
+  const note = document.getElementById('bundleSavingsNote');
+  if (savings > 0) {
+    note.textContent = `Chiri saves $${savings}/user/mo vs. current stack`;
+    note.style.background = 'var(--green-dim)';
+    note.style.color = 'var(--green)';
+    note.style.borderColor = 'rgba(6,214,160,0.3)';
+  } else if (savings < 0) {
+    note.textContent = `Stack costs $${Math.abs(savings)}/user/mo less than Chiri Business tier`;
+    note.style.background = 'var(--amber-dim)';
+    note.style.color = 'var(--amber)';
+    note.style.borderColor = 'rgba(255,209,102,0.3)';
+  } else {
+    note.textContent = 'Select tools above to calculate savings';
+    note.style.background = 'var(--surface)';
+    note.style.color = 'var(--text3)';
+    note.style.borderColor = 'var(--border)';
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// MASTER RECOMPUTE
+// ═══════════════════════════════════════════════════════════════════════════
+function recompute() {
+  const p = getPricingParams();
+  const ceiling = getCapacityCeiling();
+  const totalCap = getTotalCapacity();
+  const y1 = getY1Ramp();
+  const y2 = getY2Ramp();
+  const rev = calcRevenue();
+  const comp = calcComp(rev);
+  const trigMonth = findTriggerMonth(comp.ftTrigger);
+
+  // ── Part 1 Summary ──
+  document.getElementById('sumACV').textContent = fmt$(p.acvPerSeat * 1, false).replace('$','$') + '/seat/yr';
+  document.getElementById('sumSvcFee').textContent = fmt$(p.svcFeeBlended);
+  document.getElementById('sumCeiling').textContent = totalCap + ' eng/yr';
+  document.getElementById('sumEOYARR').textContent = fmt$(rev.eoy26);
+
+  // ── Part 2 ──
+  renderCapacityGrid();
+  document.getElementById('buMaxEng').textContent = totalCap;
+  document.getElementById('buMaxSeats').textContent = (totalCap * S.avgSeats).toLocaleString();
+  const buRev = totalCap * p.svcFeeBlended + totalCap * S.avgSeats * p.acvPerSeat;
+  document.getElementById('buRevenue').textContent = fmt$(buRev);
+
+  // ── Part 3 ──
+  renderRampGrid('rampY1', y1, 1);
+  renderRampGrid('rampY2', y2, 2);
+  renderTierGrid();
+
+  document.getElementById('tdSvcRev').textContent = fmt$(rev.svcRev);
+  document.getElementById('tdARR').textContent = fmt$(rev.arrBooked);
+  document.getElementById('tdEOY26').textContent = fmt$(rev.eoy26);
+  document.getElementById('tdEOY27').textContent = fmt$(rev.eoy27);
+  document.getElementById('tdTotal').textContent = fmt$(rev.totalRev);
+
+  // Delta: alt vs deck
+  const altP = { svcFeeBlended: 0.7*75000+0.3*225000, acvPerSeat: 1500 };
+  const deckP = { svcFeeBlended: 75000, acvPerSeat: 348 };
+  const totalWeight = ACCOUNT_TIERS.reduce((a, t, i) => a + t.count * S.tiers[i].closeRate, 0);
+  const avgSeatsW = ACCOUNT_TIERS.reduce((a, t, i) =>
+    a + (t.count * S.tiers[i].closeRate / totalWeight) * S.tiers[i].avgSeats, 0);
+  let eoy26Alt=0, eoy26Deck=0;
+  y1.forEach((m, i) => {
+    eoy26Alt  += m.planned * avgSeatsW * altP.acvPerSeat  * (12-i)/12;
+    eoy26Deck += m.planned * avgSeatsW * deckP.acvPerSeat * (12-i)/12;
+  });
+  const delta = eoy26Alt - eoy26Deck;
+  document.getElementById('tdDelta').textContent = (delta >= 0 ? '+' : '') + fmt$(delta) + ' ARR';
+
+  // Pipeline note
+  const utilPct = totalCap > 0 ? (rev.y1TotalEng / totalCap * 100).toFixed(0) : 0;
+  const pipeNote = document.getElementById('pipelineNote');
+  if (utilPct > 90) {
+    pipeNote.className = 'context-note danger';
+    pipeNote.innerHTML = `<span class="context-note-icon">⚠</span><span>Pipeline utilization is <strong>${utilPct}%</strong> — demand is hitting the capacity ceiling. Hire more engineers or reduce the growth factor to avoid over-promising. ${S.pricingModel === 'deck' ? `Switching to replacement-value pricing would add ${fmt$(delta)} in EOY ARR without changing headcount.` : ''}</span>`;
+  } else if (utilPct > 60) {
+    pipeNote.className = 'context-note warn';
+    pipeNote.innerHTML = `<span class="context-note-icon">◉</span><span>Pipeline utilization is <strong>${utilPct}%</strong> — approaching capacity. Monitor closely as the ramp accelerates.</span>`;
+  } else {
+    pipeNote.className = 'context-note info';
+    pipeNote.innerHTML = `<span class="context-note-icon">ℹ</span><span>Pipeline utilization is <strong>${utilPct}%</strong> of bottoms-up ceiling. The team has headroom — consider accelerating the growth ramp or adding more named accounts.</span>`;
+  }
+
+  // ── Part 4 ──
+  document.getElementById('compRetainer').textContent = fmt$(comp.retainerAnnual);
+  document.getElementById('compSvc').textContent = fmt$(comp.svcVar);
+  document.getElementById('compARR').textContent = fmt$(comp.arrVar);
+  document.getElementById('compTotal').textContent = fmt$(comp.totalCash);
+  document.getElementById('compEquity').textContent = fmt$(comp.equityValue);
+
+  const trigEl = document.getElementById('triggerRevenue');
+  trigEl.textContent = fmt$(comp.ftTrigger, false);
+  trigEl.style.color = comp.ftTrigger < rev.totalRev ? 'var(--green)' : 'var(--amber)';
+
+  document.getElementById('triggerMonth').textContent = `Trajectory hits trigger: ${trigMonth}`;
+  document.getElementById('triggerNote').textContent =
+    `Below ${fmt$(comp.ftTrigger)} annual revenue, the variable structure (retainer + ${S.svcPct}% services + ${S.arrPct}% ARR) is cheaper for Chiri than a full-time salary. Above this threshold, converting to FT saves the company money and locks in the GTM leader.`;
+
+  // ── Sidebar ──
+  const sbBadge = document.getElementById('sidebarModelBadge');
+  sbBadge.className = `sidebar-model-badge ${S.pricingModel}`;
+  document.getElementById('sidebarModelText').textContent = p.label;
+
+  document.getElementById('sb_ceiling').textContent = totalCap + ' eng/yr';
+  document.getElementById('sb_tdEng').textContent = fmtN(rev.y1TotalEng, 1) + ' eng';
+  document.getElementById('sb_util').textContent = utilPct + '%';
+  document.getElementById('sb_util').className = `sidebar-row-value ${utilPct > 90 ? 'red' : utilPct > 60 ? 'amber' : 'green'}`;
+
+  document.getElementById('sb_svc').textContent = fmt$(rev.svcRev);
+  document.getElementById('sb_arr').textContent = fmt$(rev.arrBooked);
+  document.getElementById('sb_eoy26').textContent = fmt$(rev.eoy26);
+  document.getElementById('sb_eoy27').textContent = fmt$(rev.eoy27);
+
+  document.getElementById('sb_kara').textContent = fmt$(comp.totalCash);
+  document.getElementById('sb_trigger').textContent = fmt$(comp.ftTrigger);
+  document.getElementById('sb_trigMonth').textContent = trigMonth;
+
+  // ── Header badge ──
+  const hBadge = document.getElementById('headerBadge');
+  hBadge.className = `header-badge ${S.pricingModel}`;
+  document.getElementById('headerBadgeText').textContent = p.label;
+
+  // ── Pricing col dim ──
+  document.getElementById('colDeck').classList.toggle('dimmed', S.pricingModel !== 'deck');
+  document.getElementById('colAlt').classList.toggle('dimmed', S.pricingModel !== 'alt');
+
+  // ── Toggle buttons ──
+  document.getElementById('toggleDeck').className = `toggle-btn ${S.pricingModel === 'deck' ? 'active deck' : ''}`;
+  document.getElementById('toggleAlt').className = `toggle-btn ${S.pricingModel === 'alt' ? 'active alt' : ''}`;
+
+  // ── Preset buttons ──
+  ['flat','hire','aggressive','custom'].forEach(p => {
+    document.getElementById('preset' + p.charAt(0).toUpperCase() + p.slice(1)).classList.toggle('active', S.preset === p);
+  });
+
+  // ── Growth pattern buttons ──
+  ['Flat','Linear','Exp','Scurve'].forEach(gp => {
+    const id = 'gp' + gp;
+    const key = gp.toLowerCase();
+    const el = document.getElementById(id);
+    if (el) {
+      el.className = `toggle-btn ${S.growthPattern === key ? 'active deck' : ''}`;
+    }
+  });
+
+  renderToolSummary();
+  saveToURL();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// EVENT HANDLERS
+// ═══════════════════════════════════════════════════════════════════════════
+function setPricingModel(model) {
+  S.pricingModel = model;
+  recompute();
+}
+
+function applyPreset(name) {
+  if (name === 'custom') {
+    S.preset = 'custom';
+    recompute();
+    return;
+  }
+  S.preset = name;
+  S.engineers = [...PRESETS[name].eng];
+  S.capacity  = [...PRESETS[name].cap];
+  recompute();
+}
+
+function onCellEdit(field, idx, val) {
+  S[field][idx] = parseFloat(val) || 0;
+  S.preset = 'custom';
+  recompute();
+}
+
+function onSlider(id) {
+  const el = document.getElementById(id);
+  const v = parseFloat(el.value);
+  S[id] = v;
+
+  // Update display value
+  const displays = {
+    avgSeats: () => `${v} seats`,
+    m1Eng: () => `${v}`,
+    growthFactor: () => `${v}`,
+    nrr: () => `${v}%`,
+    retainer: () => `$${v.toLocaleString()}`,
+    svcPct: () => `${v}%`,
+    arrPct: () => `${v}%`,
+    equity: () => `${v}%`,
+    valuation: () => `$${v}M`,
+    ftComp: () => `$${v.toLocaleString()}`,
+    ftVest: () => `${v}%`,
+  };
+  if (displays[id]) {
+    document.getElementById(id + 'Val').textContent = displays[id]();
+  }
+  recompute();
+}
+
+function onTierSlider(idx, field, val) {
+  S.tiers[idx][field] = parseFloat(val);
+  document.getElementById(field === 'closeRate' ? `cr${idx}` : `as${idx}`).textContent =
+    field === 'closeRate' ? `${val}%` : val;
+  recompute();
+}
+
+function onToolToggle(idx, checked) {
+  S.tools[idx].on = checked;
+  recompute();
+}
+
+function onToolPrice(idx, val) {
+  S.tools[idx].price = parseFloat(val) || 0;
+  recompute();
+}
+
+function setGrowthPattern(pattern) {
+  S.growthPattern = pattern;
+  recompute();
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// URL STATE
+// ═══════════════════════════════════════════════════════════════════════════
+function saveToURL() {
+  try {
+    const encoded = btoa(JSON.stringify(S));
+    history.replaceState(null, '', '#' + encoded);
+  } catch(e) {}
+}
+
+function loadFromURL() {
+  try {
+    const hash = window.location.hash.slice(1);
+    if (!hash) return false;
+    const loaded = JSON.parse(atob(hash));
+    Object.assign(S, loaded);
+
+    // Sync all slider/input DOM elements
+    const sliderIds = ['avgSeats','m1Eng','growthFactor','nrr','retainer','svcPct','arrPct','equity','valuation','ftComp','ftVest'];
+    sliderIds.forEach(id => {
+      const el = document.getElementById(id);
+      if (el && S[id] !== undefined) el.value = S[id];
+    });
+    return true;
+  } catch(e) { return false; }
+}
+
+function copyShareURL() {
+  navigator.clipboard.writeText(window.location.href).then(() => {
+    const msg = document.getElementById('copyMsg');
+    msg.style.display = 'block';
+    setTimeout(() => { msg.style.display = 'none'; }, 2500);
+  });
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// INIT
+// ═══════════════════════════════════════════════════════════════════════════
+function init() {
+  loadFromURL();
+  renderToolRows();
+  recompute();
+}
+
+window.addEventListener('DOMContentLoaded', init);
+</script>
+</body>
+</html>
