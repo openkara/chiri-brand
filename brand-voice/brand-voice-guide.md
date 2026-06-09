@@ -116,7 +116,16 @@ Every Chiri LinkedIn post follows this structure:
 3. **Tell a specific story or cite a specific source** (a customer quote, a named person, a real number)
 4. **Connect to Chiri's thesis** — warm, grounded, never a pitch
 5. **Close with a question or soft invitation** — not begging for engagement, genuinely curious
-6. **3-5 hashtags** — lower in the post
+
+## Hard Formatting Rules (non-negotiable)
+
+These override anything else in this guide. If an example below breaks one, the rule wins.
+
+- **No hashtags. Ever.** On any channel, in any format. Chiri does not use hashtags.
+- **No em dashes. Ever.** Use commas or periods.
+- **No antithesis / negation-correction construction.** Do not write "It's not X, it's Y" / "X wasn't the problem, Y was" / "X was never about Y, it's about Z" / "not just X, but Y." State the point affirmatively instead.
+  - Instead of: "Adoption isn't a technology problem. It's a trust problem."
+  - Write: "Adoption comes down to trust."
 
 ---
 
@@ -138,7 +147,9 @@ That is the voice. That is the brand. That is the thing nobody else in this spac
 # Four LinkedIn Posts: Rewritten in Chiri's Brand Voice
 
 **Source:** Podcast "#23 — Why AI Adoption Is a People Problem, Not a Technology Problem" with Kaihan Krippendorf and Joanne Sheppard.
-**Rules:** Hook under 210 chars. Short paragraphs. One clear point. Specific anchor. Warm close. 3-5 hashtags. Full scaffolding.
+**Rules:** Hook under 210 chars. Short paragraphs. One clear point. Specific anchor. Warm close. No hashtags. Full scaffolding.
+
+> Note: the four example posts below predate the no-hashtag and no-antithesis rules. Treat the Hard Formatting Rules above as authoritative; the examples are kept for structure only.
 
 ---
 
@@ -164,7 +175,6 @@ Listen to the full episode: https://open.spotify.com/episode/33QgjDmqhP7WPCDJlkP
 
 What is the biggest blocker to AI adoption inside your organization right now?
 
-#AIAdoption #FutureOfWork #PeoplePowerBusiness #ElasticWorkforce
 
 ---
 
@@ -199,7 +209,6 @@ Full episode: https://open.spotify.com/episode/33QgjDmqhP7WPCDJlkPVRm
 
 Does this resonate with what you are seeing?
 
-#AIAdoption #ChangeManagement #FutureOfWork #PeoplePowerBusiness
 
 ---
 
@@ -234,7 +243,6 @@ Full episode: https://open.spotify.com/episode/33QgjDmqhP7WPCDJlkPVRm
 
 Which side of this divide is your organization on right now?
 
-#AIAdoption #ElasticWorkforce #FutureOfWork #PeoplePowerBusiness #DigitalWorkers
 
 ---
 
@@ -272,7 +280,6 @@ Full episode: https://open.spotify.com/episode/33QgjDmqhP7WPCDJlkPVRm
 
 Have you seen this pattern? How did you handle it?
 
-#AIAdoption #FutureOfWork #PeoplePowerBusiness #ElasticWorkforce
 
 ---
 

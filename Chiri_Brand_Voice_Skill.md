@@ -91,9 +91,7 @@ Every Chiri LinkedIn post follows this exact structure:
 3. **Tell a specific story or cite a specific source** — a customer quote, a named person, a real number
 4. **Connect to Chiri's thesis** — warm, grounded, never a pitch
 5. **Close with a question or soft invitation** — genuinely curious, not begging
-6. **3-5 hashtags** — lower in the post, mix of broad and Chiri-specific
-
-**Preferred hashtags:** #AIAdoption #FutureOfWork #ElasticWorkforce #PeoplePowerBusiness #HumanAI #DigitalWorkers
+6. **No hashtags** — Chiri never uses hashtags, on any channel
 
 ---
 
@@ -149,7 +147,7 @@ Matthew is the CTO and co-founder. His voice is more technical but still accessi
 - Opens with a question
 - Tells a specific story with a named source or customer quote
 - Ends with an engagement question
-- 3-5 hashtags
+- No hashtags
 - Always paired with an image (1080x1080px)
 - Posts 2-3x per week
 
@@ -158,7 +156,7 @@ Matthew is the CTO and co-founder. His voice is more technical but still accessi
 - Hook in the first line — no warm-up
 - More punchy and direct than LinkedIn
 - Links to chiri.ai at the end
-- No hashtags needed (optional 1-2)
+- No hashtags
 - Can be a standalone tweet or a short thread
 - Posts 3-5x per week
 
@@ -188,6 +186,8 @@ Matthew is the CTO and co-founder. His voice is more technical but still accessi
 | Book a demo | Talk to our team, Let's talk |
 | Transform your business | Build around how you actually work |
 | Disrupt / Revolutionize | Change, improve, accelerate |
+| Hashtags (#anything) | Never use. No hashtags on any channel. |
+| "It's not X, it's Y" antithesis | State it affirmatively. e.g. "Adoption comes down to trust." |
 | Em-dashes (—) | Never use. Use commas or periods instead. |
 | Employee ranges (50-1,000) | Never reference publicly |
 
@@ -233,6 +233,12 @@ Matthew is the CTO and co-founder. His voice is more technical but still accessi
 
 ---
 
-## The Single Most Important Rule
+## The Non-Negotiable Rules
 
-**No em-dashes. Ever. In any content. On any channel. In any format.**
+These override everything else. Any draft that breaks one is wrong, regardless of how good it reads.
+
+1. **No em-dashes. Ever.** In any content, on any channel, in any format. Use commas or periods.
+2. **No hashtags. Ever.** On any channel.
+3. **No antithesis / negation-correction construction.** Do not write "It's not X, it's Y" / "X wasn't the problem, Y was" / "X was never about Y, it's about Z" / "not just X, but Y." It is a tired AI/LinkedIn-guru tell. State the point affirmatively instead.
+   - Instead of: "Adoption isn't a technology problem. It's a trust problem."
+   - Write: "Adoption comes down to trust."
